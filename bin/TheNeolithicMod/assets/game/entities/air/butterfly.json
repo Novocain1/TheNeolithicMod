@@ -1,0 +1,45 @@
+{
+	code: "butterfly",
+	variantgroups:  [ { code: "type", states: ["bloodredglider","commonbrimstone", "comma", "largewhite", "peacock", "smallheath", "bluepansy"] } ] ,
+	class: "EntityButterfly",
+	habitat: "Air",
+	hitboxSize: { x: 0.3, y: 0.3 },
+	client: {
+		renderer: "Shape",
+		size: 0.5,
+		shape: { base: "entity/air/butterfly" },
+		texture: { base: "entity/butterfly/{type}" },
+		behaviors: [{ code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }],
+	},
+	server: {
+		attributes: {
+			pathfinder: {
+				minTurnAnglePerSec: 9000,
+				maxTurnAnglePerSec: 18000
+			}
+		},
+		behaviors: [
+			{ code: "controlledphysics", stepHeight: 1.0001 },
+			{ code: "despawn", minPlayerDistance: 32, minSeconds: 120 },
+			{
+				code: "taskai",
+				aitasks: [
+					{
+						code: "butterflywander", 
+						priority: 1.0, 
+						movespeed: 0.02,
+						wanderChance: 0.1,
+						maxHeight: 10,
+						targetDistance: 0.3
+					}
+				]
+			}
+		],
+	},
+	sounds: {
+		
+	},
+	attributes: {
+		
+	},
+}

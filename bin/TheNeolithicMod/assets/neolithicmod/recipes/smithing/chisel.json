@@ -1,0 +1,13 @@
+{
+	ingredient: { type: "item", code: "game:ingot-*", name: "metal", allowedVariants: ["copper", "tinbronze", "bismuthbronze", "blackbronze","iron"] },
+	pattern: [
+		"_____#####_____",
+		"_____#####_____",
+		"#####_____#####",
+		"#####_____#####",
+		"_____#####_____",
+		"_____#####_____",
+	],
+	name: "chiselhead",
+	output: { type: "item", code: "chiselhead-{metal}", stacksize: 4  }
+}
