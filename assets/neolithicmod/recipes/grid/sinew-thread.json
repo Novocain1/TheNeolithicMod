@@ -1,9 +1,0 @@
-{
-	ingredientPattern: "FFF",
-	ingredients: {
-		"F": { type: "item", code: "byproducts-sinew-fibers", name: "Sinew"  }
-	},
-	width: 3,
-	height: 1,
-	output: { type: "item", code: "byproducts-sinew-thread", quantity: 1  }
-}
