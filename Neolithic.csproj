@@ -144,9 +144,6 @@
     <Folder Include=".vs\Neolithic\v15\" />
     <Folder Include="bin\TheNeolithicMod\" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="docs\index.html" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />
