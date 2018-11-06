@@ -126,7 +126,6 @@
     <Compile Include="CarryCapacity\Network\PickUpMessage.cs" />
     <Compile Include="CarryCapacity\Network\PlaceDownMessage.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\FixedBESapling.cs" />
-    <Compile Include="Neolithic\Content\Block\BlockBambooFix.cs" />
     <Compile Include="Neolithic\Content\Block\BlockMortarAndPestle.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\BEMortarAndPestle.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\BEScary.cs" />

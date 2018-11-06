@@ -8,6 +8,7 @@ namespace TheNeolithicMod
         public override void Start(ICoreAPI api)
         {
             base.Start(api);
+
             //Block Behavior
             api.RegisterBlockBehaviorClass("ClayPressBehavior", typeof(ClayPressBehavior));
 
@@ -15,9 +16,6 @@ namespace TheNeolithicMod
             api.RegisterBlockClass("BlockPlaceOnDrop", typeof(BlockPlaceOnDrop));
             api.RegisterBlockClass("BlockGiantReeds", typeof(BlockGiantReeds));
             api.RegisterBlockClass("BlockMortarAndPestle", typeof(BlockMortarAndPestle));
-            api.RegisterBlockClass("BlockBambooFix", typeof(BlockBambooFix));
-            //api.RegisterBlockClass("BlockBambooGreen", typeof(BlockBambooGreen));
-            //api.RegisterBlockClass("BlockBambooBrown", typeof(BlockBambooBrown));
             //api.RegisterBlockClass("BlockPlant", typeof(BlockPlant));
             //api.RegisterBlockClass("FixedBlockCrop", typeof(FixedBlockCrop));
 
