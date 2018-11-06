@@ -15,6 +15,7 @@ namespace TheNeolithicMod
             api.RegisterBlockClass("BlockPlaceOnDrop", typeof(BlockPlaceOnDrop));
             api.RegisterBlockClass("BlockGiantReeds", typeof(BlockGiantReeds));
             api.RegisterBlockClass("BlockMortarAndPestle", typeof(BlockMortarAndPestle));
+            api.RegisterBlockClass("BlockBambooFix", typeof(BlockBambooFix));
             //api.RegisterBlockClass("BlockBambooGreen", typeof(BlockBambooGreen));
             //api.RegisterBlockClass("BlockBambooBrown", typeof(BlockBambooBrown));
             //api.RegisterBlockClass("BlockPlant", typeof(BlockPlant));

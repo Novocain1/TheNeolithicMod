@@ -15,7 +15,7 @@ namespace TheNeolithicMod
     {
         static Random rand = new Random();
 
-        static Dictionary<string, string> FixedTreeGenMapping = new Dictionary<string, string>
+        public static Dictionary<string, string> FixedTreeGenMapping = new Dictionary<string, string>
         {
             { "birch", "silverbirch" },
             { "oak", "englishoak" },
@@ -45,6 +45,7 @@ namespace TheNeolithicMod
         public override void OnBlockPlaced(ItemStack byItemStack = null)
         {
             totalHoursTillGrowth = api.World.Calendar.TotalHours + (5 + 3 * rand.NextDouble()) * 24;
+
         }
 
 

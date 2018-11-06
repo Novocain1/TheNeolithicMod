@@ -1,6 +1,6 @@
 {
 	code: "bamboo",
-	class: "BlockBamboo",
+	class: "BlockBambooFix",
 	variantgroups: [
 
 		{ code: "color", states: ["brown", "green"] },
