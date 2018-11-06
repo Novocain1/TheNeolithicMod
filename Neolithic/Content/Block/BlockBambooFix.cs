@@ -119,7 +119,7 @@ namespace TheNeolithicMod
 
                 if (nextSegmentAtHeight <= i)
                 {
-                    block = ((BlockBamboo)block).NextSegment(blockAccessor);
+                    block = ((BlockBambooFix)block).NextSegment(blockAccessor);
                     nextSegmentAtHeight += height / 3;
                 }
 

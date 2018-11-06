@@ -23,8 +23,8 @@ namespace TheNeolithicMod
             { "pine", "scotspine" },
             { "acacia", "truemulga" },
             { "kapok", "kapok" },
-            { "bamboogreen", "bamboo-green-grown" },
-            { "bamboobrown", "bamboo-brown-grown" }
+            { "bamboogreen", "bamboo-grown-green" },
+            { "bamboobrown", "bamboo-grown-brown" }
         };
 
 

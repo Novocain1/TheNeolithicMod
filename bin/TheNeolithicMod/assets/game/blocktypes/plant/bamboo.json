@@ -3,9 +3,9 @@
 	class: "BlockBambooFix",
 	variantgroups: [
 
-		{ code: "color", states: ["brown", "green"] },
 		{ code: "type", states: ["grown", "placed"] },
-		{ code: "part", states: ["segment1", "segment2", "segment3"] },
+		{ code: "color", states: ["brown", "green"] },
+    { code: "part", states: ["segment1", "segment2", "segment3"] },
 	],
 	creativeinventory: { "general": ["bamboo-placed-*"], "flora": ["bamboo-placed-*"] },
 	attributesByType: {
