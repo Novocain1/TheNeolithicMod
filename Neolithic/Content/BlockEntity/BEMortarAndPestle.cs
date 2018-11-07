@@ -274,7 +274,7 @@ namespace TheNeolithicMod
             MeshData mesh;
             ITesselatorAPI mesher = ((ICoreClientAPI)api).Tesselator;
 
-            mesher.TesselateShape(block, api.Assets.TryGet("shapes/block/mortarandpestle/" + type + ".json").ToObject<Shape>(), out mesh);
+            mesher.TesselateShape(block, api.Assets.TryGet("shapes/wood/block/mortarandpestle/" + type + ".json").ToObject<Shape>(), out mesh);
 
             return mesh;
         }

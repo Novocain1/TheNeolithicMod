@@ -8,7 +8,7 @@
 	blockmaterial: "Wood",
 	drawtype: "json",
 	textures: {
-		"debarked": { base: "game:block/wood/debarked/{wood}" },
+		"debarked": { base: "block/wood/debarked/{wood}" },
 	},
 	resistance: 3.5,
 	sideopaque: {

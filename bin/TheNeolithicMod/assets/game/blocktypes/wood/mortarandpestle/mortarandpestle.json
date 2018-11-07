@@ -17,9 +17,9 @@
 		},
 	blockmaterial: "wood",
 	textures: {
-		bark: {base: "game:block/wood/bark/{wood}"},
+		bark: {base: "block/wood/bark/{wood}"},
 		debarked: {base: "block/wood/debarked/{wood}"},
-		trunk: {base: "game:block/wood/treetrunk/{wood}"}
+		trunk: {base: "block/wood/treetrunk/{wood}"}
 	},
 	sidesolid: {
 		all: false,
@@ -38,6 +38,14 @@
 			x2: 1.0, 
 			y2: 1.0, 
 			z2: 1.0 
-		}
+		},
+		{ 
+			x1: 0.25, 
+			y1: 1, 
+			z1: 0.25, 
+			x2: 0.75, 
+			y2: 1.05, 
+			z2: 0.75 
+		},
 	]
 }

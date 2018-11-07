@@ -416,9 +416,9 @@
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-maple.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-acacia.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-birch.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\base.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\complete.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\top.json" />
+    <None Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\mortarandpestle\base.json" />
+    <None Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\mortarandpestle\complete.json" />
+    <None Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\mortarandpestle\top.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\plant\giantreeds-water.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\plant\sapling\plaintree\acacia.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\plant\sapling\plaintree\bamboobrown.json" />
@@ -562,9 +562,9 @@
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\furniture\chair.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\furniture\table.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\logwall\logwall.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\mortarandpestle\mortar.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\mortarandpestle\mortarandpestle.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\mortarandpestle\pestle.json" />
+    <None Include="bin\TheNeolithicMod\assets\game\blocktypes\wood\mortarandpestle\mortar.json" />
+    <None Include="bin\TheNeolithicMod\assets\game\blocktypes\wood\mortarandpestle\mortarandpestle.json" />
+    <None Include="bin\TheNeolithicMod\assets\game\blocktypes\wood\mortarandpestle\pestle.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\planks-bamboo.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\primitivefence.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\primitivegate.json" />

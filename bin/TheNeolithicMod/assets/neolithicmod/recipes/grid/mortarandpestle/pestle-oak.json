@@ -6,5 +6,5 @@
     width: 1,
     height: 1,
     shapeless: true,
-    output: { type: "block", code: "neolithicmod:pestle-oak", quantity: 1  }
+    output: { type: "block", code: "game:pestle-oak", quantity: 1  }
 }
