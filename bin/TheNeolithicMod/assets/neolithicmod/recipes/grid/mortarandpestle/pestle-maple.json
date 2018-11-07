@@ -1,0 +1,10 @@
+{
+    ingredientPattern: "P",
+    ingredients: {
+        "P": {type: "Block", code: "game:chiseledblock", attributes: { materials: [2118], cuboids: [9672198, 10458822, 9144135] } }
+    },
+    width: 1,
+    height: 1,
+    shapeless: true,
+    output: { type: "block", code: "neolithicmod:pestle-maple", quantity: 1  }
+}
