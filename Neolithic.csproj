@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\Neolithic\v15\" />
+    <Folder Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\TheNeolithicMod\assets\game\blocktypes\clay\bowl.json" />
@@ -416,9 +417,9 @@
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-maple.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-acacia.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-birch.json" />
-    <None Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\mortarandpestle\base.json" />
-    <None Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\mortarandpestle\complete.json" />
-    <None Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\mortarandpestle\top.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\base.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\complete.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\top.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\plant\giantreeds-water.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\plant\sapling\plaintree\acacia.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\plant\sapling\plaintree\bamboobrown.json" />

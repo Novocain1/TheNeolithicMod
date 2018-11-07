@@ -9,10 +9,10 @@
 	],
 	creativeinventory: { "general": ["mortarandpestle-{wood}-east"], "neolithicblocks": ["mortarandpestle-{wood}-east"] },
 	shapeByType: {
-		"*-north": { base: "game:block/wood/mortarandpestle/complete", rotateY: 90 },
-		"*-east": { base: "game:block/wood/mortarandpestle/complete", rotateY: 0 },
-		"*-south": { base: "game:block/wood/mortarandpestle/complete", rotateY: 270 },
-		"*-west": { base: "game:block/wood/mortarandpestle/complete", rotateY: 180 }
+		"*-north": { base: "neolithicmod:block/wood/mortarandpestle/complete", rotateY: 90 },
+		"*-east": { base: "neolithicmod:block/wood/mortarandpestle/complete", rotateY: 0 },
+		"*-south": { base: "neolithicmod:block/wood/mortarandpestle/complete", rotateY: 270 },
+		"*-west": { base: "neolithicmod:block/wood/mortarandpestle/complete", rotateY: 180 }
 		
 		},
 	blockmaterial: "wood",

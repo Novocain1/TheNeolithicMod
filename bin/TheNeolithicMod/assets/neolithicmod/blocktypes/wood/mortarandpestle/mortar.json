@@ -4,7 +4,7 @@
 		{ loadFromProperties: "block/wood" }
 	],
 	creativeinventory: { "general": ["*"], "neolithicblocks": ["*"] },
-	shape: { base: "game:block/wood/mortarandpestle/base" },
+	shape: { base: "neolithicmod:block/wood/mortarandpestle/base" },
 	blockmaterial: "Wood",
 	drawtype: "json",
 	textures: {
