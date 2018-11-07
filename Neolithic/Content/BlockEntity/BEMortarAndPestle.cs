@@ -271,10 +271,11 @@ namespace TheNeolithicMod
             Block block = api.World.BlockAccessor.GetBlock(pos);
             if (block.BlockId == 0) return null;
 
+
             MeshData mesh;
             ITesselatorAPI mesher = ((ICoreClientAPI)api).Tesselator;
 
-            mesher.TesselateShape(block, api.Assets.TryGet("shapes/wood/block/mortarandpestle/" + type + ".json").ToObject<Shape>(), out mesh);
+            mesher.TesselateShape(block, api.Assets.TryGet("neolithicmod:shapes/block/wood/mortarandpestle/" + type + ".json").ToObject<Shape>(), out mesh);
 
             return mesh;
         }
@@ -636,11 +637,14 @@ namespace TheNeolithicMod
 
         public bool OnTesselation(ITerrainMeshPool mesher, ITesselatorAPI tesselator)
         {
-            if (ownBlock == null) return false;
+            if(ownBlock == null) return false;
+            string direc = ownBlock.LastCodePart();
+            float yDeg = BlockFacing.FromCode(direc).HorizontalAngleIndex * 90;
 
-            //Console.WriteLine("call to ontesseleation. Isgrinding={0}", IsGrinding);
-            
-            mesher.AddMeshData(this.quernBaseMesh);
+            mesher.AddMeshData(
+                    this.quernBaseMesh.Clone()
+                    .Rotate(new Vec3f(0.5f, 0.5f, 0.5f), 0.0f, (yDeg-90) * GameMath.DEG2RAD, 0.0f)
+                );
             if (!IsGrinding)
             {
 
@@ -648,8 +652,10 @@ namespace TheNeolithicMod
                     this.quernTopMesh.Clone()
                     //.Rotate(new Vec3f(0.5f, 0.5f, 0.5f), 0, renderer.Angle * GameMath.DEG2RAD, 0)
                     //.Translate(0 / 16f, 11 / 16f, 0 / 16f)
-                    .Rotate(new Vec3f(0.5f, 0.5f, 0.5f), 0.0f, 0.0f, -45.0f * GameMath.DEG2RAD)
-                    .Translate(0.15f,0.5f,0.0f)
+                    .Rotate(new Vec3f(0.5f, 0.5f, 0.5f), 0.0f, 0.0f, 0.0f)
+                    .Translate(0.1f, 0.0f, 0.0f)
+                    .Rotate(new Vec3f(0.5f, 0.5f, 0.5f), 0.0f, (yDeg-90) * GameMath.DEG2RAD, -45.0f * GameMath.DEG2RAD)
+                    .Translate(0.0f, 0.5f, 0.0f)
                 );
 
             }

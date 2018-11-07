@@ -9,17 +9,17 @@
 	],
 	creativeinventory: { "general": ["mortarandpestle-{wood}-east"], "neolithicblocks": ["mortarandpestle-{wood}-east"] },
 	shapeByType: {
-		"*-north": { base: "block/wood/mortarandpestle/complete", rotateY: 90 },
-		"*-east": { base: "block/wood/mortarandpestle/complete", rotateY: 0 },
-		"*-south": { base: "block/wood/mortarandpestle/complete", rotateY: 270 },
-		"*-west": { base: "block/wood/mortarandpestle/complete", rotateY: 180 }
+		"*-north": { base: "neolithicmod:block/wood/mortarandpestle/complete", rotateY: 90 },
+		"*-east": { base: "neolithicmod:block/wood/mortarandpestle/complete", rotateY: 0 },
+		"*-south": { base: "neolithicmod:block/wood/mortarandpestle/complete", rotateY: 270 },
+		"*-west": { base: "neolithicmod:block/wood/mortarandpestle/complete", rotateY: 180 }
 		
 		},
 	blockmaterial: "wood",
 	textures: {
-		bark: {base: "block/wood/bark/{wood}"},
+		bark: {base: "game:block/wood/bark/{wood}"},
 		debarked: {base: "block/wood/debarked/{wood}"},
-		trunk: {base: "block/wood/treetrunk/{wood}"}
+		trunk: {base: "game:block/wood/treetrunk/{wood}"}
 	},
 	sidesolid: {
 		all: false,
@@ -39,9 +39,9 @@
 			y2: 1.0, 
 			z2: 1.0 
 		},
-		{ 
+    { 
 			x1: 0.25, 
-			y1: 1, 
+			y1: 0.25, 
 			z1: 0.25, 
 			x2: 0.75, 
 			y2: 1.05, 

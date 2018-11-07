@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".vs\Neolithic\v15\" />
+    <Folder Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\TheNeolithicMod\assets\game\blocktypes\clay\bowl.json" />
