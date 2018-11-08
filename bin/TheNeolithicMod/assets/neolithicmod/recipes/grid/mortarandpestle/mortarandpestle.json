@@ -2,10 +2,10 @@
 	ingredientPattern: "PM",
 	ingredients: {
 		"P": { type: "block", code: "neolithicmod:pestle-*"},
-		"M": { type: "block", code: "neolithicmod:mortar-*-east", allowedVariants: ["acacia", "birch", "kapok", "maple", "oak", "pine"], name: "wood", },
+		"M": { type: "block", code: "neolithicmod:mortar-*", allowedVariants: ["acacia", "birch", "kapok", "maple", "oak", "pine"], name: "wood", },
     },
     width: 1,
     height: 2,
     shapeless: true,
-    output: { type: "block", code: "neolithicmod:mortarandpestle-{wood}", quantity: 1  }
+    output: { type: "block", code: "neolithicmod:mortarandpestle-{wood}-east", quantity: 1  }
 }

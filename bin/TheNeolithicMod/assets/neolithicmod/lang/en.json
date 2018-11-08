@@ -780,16 +780,10 @@
 	"item-sisal-thread": "Sisal Thread",
 	"item-sisal-twine": "Sisal Twine",
 	"item-sisal-rope": "Sisal Rope",
-	
-	"item-bamboostakes-brown": "Brown Bamboo Stakes",
-	"item-bamboostakes-green": "Green Bamboo Stakes",
-	
+			
 	"block-planks-bamboo-brown": "Brown Bamboo Planks",
 	"block-planks-bamboo-green": "Green Bamboo Planks",
-	
-	"itemdesc-bamboostakes-brown": "Arrange in the grid 2 x 2 to make Brown Bamboo Planks",
-	"itemdesc-bamboostakes-green": "Arrange in the grid 2 x 2 to make Green Bamboo Planks",
-	
+		
 	"itemdesc-sisal-fibers": "Put 3 in a row to make Sisal Thread",
 	"itemdesc-sisal-thread": "Arrange in the grid 2 in row under 2 in row. Like a square to make Twine",
 	"itemdesc-sisal-twine": "Fill the grid, 3 x 3 to make 3 Ropes",
