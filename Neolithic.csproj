@@ -411,15 +411,10 @@
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\mortar-oak.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\mortar-birch.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\mortarandpestle.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-kapok.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-pine.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-oak.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-maple.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-acacia.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle-birch.json" />
-    <None Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\mortarandpestle\base.json" />
-    <None Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\mortarandpestle\complete.json" />
-    <None Include="bin\TheNeolithicMod\assets\game\shapes\block\wood\mortarandpestle\top.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\base.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\complete.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\top.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\plant\giantreeds-water.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\plant\sapling\plaintree\acacia.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\plant\sapling\plaintree\bamboobrown.json" />
@@ -578,7 +573,6 @@
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\food\porkchops.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\food\rabbit.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\resource\animal.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\resource\bamboostakes.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\resource\bowlimb.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\resource\byproducts.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\resource\fletching.json" />

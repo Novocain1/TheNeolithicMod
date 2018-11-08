@@ -1,7 +1,7 @@
 {
 	ingredientPattern: "SS	SS",
 	ingredients: {
-		"S": { type: "item", code: "bamboostakes-brown"  },
+		"S": { type: "item", code: "game:bamboostakes-brown"  },
 	},
 	width: 2,
 	height: 2,

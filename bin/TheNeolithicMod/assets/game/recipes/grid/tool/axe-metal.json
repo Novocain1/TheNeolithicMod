@@ -1,7 +1,7 @@
 {
 	ingredientPattern: "T	S",
 	ingredients: {
-		"T": { type: "item", code: "game:axehead-*", allowedVariants: [ "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver" ],  name: "material" },
+		"T": { type: "item", code: "game:axehead-*", allowedVariants: [ "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron" ],  name: "material" },
 		"S": { type: "item", code: "game:stick" }
 	},
 	width: 1,

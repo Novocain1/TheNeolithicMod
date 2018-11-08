@@ -591,8 +591,36 @@
 	
 	"item-bamboostakes-brown": "Brown Bamboo Stakes",
 	"item-bamboostakes-green": "Green Bamboo Stakes",
+
+	"itemdesc-bamboostakes-brown": "Arrange in the grid 2 x 2 to make Brown Bamboo Planks",
+	"itemdesc-bamboostakes-green": "Arrange in the grid 2 x 2 to make Green Bamboo Planks",
+
 	"item-seeds-sisal": "Sisal Seeds",
 	"item-sisal-leaves": "Sisal Leaves",
+
+	"block-mortarandpestle-acacia-*":"Acacia Mortar and Pestle",
+	"block-mortarandpestle-birch-*":"Birch Mortar and Pestle",
+	"block-mortarandpestle-kapok-*":"Kapok Mortar and Pestle",
+	"block-mortarandpestle-maple-*":"Maple Mortar and Pestle",
+	"block-mortarandpestle-oak-*":"Oak Mortar and Pestle",
+	"block-mortarandpestle-pine-*":"Pine Mortar and Pestle",
+	"blockdesc-mortarandpestle-*":"Grind grains here.",
+
+	"block-mortar-acacia":"Acacia Mortar",
+	"block-mortar-birch":"Birch Mortar",
+	"block-mortar-kapok":"Kapok Mortar",
+	"block-mortar-maple":"Maple Mortar",
+	"block-mortar-oak":"oak Mortar",
+	"block-mortar-pine":"Pine Mortar",
+	"blockdesc-mortar-*":"In the crafting grid with a Mortar to make the Mortar and Pestle",
+
+	"block-pestle-acacia":"Acacia Pestle",
+	"block-pestle-birch":"Birch Pestle",
+	"block-pestle-kapok":"Kapok Pestle",
+	"block-pestle-maple":"Maple Pestle",
+	"block-pestle-oak":"Oak Pestle",
+	"block-pestle-pine":"Pine Pestle",
+	"blockdesc-pestle-*":"In crafting grid with a mortar to make the Mortar and Pestle",
 	
 	"item-tallow": "Tallow",
 	"item-tallowcandle": "Tallow Candle",
