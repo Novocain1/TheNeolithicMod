@@ -133,6 +133,7 @@
     <Compile Include="Neolithic\Content\Block\BlockMortarAndPestle.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\BEMortarAndPestle.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\BEScary.cs" />
+    <Compile Include="Neolithic\Content\Item\ItemSwappable.cs" />
     <Compile Include="Neolithic\Content\Renderer\PestleRenderer.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\POIEntity.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\NeolithicTransient.cs" />
