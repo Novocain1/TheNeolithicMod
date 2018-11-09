@@ -48,11 +48,11 @@
 		},
 	},
 	durabilitybytype: {
-		"axe-hand-granite": 30,
-		"axe-hand-andesite": 30,
-		"axe-hand-basalt": 30,
-		"axe-hand-obsidian": 75,
-		"axe-hand-flint": 50,
+		"axe-hand-granite": 60,
+		"axe-hand-andesite": 60,
+		"axe-hand-basalt": 60,
+		"axe-hand-obsidian": 100,
+		"axe-hand-flint": 80,
 	},
 	attackpowerbytype: {
 		"axe-hand-granite": 0.36,

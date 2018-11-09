@@ -14,11 +14,11 @@
 
 	durabilitybytype: 
 	{
-		"knife-hand-granite": 30,
-		"knife-hand-andesite": 30,
-		"knife-hand-basalt": 30,
-		"knife-hand-obsidian": 75,
-		"knife-hand-flint": 50,
+		"knife-hand-granite": 60,
+		"knife-hand-andesite": 60,
+		"knife-hand-basalt": 60,
+		"knife-hand-obsidian": 100,
+		"knife-hand-flint": 80,
 	},
 	attackpowerbytype: 
 	{
