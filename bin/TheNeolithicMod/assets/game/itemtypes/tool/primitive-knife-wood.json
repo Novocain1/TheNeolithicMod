@@ -17,11 +17,11 @@
 
 	durabilitybytype: 
 	{
-		"knife-primitive-granite-*": 60,
-		"knife-primitive-andesite-*": 60,
-		"knife-primitive-basalt-*": 60,
-		"knife-primitive-obsidian-*": 150,
-		"knife-primitive-flint-*": 100,
+		"knife-primitive-granite-*": 150,
+		"knife-primitive-andesite-*": 150,
+		"knife-primitive-basalt-*": 150,
+		"knife-primitive-obsidian-*": 250,
+		"knife-primitive-flint-*": 200,
 	},
 	attackpowerbytype: 
 	{

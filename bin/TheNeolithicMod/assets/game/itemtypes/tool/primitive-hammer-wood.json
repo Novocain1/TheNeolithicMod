@@ -16,11 +16,11 @@
 	},
 	durabilitybytype: 
 	{
-		"hammer-primitive-granite-*": 60,
-		"hammer-primitive-andesite-*": 60,
-		"hammer-primitive-basalt-*": 60,
-		"hammer-primitive-obsidian-*": 150,
-		"hammer-primitive-flint-*": 100,
+		"hammer-primitive-granite-*": 150,
+		"hammer-primitive-andesite-*": 150,
+		"hammer-primitive-basalt-*": 150,
+		"hammer-primitive-obsidian-*": 250,
+		"hammer-primitive-flint-*": 200,
 	},
 	attackpowerbytype: 
 	{

@@ -19,11 +19,11 @@
 		"rope": { base: "neolithicmod:block/rope" },
 	},
 	durabilitybytype: {
-		"primitive-sickle-granite-*": 60,
-		"primitive-sickle-andesite-*": 60,
-		"primitive-sickle-basalt-*": 60,
-		"primitive-sickle-obsidian-*": 150,
-		"primitive-sickle-flint-*": 100,
+		"primitive-sickle-granite-*": 150,
+		"primitive-sickle-andesite-*": 150,
+		"primitive-sickle-basalt-*": 150,
+		"primitive-sickle-obsidian-*": 250,
+		"primitive-sickle-flint-*": 200,
 	},
 	creativeinventory: { "general": ["*"], "items": ["*"], "neolithictools": ["*"] },
 	fpHandTransform: {

@@ -32,11 +32,11 @@
 		},
 	},
 	durabilitybytype: {
-		"primitive-hoe-granite-*": 60,
-		"primitive-hoe-andesite-*": 60,
-		"primitive-hoe-basalt-*": 60,
+		"primitive-hoe-granite-*": 80,
+		"primitive-hoe-andesite-*": 80,
+		"primitive-hoe-basalt-*": 80,
 		"primitive-hoe-obsidian-*": 150,
-		"primitive-hoe-flint-*": 100,
+		"primitive-hoe-flint-*": 120,
 	},
 	attackpowerbytype: {
 		"primitive-hoe-granite-*": 1,

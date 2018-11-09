@@ -46,11 +46,11 @@
 		},
 	},
 	durabilitybytype: {
-		"spear-primitive-granite": 32,
-		"spear-primitive-andesite": 32,
-		"spear-primitive-basalt": 32,
+		"spear-primitive-granite": 50,
+		"spear-primitive-andesite": 50,
+		"spear-primitive-basalt": 50,
 		"spear-primitive-obsidian": 90,
-		"spear-primitive-flint": 64,
+		"spear-primitive-flint": 70,
 	},
 	creativeinventory: { "general": ["*"], "items": ["*"], "neolithictools": ["*"]  },
 	fpHandTransform: {

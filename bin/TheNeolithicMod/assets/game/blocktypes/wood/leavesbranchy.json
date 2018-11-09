@@ -50,32 +50,28 @@
 		{ 
 			type: "block", 
 			code: "neolithicmod:branch-very-thin-{wood}-bark-ud",
-			lastDrop: true,
 			quantityByType: {
-				"*-acacia": { avg:4, var: 2 },
-				"*": { avg: 4, var: 2 },
+				"*-acacia": { avg:2, var: 1 },
+				"*": { avg: 2, var: 1 },
 			}
 		},
 		{ 
 			type: "block", 
 			code: "neolithicmod:branch-thin-{wood}-bark-ud",
-			lastDrop: true,
 			quantityByType: {
-				"*-acacia": { avg: 3, var: 1.5 },
-				"*": { avg: 3, var: 1.5 },
+				"*-acacia": { avg: 4, var: 2 },
+				"*": { avg: 4, var: 2 },
 			}
 		},{ 
 			type: "block", 
 			code: "neolithicmod:branch-medium-{wood}-bark-ud",
-			lastDrop: true,
 			quantityByType: {
-				"*-acacia": { avg: 2, var:1 },
-				"*": { avg: 2, var: 1 },
+				"*-acacia": { avg: 3, var:1 },
+				"*": { avg: 3, var: 1 },
 			}
 		},{ 
 			type: "block", 
 			code: "neolithicmod:branch-thick-{wood}-bark-ud",
-			lastDrop: true,
 			quantityByType: {
 				"*-acacia": { avg: 1, var: 0.5},
 				"*": { avg: 1, var: 0.5 },

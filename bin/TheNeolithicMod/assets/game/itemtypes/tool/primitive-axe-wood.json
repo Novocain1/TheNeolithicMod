@@ -51,11 +51,11 @@
 		},
 	},
 	durabilitybytype: {
-		"axe-primitive-granite-*": 60,
-		"axe-primitive-andesite-*": 60,
-		"axe-primitive-basalt-*": 60,
-		"axe-primitive-obsidian-*": 150,
-		"axe-primitive-flint-*": 100,
+		"axe-primitive-granite-*": 150,
+		"axe-primitive-andesite-*": 150,
+		"axe-primitive-basalt-*": 150,
+		"axe-primitive-obsidian-*": 200,
+		"axe-primitive-flint-*": 180,
 	},
 	attackpowerbytype: {
 		"axe-primitive-granite-*": 0.75,

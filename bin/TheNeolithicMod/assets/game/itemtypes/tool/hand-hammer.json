@@ -12,11 +12,11 @@
 		"stone": { base: "item/tool/material/{stone}" },
 	},
 	durabilitybytype: {
-		"hammer-hand-granite": 30,
-		"hammer-hand-andesite": 30,
-		"hammer-hand-basalt": 30,
-		"hammer-hand-obsidian": 75,
-		"hammer-hand-flint": 50,
+		"hammer-hand-granite": 70,
+		"hammer-hand-andesite": 70,
+		"hammer-hand-basalt": 70,
+		"hammer-hand-obsidian": 120,
+		"hammer-hand-flint": 100,
 	},
 	creativeinventory: { "general": ["*"], "items": ["*"], "neolithictools": ["*"] },
 	fpHandTransform: {

@@ -50,11 +50,11 @@
 		"shovel-primitive-flint-*": 1,
 	},
 	durabilitybytype: {
-		"shovel-primitive-granite-*": 60,
-		"shovel-primitive-andesite-*": 60,
-		"shovel-primitive-basalt-*": 60,
-		"shovel-primitive-obsidian-*": 150,
-		"shovel-primitive-flint-*": 100,
+		"shovel-primitive-granite-*": 150,
+		"shovel-primitive-andesite-*": 150,
+		"shovel-primitive-basalt-*": 150,
+		"shovel-primitive-obsidian-*": 250,
+		"shovel-primitive-flint-*": 200,
 
 	},
 	creativeinventory: { "general": ["*"], "items": ["*"], "neolithictools": ["*"] },
