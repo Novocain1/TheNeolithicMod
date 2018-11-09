@@ -1,14 +1,5 @@
 {
   code: "sisal-rope",
-  class: "ItemSwappable",
-  attributes: {
-   swapBlocks: [
-      ["rock-basalt", "cobblestone-basalt"],
-      ["rock-granite", "cobblestone-granite"],
-      ["rock-chalk", "cobblestone-chalk"],
-   ],
-    swapRate: 1
-  },
   texture: { base: "item/resource/sisal-rope" },
   creativeinventory: {
     "general": [ "*" ],
