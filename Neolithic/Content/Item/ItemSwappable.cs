@@ -27,7 +27,7 @@ namespace TheNeolithicMod
             Block fromBlock = api.World.GetBlock(new AssetLocation(slot.Itemstack.Collectible.Attributes["fromCode"].AsString()));
             Block toBlock = api.World.GetBlock(new AssetLocation(slot.Itemstack.Collectible.Attributes["toCode"].AsString()));
 
-            if (block != null && block == fromBlock) 
+            if (block != null && block == fromBlock && slot.Itemstack.StackSize >= swapRate) 
             {
                 if (swapRate != 0)
                 {
