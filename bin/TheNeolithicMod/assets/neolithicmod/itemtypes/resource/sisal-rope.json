@@ -1,7 +1,17 @@
 {
-	code: "sisal-rope",
-	texture: { base: "item/resource/sisal-rope" },
-	creativeinventory: { "general": ["*"], "items": ["*"],  "neolithicitems": ["*"] },
-	maxstacksize: 64,
-	materialDensity: 200
+  code: "sisal-rope",
+  class: "ItemSwappable",
+  attributes: {
+    fromCode: "basalt",
+    toCode: "cobblestone-basalt",
+    swapRate: 1
+  },
+  texture: { base: "item/resource/sisal-rope" },
+  creativeinventory: {
+    "general": [ "*" ],
+    "items": [ "*" ],
+    "neolithicitems": [ "*" ]
+  },
+  maxstacksize: 64,
+  materialDensity: 200
 }

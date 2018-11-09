@@ -13,29 +13,27 @@ namespace TheNeolithicMod
 {
     class ItemSwappable : Item
     {
-        public string fromCode = "";
-        public string toCode = "";
-        public void LoadConfig(JsonObject swapconfig)
+
+        public override void OnLoaded(ICoreAPI api)
         {
-            if (swapconfig["convertFrom"] != null)
-            {
-                fromCode = swapconfig["convertFrom"].AsString();
-            }
-            if (swapconfig["convertTo"] != null)
-            {
-                toCode = swapconfig["convertTo"].AsString();
-            }
+            base.OnLoaded(api);
         }
         public override void OnHeldInteractStart(IItemSlot slot, IEntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)
         {
             base.OnHeldInteractStart(slot, byEntity, blockSel, entitySel, ref handling);
+            int swapRate = slot.Itemstack.Collectible.Attributes["swapRate"].AsInt(0);
             Block block = byEntity.World.BlockAccessor.GetBlock(blockSel.Position);
             BlockPos pos = blockSel.Position;
-            Block fromBlock = api.World.GetBlock(new AssetLocation(fromCode));
-            Block toBlock = api.World.GetBlock(new AssetLocation(toCode));
-            
+            Block fromBlock = api.World.GetBlock(new AssetLocation(slot.Itemstack.Collectible.Attributes["fromCode"].AsString()));
+            Block toBlock = api.World.GetBlock(new AssetLocation(slot.Itemstack.Collectible.Attributes["toCode"].AsString()));
+
             if (block != null && block == fromBlock) 
             {
+                if (swapRate != 0)
+                {
+                    slot.TakeOut(swapRate);
+                }
+                api.World.PlaySoundAt(block.Sounds.Place, pos.X, pos.Y, pos.Z);
                 api.World.BlockAccessor.SetBlock(toBlock.BlockId, pos);
             }
         }
