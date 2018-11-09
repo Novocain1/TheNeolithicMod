@@ -17,8 +17,8 @@ namespace TheNeolithicMod
         public override void OnLoaded(ICoreAPI api)
         {
             base.OnLoaded(api);
-            AssetLocation[][] arraySwapMapping = Attributes["swapBlocks"].AsObject<AssetLocation[][]>();
-            foreach (var val in arraySwapMapping)
+            AssetLocation[][] arrSwap = Attributes["swapBlocks"].AsObject<AssetLocation[][]>();
+            foreach (var val in arrSwap)
             {
                 swapMapping[val[0]] = val[1];
             }
