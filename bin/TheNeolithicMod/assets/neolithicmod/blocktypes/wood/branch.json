@@ -213,6 +213,6 @@
 		}
 		
 	},
-	maxStackSize: 16,
+	maxStackSize: 64,
 	materialDensity: 700
 }
