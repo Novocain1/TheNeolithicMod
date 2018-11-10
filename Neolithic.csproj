@@ -1699,6 +1699,8 @@
     <Content Include="bin\TheNeolithicMod\assets\neolithicmod\textures\unknown.png" />
     <Content Include="bin\TheNeolithicMod\Neolithic.dll" />
     <Content Include="bin\TheNeolithicMod\Neolithic.pdb" />
+    <Content Include="WIPAssets\Balduranne\shapes\shapes.txt" />
+    <Content Include="WIPAssets\Balduranne\textures\textures.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
