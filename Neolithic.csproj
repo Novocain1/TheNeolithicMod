@@ -412,6 +412,9 @@
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\mortar-birch.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\mortarandpestle.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\mortarandpestle\pestle.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\scaffolding-leatherstrips-verythinbranch.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\scaffolding-sinew-verythinbranch.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\scaffolding-sisal-verythinbranch.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\base.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\complete.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\block\wood\mortarandpestle\top.json" />
@@ -763,8 +766,8 @@
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\roof\stairs\debarked\sisal\stairs-debarked-sisal-topend.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\roof\stairs\debarked\sisal\stairs-debarked-sisal-topwall.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\scaffolding-leathersrips.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\scaffolding-sinew.json" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\scaffolding-sisal.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\scaffolding-sinew-stick.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\scaffolding-sisal-stick.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\sinew-fiber.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\sinew-thread.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\sinew.json" />

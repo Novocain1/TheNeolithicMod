@@ -20,6 +20,6 @@
 		burnTemperature: 800,
 		burnDuration: 24,
 	},
-	maxStackSize: 32,
+	maxStackSize: 64,
 	materialDensity: 400
 }
