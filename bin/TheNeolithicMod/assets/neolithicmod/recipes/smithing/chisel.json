@@ -1,13 +1,17 @@
 {
-	ingredient: { type: "item", code: "game:ingot-*", name: "metal", allowedVariants: ["copper", "tinbronze", "bismuthbronze", "blackbronze","iron"] },
+	ingredient: { type: "item", code: "game:ingot-*", name: "metal", allowedVariants: ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron"] },
 	pattern: [
-		"_____#####_____",
-		"_____#####_____",
-		"#####_____#####",
-		"#####_____#####",
-		"_____#####_____",
-		"_____#####_____",
+		"##__##__##",
+		"##__##__##",
+		"##__##__##",
+		"##__##__##",
+		"##__##__##",
+		"__##__##__",
+		"__##__##__",
+		"__##__##__",
+		"__##__##__",
+		"__##__##__"
 	],
-	name: "chiselhead",
-	output: { type: "item", code: "chiselhead-{metal}", stacksize: 4  }
+	name: "Block chisel",
+	output: { type: "item", code: "game:chisel-{metal}", stacksize: 5  }
 }
