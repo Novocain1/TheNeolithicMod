@@ -15,5 +15,5 @@
 			requiresQuantity: 5
 		}
 	},
-	output: { type: "block", code: "romanroad-{rock}-brick-east" }
+	output: { type: "block", code: "romanroad-{rock}-brickb-east" }
 }

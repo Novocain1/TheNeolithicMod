@@ -410,7 +410,6 @@
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\lightsources\tallow\tallowcandle1.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\lightsources\tallow\tallowcandle2.json" />
     <None Include="bin\TheNeolithicMod\assets\game\shapes\block\lightsources\tallow\tallowcandle3.json" />
-    <None Include="bin\TheNeolithicMod\assets\game\textures\block\stone\roads\stones\newroadscobble.zip" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\clay\adobe.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\clay\cob.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\clay\rammedearth.json" />
@@ -1810,9 +1809,7 @@
     <Content Include="WIPAssets\Novocain\textures\moss.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
-  <ProjectExtensions>
-    <VisualStudio AllowExistingFolder="true" />
-  </ProjectExtensions>
+  <ProjectExtensions />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
