@@ -1799,7 +1799,8 @@
     <Content Include="bin\Totems\assets\totems\textures\item\offering-bowl\fruit.png" />
     <Content Include="bin\Totems\assets\totems\textures\item\offering-bowl\meat.png" />
     <Content Include="bin\Totems\assets\totems\textures\item\offering-bowl\vegetable.png" />
-    <Content Include="CHANGELOG.txt" />
+    <Content Include="CHANGELOG-Totem.txt" />
+    <Content Include="CHANGELOG-Neolithic.txt" />
     <Content Include="WIPAssets\Balduranne\shapes\shapes.txt" />
     <Content Include="WIPAssets\Balduranne\textures\textures.txt" />
     <Content Include="WIPAssets\Novocain\textures\circlereference.png" />
