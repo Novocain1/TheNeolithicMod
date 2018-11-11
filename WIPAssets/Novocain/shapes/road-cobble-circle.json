@@ -7,6 +7,7 @@
 	"textureHeight": 16,
 	"textures": {
 		"moss": "E:/Games/VintageStory/Neolithic/NeolithicMod/WIPAssets/Novocain/textures/moss",
+		"circle-granite": "E:/Games/VintageStory/Neolithic/NeolithicMod/bin/TheNeolithicMod/assets/game/textures/block/stone/roads/roman/circle-granite",
 		"granite": "E:/Games/VintageStory/assets/survival/textures/block/stone/gravel/granite",
 		"moss-roman": "E:/Games/VintageStory/assets/survival/textures/block/stone/rock/granite",
 		"circlereferencemoss": "E:/Games/VintageStory/Neolithic/NeolithicMod/WIPAssets/Novocain/textures/circlereferencemoss"
@@ -43,11 +44,11 @@
 					"from": [ 0.5, 15.0, 0.5 ], 
 					"to": [ 15.5, 15.9, 15.5 ], 
 					"faces": {
-						"north": { "texture": "#moss-roman", "uv": [ 0.0, 0.0, 15.0, 0.5 ] },
+						"north": { "texture": "#circle-granite", "uv": [ 0.0, 0.0, 15.0, 0.5 ] },
 						"east": { "texture": "#moss-roman", "uv": [ 0.0, 0.0, 15.0, 0.5 ] },
 						"south": { "texture": "#moss-roman", "uv": [ 0.0, 0.0, 15.0, 0.5 ] },
 						"west": { "texture": "#moss-roman", "uv": [ 0.0, 0.0, 15.0, 0.5 ] },
-						"up": { "texture": "#moss-roman", "uv": [ 0.0, 0.0, 15.0, 15.0 ] },
+						"up": { "texture": "#circle-granite", "uv": [ 0.5, 0.5, 15.5, 15.5 ] },
 						"down": { "texture": "#null", "uv": [ 0.0, 0.0, 15.0, 15.0 ], "enabled": false }
 					}
 				}
