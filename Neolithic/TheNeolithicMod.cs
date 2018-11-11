@@ -24,7 +24,7 @@ namespace TheNeolithicMod
             api.RegisterItemClass("ItemShears", typeof(ItemShears));
             api.RegisterItemClass("ItemGiantReedsRoot", typeof(ItemGiantReedsRoot));
             api.RegisterItemClass("ItemAdze", typeof(ItemAdze));
-            api.RegisterItemClass("ItemSwappable", typeof(ItemSwappable));
+            api.RegisterItemClass("ItemSwapBlocks", typeof(ItemSwapBlocks));
             //Block Entity
             api.RegisterBlockEntityClass("GenericPOI", typeof(POIEntity));
             api.RegisterBlockEntityClass("NeolithicTransient", typeof(NeolithicTransient));

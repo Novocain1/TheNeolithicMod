@@ -11,7 +11,7 @@ using Vintagestory.API.MathTools;
 
 namespace TheNeolithicMod
 {
-    class ItemSwappable : Item
+    class ItemSwapBlocks : Item
     {
         Dictionary<AssetLocation, AssetLocation> swapMapping = new Dictionary<AssetLocation, AssetLocation>();
         public override void OnLoaded(ICoreAPI api)
@@ -39,7 +39,7 @@ namespace TheNeolithicMod
 
                 if (slot.Itemstack.StackSize >= swapRate)
                 {
-                    if (swapRate != 0)
+                    if (swapRate > 0)
                     {
                         slot.TakeOut(swapRate);
                     }
