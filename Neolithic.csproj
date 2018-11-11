@@ -969,8 +969,41 @@
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\sounds\morbid\squish1.ogg" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\sounds\morbid\squish2.ogg" />
     <None Include="bin\TheNeolithicMod\modinfo.json" />
+    <None Include="bin\Totems\assets\totems\blocktypes\totem-pig-crucible.json" />
+    <None Include="bin\Totems\assets\totems\blocktypes\totem-pig.json" />
+    <None Include="bin\Totems\assets\totems\itemtypes\offering-bowl\offering-bowl.json" />
+    <None Include="bin\Totems\assets\totems\lang\en.json" />
+    <None Include="bin\Totems\assets\totems\patches\recipes.json" />
+    <None Include="bin\Totems\assets\totems\recipes\clayforming\crucible.json" />
+    <None Include="bin\Totems\assets\totems\recipes\clayforming\fourcrucible.json" />
+    <None Include="bin\Totems\assets\totems\recipes\grid\offering-bowl-bread.json" />
+    <None Include="bin\Totems\assets\totems\recipes\grid\offering-bowl-empty.json" />
+    <None Include="bin\Totems\assets\totems\recipes\grid\offering-bowl-fruit.json" />
+    <None Include="bin\Totems\assets\totems\recipes\grid\offering-bowl-meat.json" />
+    <None Include="bin\Totems\assets\totems\recipes\grid\offering-bowl-vegetable.json" />
+    <None Include="bin\Totems\assets\totems\recipes\grid\totem-pig-bowl.json" />
+    <None Include="bin\Totems\assets\totems\recipes\grid\totem-pig-crucible.json" />
+    <None Include="bin\Totems\assets\totems\recipes\grid\totem-pig-eyes.json" />
+    <None Include="bin\Totems\assets\totems\recipes\grid\totem-pig-new.json" />
+    <None Include="bin\Totems\assets\totems\recipes\grid\totem-pig-tusk.json" />
+    <None Include="bin\Totems\assets\totems\shapes\block\wood\bowl.json" />
+    <None Include="bin\Totems\assets\totems\shapes\block\wood\totem\pig\bowl.json" />
+    <None Include="bin\Totems\assets\totems\shapes\block\wood\totem\pig\crucible.json" />
+    <None Include="bin\Totems\assets\totems\shapes\block\wood\totem\pig\eyes.json" />
+    <None Include="bin\Totems\assets\totems\shapes\block\wood\totem\pig\new.json" />
+    <None Include="bin\Totems\assets\totems\shapes\block\wood\totem\pig\tusk.json" />
+    <None Include="bin\Totems\modinfo.json" />
+    <None Include="README.md" />
+    <None Include="UNLICENSE" />
+    <None Include="WIPAssets\Novocain\shapes\road-cobble-circle.json" />
+    <None Include="WIPAssets\Novocain\shapes\road-cobble-shuffled.json" />
+    <None Include="WIPAssets\Novocain\shapes\road-cobble-square.json" />
+    <None Include="WIPAssets\Novocain\shapes\road-steppingstone-shuffled.json" />
+    <None Include="WIPAssets\Novocain\shapes\road-steppingstone-square.json" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitattributes" />
+    <Content Include=".gitignore" />
     <Content Include="bin\TheNeolithicMod\assets\game\textures\block\bone.png" />
     <Content Include="bin\TheNeolithicMod\assets\game\textures\block\clay\blueclay.png" />
     <Content Include="bin\TheNeolithicMod\assets\game\textures\block\clay\ceramic-dark.png" />
@@ -1760,8 +1793,20 @@
     <Content Include="bin\TheNeolithicMod\assets\neolithicmod\textures\unknown.png" />
     <Content Include="bin\TheNeolithicMod\Neolithic.dll" />
     <Content Include="bin\TheNeolithicMod\Neolithic.pdb" />
+    <Content Include="bin\Totems\assets\totems\textures\block\pig-eyes.png" />
+    <Content Include="bin\Totems\assets\totems\textures\item\offering-bowl\bread.png" />
+    <Content Include="bin\Totems\assets\totems\textures\item\offering-bowl\empty.png" />
+    <Content Include="bin\Totems\assets\totems\textures\item\offering-bowl\fruit.png" />
+    <Content Include="bin\Totems\assets\totems\textures\item\offering-bowl\meat.png" />
+    <Content Include="bin\Totems\assets\totems\textures\item\offering-bowl\vegetable.png" />
+    <Content Include="CHANGELOG.txt" />
     <Content Include="WIPAssets\Balduranne\shapes\shapes.txt" />
     <Content Include="WIPAssets\Balduranne\textures\textures.txt" />
+    <Content Include="WIPAssets\Novocain\textures\circlereference.png" />
+    <Content Include="WIPAssets\Novocain\textures\circlereferenceframe.png" />
+    <Content Include="WIPAssets\Novocain\textures\circlereferencemoss.png" />
+    <Content Include="WIPAssets\Novocain\textures\moss-roman.png" />
+    <Content Include="WIPAssets\Novocain\textures\moss.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
