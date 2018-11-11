@@ -1,0 +1,2 @@
+﻿Added the Totems mod to the bin folder. 
+The idea is to keep all the mods withing the same work enmviroment.
