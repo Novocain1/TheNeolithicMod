@@ -11,6 +11,7 @@ namespace TheNeolithicMod
 
             //Block Behavior
             api.RegisterBlockBehaviorClass("ClayPressBehavior", typeof(ClayPressBehavior));
+            api.RegisterBlockBehaviorClass("BlockCreateBehavior", typeof(BlockCreateBehavior));
 
             //Block
             api.RegisterBlockClass("BlockPlaceOnDrop", typeof(BlockPlaceOnDrop));
