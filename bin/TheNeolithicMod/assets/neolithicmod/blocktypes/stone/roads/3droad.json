@@ -1,29 +1,19 @@
 ﻿{
 	code: "3droad",
-	behaviors: [
-		{
-			name: "HorizontalOrientable",
-			properties: { dropBlockFace: "east" }
-		}
-	],
 	variantgroups: [
 		{ loadFromProperties: "block/rock" },
 		{
 			code: "pattern",
 			states: [ "square", ]
-		},
-		{
-			code: "side",
-			loadFromProperties: "abstract/horizontalorientation"
 		}
 	],
 	drawtype: "json",
 	creativeinventory: {
-		"general": [ "*-east" ],
-		"neolithicdeco": [ "*-east" ]
+		"general": [ "*" ],
+		"neolithicdeco": [ "*" ]
 	},
 	shapeByType: {
-		"*-square-east": { base: "block/road/road-cobble-square" },
+		"*-square": { base: "block/road/road-cobble-square" },
 	},
 	blockmaterial: "Stone",
 	replaceable: 900,
