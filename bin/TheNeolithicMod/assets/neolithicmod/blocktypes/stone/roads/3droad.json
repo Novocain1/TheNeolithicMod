@@ -11,7 +11,7 @@
     },
     {
       code: "pattern",
-      states: [ "square", "tightsquare", ],
+      states: [ "square", "tightsquare", "brick", "tightbrick" ],
     },
   ],
   drawtype: "json",
@@ -22,6 +22,8 @@
   shapeByType: {
     "*-square": { base: "block/road/road-cobble-square" },
     "*-tightsquare": { base: "block/road/road-cobble-tightsquare" },
+    "*-brick": { base: "block/road/road-cobble-brick" },
+    "*-tightbrick": { base: "block/road/road-cobble-tightbrick" },
   },
   blockmaterial: "Stone",
   replaceable: 900,
