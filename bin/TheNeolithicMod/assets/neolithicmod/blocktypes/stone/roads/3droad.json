@@ -1,11 +1,18 @@
 ﻿{
   code: "3droad",
   variantgroups: [
-    { loadFromProperties: "block/rock" },
+    {
+      code: "roughness",
+      states: [ "polished", "rough", ],
+    },
+    { 
+      code: "rock",
+      loadFromProperties: "block/rock" 
+    },
     {
       code: "pattern",
-      states: [ "square", ]
-    }
+      states: [ "square", "tightsquare", ],
+    },
   ],
   drawtype: "json",
   creativeinventory: {
@@ -14,6 +21,7 @@
   },
   shapeByType: {
     "*-square": { base: "block/road/road-cobble-square" },
+    "*-tightsquare": { base: "block/road/road-cobble-tightsquare" },
   },
   blockmaterial: "Stone",
   replaceable: 900,
@@ -25,7 +33,10 @@
     break: "game:block/rock-break-pickaxe",
   },
   textures: {
-    top: { base: "game:block/stone/roads/roman/{pattern}-{rock}" },
+    top: { 
+      base: "game:block/stone/gravel/{rock}", 
+      overlays: [ "game:block/stone/roads/3d/{roughness}/{pattern}-{rock}" ], 
+    },
     sides: { base: "game:block/stone/gravel/{rock}" },
   },
   resistance: 3,
