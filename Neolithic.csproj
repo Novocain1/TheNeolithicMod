@@ -417,6 +417,7 @@
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\plant\gate.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\plant\haybale.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\plant\wicker.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\stone\roads\3dcobble.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\stone\roads\roman.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\stone\roads\softroad.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\lamppost\attachmenta.json" />
@@ -1212,7 +1213,7 @@
     <Content Include="bin\TheNeolithicMod\assets\game\textures\item\tool\material\woodenclub.png" />
     <Content Include="bin\TheNeolithicMod\assets\game\textures\item\tool\shafts\bamboo-arrow-shaft.png" />
     <Content Include="bin\TheNeolithicMod\assets\game\textures\item\tool\shafts\bamboo-javelin-shaft.png" />
-    <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\stone\roads\3droad.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\stone\roads\3dpavers.json" />
     <Content Include="bin\TheNeolithicMod\assets\neolithicmod\textures\block\bag\burdenbasket.png" />
     <Content Include="bin\TheNeolithicMod\assets\neolithicmod\textures\block\chest\acacia\Corners.png" />
     <Content Include="bin\TheNeolithicMod\assets\neolithicmod\textures\block\chest\acacia\Floor.png" />
