@@ -21,7 +21,7 @@
   },
   shapeByType: {
     "*-square": { base: "block/road/road-paver-square" },
-    "*-tightsquare": { base: "block/road/road-pave-tightsquare" },
+    "*-tightsquare": { base: "block/road/road-paver-tightsquare" },
     "*-brick": { base: "block/road/road-paver-brick" },
     "*-tightbrick": { base: "block/road/road-paver-tightbrick" },
   },
