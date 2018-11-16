@@ -33,7 +33,7 @@
   },
   textures: {
     top: { 
-      base: "game:block/stone/gravel/{rock}", 
+      base: "game:block/soil/fertmedium", 
       overlays: [ "game:block/stone/roads/3d/cobble/{roughness}/{pattern}-{rock}" ], 
     },
     sides: { base: "game:block/stone/gravel/{rock}" },
