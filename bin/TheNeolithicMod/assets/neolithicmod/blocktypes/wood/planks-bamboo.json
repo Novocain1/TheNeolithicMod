@@ -6,17 +6,6 @@
 	creativeinventory: { "general": ["*"], "construction": ["*"], "neolithicblocks": ["*"] },
 	shape: { base: "game:block/basic/cube" },
 	blockmaterial: "Wood",
-  behaviors: [
-    {
-      name: "BlockSwapBehavior",
-      properties: {
-        "matcount": 0,
-        "swapBlocks": [
-          [ "game:clay-*", "game:woodenfence-aged-ew" ],
-        ],
-      },
-    },
-  ],
 	drawtype: "cube",
 	textures: {
 		horizontals: { base: "block/wood/planks/{type}-side" },
