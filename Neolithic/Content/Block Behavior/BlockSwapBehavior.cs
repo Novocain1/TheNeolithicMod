@@ -2,16 +2,17 @@
 
 using Vintagestory.API;
 using Vintagestory.API.Common;
+using Vintagestory.API.MathTools;
 
 namespace TheNeolithicMod
 {
-    class BlockCreateBehavior : BlockBehavior
+    class BlockSwapBehavior : BlockBehavior
     {
 
         private int matcount = 1;
-        private AssetLocation[][] createBlocks;
+        private AssetLocation[][] swapBlocks;
 
-        public BlockCreateBehavior(Block block) : base(block)
+        public BlockSwapBehavior(Block block) : base(block)
         {
 
         }
@@ -19,17 +20,18 @@ namespace TheNeolithicMod
         public override void Initialize(JsonObject properties)
         {
             matcount = properties["matcount"].AsInt(matcount);
-            createBlocks = properties["createBlocks"].AsObject<AssetLocation[][]>();
+            swapBlocks = properties["swapBlocks"].AsObject<AssetLocation[][]>();
         }
 
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
         {
             handling = EnumHandling.PreventDefault;
             AssetLocation makes = new AssetLocation("");
+            BlockPos pos = blockSel.Position;
             var active = byPlayer.InventoryManager.ActiveHotbarSlot;
             bool ok = false;
 
-            foreach (var val in createBlocks)
+            foreach (var val in swapBlocks)
             {
                 if (active.Itemstack.Collectible.WildCardMatch(val[0]))
                 {
@@ -41,13 +43,14 @@ namespace TheNeolithicMod
 
             if (ok && active.StackSize >= matcount)
             {
-                world.SpawnItemEntity(new ItemStack(world.GetBlock(makes)), blockSel.Position.ToVec3d().Add(0.5, 0.5, 0.5), null);
-
                 active.Itemstack.StackSize -= matcount;
                 if (active.Itemstack.StackSize <= 0)
                 {
                     active.Itemstack = null;
                 }
+                world.PlaySoundAt(block.Sounds.Place, pos.X, pos.Y, pos.Z);
+                world.BlockAccessor.SetBlock(world.GetBlock(makes).BlockId, pos);
+
                 active.MarkDirty();
                 return true;
             }

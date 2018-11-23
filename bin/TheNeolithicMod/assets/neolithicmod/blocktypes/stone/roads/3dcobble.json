@@ -7,7 +7,7 @@
     },
     { 
       code: "rock",
-      loadFromProperties: "block/rock" 
+      states: [ "andesite", "basalt", "chalk", "claystone", "granite", "obsidian", "sandstone", "shale", ],
     },
     {
       code: "pattern",
@@ -33,7 +33,7 @@
   },
   textures: {
     top: { 
-      base: "game:block/soil/fertmedium", 
+      base: "game:block/stone/base/moss", 
       overlays: [ "game:block/stone/roads/3d/cobble/{roughness}/{pattern}-{rock}" ], 
     },
     sides: { base: "game:block/stone/gravel/{rock}" },

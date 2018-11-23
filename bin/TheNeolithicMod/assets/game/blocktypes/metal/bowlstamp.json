@@ -13,7 +13,10 @@
       properties: {
         "matcount": 1,
         "createBlocks": [
-          [ "game:clay-blue", "game:bowl-raw" ],
+          [ "game:clay-*", "game:bowl-raw" ],
+          [ "game:metalsheet-tinbronze*", "bowlstamp-tinbronze" ],
+          [ "game:metalsheet-bismuthbronze*", "bowlstamp-bismuthbronze" ],
+          [ "game:metalsheet-blackbronze*", "bowlstamp-blackbronze" ],
         ],
       },
     },

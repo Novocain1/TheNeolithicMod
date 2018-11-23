@@ -133,6 +133,7 @@
     <Compile Include="CarryCapacity\Handler\DeathHandler.cs" />
     <Compile Include="CarryCapacity\Network\PickUpMessage.cs" />
     <Compile Include="CarryCapacity\Network\PlaceDownMessage.cs" />
+    <Compile Include="Neolithic\Content\Block Behavior\BlockSwapBehavior.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\BlockCreateBehavior.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\FixedBESapling.cs" />
     <Compile Include="Neolithic\Content\Block\BlockMortarAndPestle.cs" />
