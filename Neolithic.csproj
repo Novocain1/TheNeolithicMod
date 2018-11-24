@@ -144,7 +144,6 @@
     <Compile Include="Neolithic\Content\BlockEntity\POIEntity.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\NeolithicTransient.cs" />
     <Compile Include="Neolithic\Content\Block\BlockGiantReeds.cs" />
-    <Compile Include="Neolithic\Content\Block Behavior\ClayPressBehavior.cs" />
     <Compile Include="Neolithic\Content\Item\ItemAdze.cs" />
     <Compile Include="Neolithic\Content\Item\ItemGiantReedsRoot.cs" />
     <Compile Include="Neolithic\Content\Item\ItemSickle.cs" />
