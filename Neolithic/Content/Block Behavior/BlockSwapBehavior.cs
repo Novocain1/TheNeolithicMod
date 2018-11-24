@@ -19,10 +19,11 @@ namespace TheNeolithicMod
 
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
         {
+            var active = byPlayer.InventoryManager.ActiveHotbarSlot;
+            if (active.Itemstack == null) return false;
             handling = EnumHandling.PreventDefault;
             AssetLocation makes = new AssetLocation("");
             BlockPos pos = blockSel.Position;
-            var active = byPlayer.InventoryManager.ActiveHotbarSlot;
             bool ok = false;
 
             foreach (var val in swapBlocks)
