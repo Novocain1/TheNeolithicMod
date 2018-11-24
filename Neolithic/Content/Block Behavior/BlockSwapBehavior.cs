@@ -30,6 +30,7 @@ namespace TheNeolithicMod
             {
                 if (active.Itemstack.Collectible.WildCardMatch(new AssetLocation(val[0].ToString())))
                 {
+                 
                     makes = new AssetLocation(val[1].ToString());
                     count = Convert.ToInt32(val[2]);
                     ok = true;
@@ -39,12 +40,17 @@ namespace TheNeolithicMod
 
             if (ok && active.StackSize >= count)
             {
+                world.PlaySoundAt(block.Sounds.Place, pos.X, pos.Y, pos.Z);
                 active.Itemstack.StackSize -= count;
+
+                if (world.Side == EnumAppSide.Client)
+                {
+                    world.PlaySoundAt(block.Sounds.Place, pos.X, pos.Y, pos.Z);
+                }
                 if (active.Itemstack.StackSize <= 0)
                 {
                     active.Itemstack = null;
                 }
-                world.PlaySoundAt(block.Sounds.Place, pos.X, pos.Y, pos.Z);
                 world.BlockAccessor.SetBlock(world.GetBlock(makes).BlockId, pos);
 
                 active.MarkDirty();

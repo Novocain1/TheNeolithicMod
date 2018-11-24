@@ -1,6 +1,7 @@
 ﻿using System;
 using Vintagestory.API;
 using Vintagestory.API.Common;
+using Vintagestory.API.MathTools;
 
 namespace TheNeolithicMod
 {
@@ -21,12 +22,14 @@ namespace TheNeolithicMod
             if (active.Itemstack == null) return false;
             handling = EnumHandling.PreventDefault;
             AssetLocation makes = new AssetLocation("");
-            
+            BlockPos pos = blockSel.Position;
+
             bool ok = false;
 
             foreach (var val in createBlocks)
             {
                 if (active.Itemstack.Collectible.WildCardMatch(new AssetLocation(val[0].ToString()))) {
+                    
                     makes = new AssetLocation(val[1].ToString());
                     count = Convert.ToInt32(val[2]);
                     ok = true;
@@ -37,12 +40,17 @@ namespace TheNeolithicMod
             if (ok && active.StackSize >= count)
             {
                 world.SpawnItemEntity(new ItemStack(world.GetBlock(makes)), blockSel.Position.ToVec3d().Add(0.5, 0.5, 0.5), null);
-
+                if (world.Side == EnumAppSide.Client)
+                {
+                    world.PlaySoundAt(block.Sounds.Place, pos.X, pos.Y, pos.Z);
+                }
                 active.Itemstack.StackSize -= count;
+
                 if (active.Itemstack.StackSize <= 0)
                 {
                     active.Itemstack = null;
                 }
+
                 active.MarkDirty();
                 return true;
             }

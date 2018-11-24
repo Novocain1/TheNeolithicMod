@@ -8,6 +8,7 @@
   ],
   blockmaterial: "Metal",
   behaviors: [
+    { name: "UnstableFalling" },
     {
       name: "BlockCreateBehavior",
       properties: {
@@ -41,6 +42,8 @@
   },
   sounds: {
     walk: "walk/stone",
+    place: "block/anvil1",
+    break: "block/anvil2",
   },
   collisionbox: {
     x1: 0.3125,
