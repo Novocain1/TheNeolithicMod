@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Vintagestory.API;
 using Vintagestory.API.Common;
@@ -9,8 +10,8 @@ namespace TheNeolithicMod
     class BlockSwapBehavior : BlockBehavior
     {
 
-        private int matcount = 1;
-        private AssetLocation[][] swapBlocks;
+        private int count = 1;
+        private object[][] swapBlocks;
 
         public BlockSwapBehavior(Block block) : base(block)
         {
@@ -19,8 +20,8 @@ namespace TheNeolithicMod
 
         public override void Initialize(JsonObject properties)
         {
-            matcount = properties["matcount"].AsInt(matcount);
-            swapBlocks = properties["swapBlocks"].AsObject<AssetLocation[][]>();
+            count = properties["matcount"].AsInt(count);
+            swapBlocks = properties["swapBlocks"].AsObject<object[][]>();
         }
 
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
@@ -33,17 +34,18 @@ namespace TheNeolithicMod
 
             foreach (var val in swapBlocks)
             {
-                if (active.Itemstack.Collectible.WildCardMatch(val[0]))
+                if (active.Itemstack.Collectible.WildCardMatch(new AssetLocation(val[0].ToString())))
                 {
-                    makes = val[1];
+                    makes = new AssetLocation(val[1].ToString());
+                    count = Convert.ToInt32(val[2]);
                     ok = true;
                     break;
                 }
             }
 
-            if (ok && active.StackSize >= matcount)
+            if (ok && active.StackSize >= count)
             {
-                active.Itemstack.StackSize -= matcount;
+                active.Itemstack.StackSize -= count;
                 if (active.Itemstack.StackSize <= 0)
                 {
                     active.Itemstack = null;

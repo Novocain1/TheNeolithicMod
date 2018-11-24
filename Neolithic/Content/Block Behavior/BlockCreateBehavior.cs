@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Vintagestory.API;
 using Vintagestory.API.Common;
@@ -8,8 +9,8 @@ namespace TheNeolithicMod
     class BlockCreateBehavior : BlockBehavior
     {
 
-        private int matcount = 1;
-        private AssetLocation[][] createBlocks;
+        private int count = 1;
+        private object[][] createBlocks;
 
         public BlockCreateBehavior(Block block) : base(block)
         {
@@ -18,8 +19,7 @@ namespace TheNeolithicMod
 
         public override void Initialize(JsonObject properties)
         {
-            matcount = properties["matcount"].AsInt(matcount);
-            createBlocks = properties["createBlocks"].AsObject<AssetLocation[][]>();
+            createBlocks = properties["createBlocks"].AsObject<object[][]>();
         }
 
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
@@ -31,19 +31,19 @@ namespace TheNeolithicMod
 
             foreach (var val in createBlocks)
             {
-                if (active.Itemstack.Collectible.WildCardMatch(val[0]))
-                {
-                    makes = val[1];
+                if (active.Itemstack.Collectible.WildCardMatch(new AssetLocation(val[0].ToString()))) {
+                    makes = new AssetLocation(val[1].ToString());
+                    count = Convert.ToInt32(val[2]);
                     ok = true;
                     break;
                 }
             }
 
-            if (ok && active.StackSize >= matcount)
+            if (ok && active.StackSize >= count)
             {
                 world.SpawnItemEntity(new ItemStack(world.GetBlock(makes)), blockSel.Position.ToVec3d().Add(0.5, 0.5, 0.5), null);
 
-                active.Itemstack.StackSize -= matcount;
+                active.Itemstack.StackSize -= count;
                 if (active.Itemstack.StackSize <= 0)
                 {
                     active.Itemstack = null;

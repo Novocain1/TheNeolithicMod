@@ -11,12 +11,11 @@
     {
       name: "BlockCreateBehavior",
       properties: {
-        "matcount": 1,
         "createBlocks": [
-          [ "game:clay-*", "game:bowl-raw" ],
-          [ "game:metalsheet-tinbronze*", "bowlstamp-tinbronze" ],
-          [ "game:metalsheet-bismuthbronze*", "bowlstamp-bismuthbronze" ],
-          [ "game:metalsheet-blackbronze*", "bowlstamp-blackbronze" ],
+          [ "game:clay-*", "game:bowl-raw", 4 ],
+          [ "game:metalsheet-tinbronze*", "bowlstamp-tinbronze", 1 ],
+          [ "game:metalsheet-bismuthbronze*", "bowlstamp-bismuthbronze", 1 ],
+          [ "game:metalsheet-blackbronze*", "bowlstamp-blackbronze", 1 ],
         ],
       },
     },
