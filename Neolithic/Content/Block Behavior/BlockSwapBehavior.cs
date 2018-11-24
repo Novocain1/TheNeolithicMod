@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
 using Vintagestory.API;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
@@ -9,14 +7,9 @@ namespace TheNeolithicMod
 {
     class BlockSwapBehavior : BlockBehavior
     {
-
         private int count = 1;
         private object[][] swapBlocks;
-
-        public BlockSwapBehavior(Block block) : base(block)
-        {
-
-        }
+        public BlockSwapBehavior(Block block) : base(block){}
 
         public override void Initialize(JsonObject properties)
         {

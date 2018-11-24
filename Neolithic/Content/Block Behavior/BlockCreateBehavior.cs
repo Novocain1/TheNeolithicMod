@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-
 using Vintagestory.API;
 using Vintagestory.API.Common;
 
@@ -8,14 +6,9 @@ namespace TheNeolithicMod
 {
     class BlockCreateBehavior : BlockBehavior
     {
-
         private int count = 1;
         private object[][] createBlocks;
-
-        public BlockCreateBehavior(Block block) : base(block)
-        {
-
-        }
+        public BlockCreateBehavior(Block block) : base(block){}
 
         public override void Initialize(JsonObject properties)
         {
