@@ -1,14 +1,7 @@
-
-using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-
-using Vintagestory.API;
 using Vintagestory.API.Common;
-using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 
-namespace BbB
+namespace TheNeolithicMod
 {
 
     class LampPostBehavior : BlockBehavior {

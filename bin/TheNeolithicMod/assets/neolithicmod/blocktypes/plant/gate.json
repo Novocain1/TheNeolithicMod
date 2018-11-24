@@ -1,6 +1,6 @@
 {
 	code: "gate-gap",
-	behaviors: [{name: "rotateninety"}],
+	behaviors: [{name: "RotateNinety"}],
     variantgroups: [
 		{ code: "type", states: ["n", "w"] }
     ],

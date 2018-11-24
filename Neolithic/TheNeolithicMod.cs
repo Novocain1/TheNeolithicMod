@@ -12,6 +12,9 @@ namespace TheNeolithicMod
             //Block Behavior
             api.RegisterBlockBehaviorClass("BlockCreateBehavior", typeof(BlockCreateBehavior));
             api.RegisterBlockBehaviorClass("BlockSwapBehavior", typeof(BlockSwapBehavior));
+            api.RegisterBlockBehaviorClass("LampConnectorBehavior", typeof(LampConnectorBehavior));
+            api.RegisterBlockBehaviorClass("LampPostBehavior", typeof(LampPostBehavior));
+            api.RegisterBlockBehaviorClass("RotateNinety", typeof(RotateNinety));
 
             //Block
             api.RegisterBlockClass("BlockPlaceOnDrop", typeof(BlockPlaceOnDrop));
