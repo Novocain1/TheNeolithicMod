@@ -20,6 +20,14 @@
         ],
       },
     },
+    {
+      name: "BlockSwapBehavior",
+      properties: {
+        "swapBlocks": [
+          [ "game:chisel-*", "bowlstamp-bismuthbronze", 0, "game:bowlstamp-tinbronze" ],
+        ],
+      },
+    },
   ],
   replaceable: 300,
   resistance: 0.75,
