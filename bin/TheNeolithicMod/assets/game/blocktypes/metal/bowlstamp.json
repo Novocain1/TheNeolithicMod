@@ -14,9 +14,9 @@
       properties: {
         "createBlocks": [
           [ "game:clay-*", "game:bowl-raw", 4 ],
-          [ "game:metalsheet-tinbronze*", "bowlstamp-tinbronze", 1 ],
-          [ "game:metalsheet-bismuthbronze*", "bowlstamp-bismuthbronze", 1 ],
-          [ "game:metalsheet-blackbronze*", "bowlstamp-blackbronze", 1 ],
+          [ "game:metalsheet-tinbronze*", "game:bowlstamp-tinbronze", 1 ],
+          [ "game:metalsheet-bismuthbronze*", "game:bowlstamp-bismuthbronze", 1 ],
+          [ "game:metalsheet-blackbronze*", "game:bowlstamp-blackbronze", 1 ],
         ],
       },
     },
@@ -24,7 +24,7 @@
       name: "BlockSwapBehavior",
       properties: {
         "swapBlocks": [
-          [ "game:chisel-*", "bowlstamp-bismuthbronze", 0, "game:bowlstamp-tinbronze" ],
+          [ "game:chisel-*", "bowlstamp-bismuthbronze", "game:bowlstamp-tinbronze", 0],
         ],
       },
     },
