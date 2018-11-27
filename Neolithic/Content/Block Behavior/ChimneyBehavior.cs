@@ -42,13 +42,19 @@ namespace TheNeolithicMod
             Block check;
             foreach (var val in lookFor)
             {
-                for (int y = 0; y < pos.Y; y++)
+                for (int y = 1; y < pos.Y; y++)
                 {
-                    check = world.BlockAccessor.GetBlock(pos + new BlockPos(0, -y, 0));
-                    if (new ItemStack(check).Collectible.WildCardMatch(val[0]))
+                    for (int x = -1; x <= 1; x++)
                     {
-                        exists = true;
-                        break;
+                        for (int z = -1; z <= 1; z++)
+                        {
+                            check = world.BlockAccessor.GetBlock(pos + new BlockPos(x, -y, z));
+                            if (new ItemStack(check).Collectible.WildCardMatch(val[0]))
+                            {
+                                exists = true;
+                                break;
+                            }
+                        }
                     }
                 }
                 check = world.BlockAccessor.GetBlock(pos);

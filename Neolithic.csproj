@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Neolithic\Content\Block Behavior\ChimneyBehavior.cs" />
+    <Compile Include="Neolithic\Content\BlockEntity\BlockEntityChimney.cs" />
     <Compile Include="TasksLib\BehaviorsLib.cs" />
     <Compile Include="TasksLib\Tasks\AiTaskInjured.cs" />
     <Compile Include="TasksLib\Tasks\AiTaskSleep.cs" />

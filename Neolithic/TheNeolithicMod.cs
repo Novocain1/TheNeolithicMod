@@ -36,6 +36,7 @@ namespace TheNeolithicMod
             api.RegisterBlockEntityClass("BEScary", typeof(BEScary));
             api.RegisterBlockEntityClass("FixedBESapling", typeof(FixedBESapling));
             api.RegisterBlockEntityClass("BEMortarAndPestle", typeof(BEMortarAndPestle));
+            api.RegisterBlockEntityClass("BlockEntityChimney", typeof(BlockEntityChimney));
         }
     }
 }
