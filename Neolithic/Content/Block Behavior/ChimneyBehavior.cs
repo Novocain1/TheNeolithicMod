@@ -22,7 +22,7 @@ namespace TheNeolithicMod
         {
             pos = blockSel.Position;
             world = aworld; //idunno, becomes null and breaks if I don't do this
-            listenerId = world.RegisterGameTickListener(ticker, 1000);
+            listenerId = world.RegisterGameTickListener(ticker, 5000);
             return true;
         }
 
@@ -38,43 +38,30 @@ namespace TheNeolithicMod
 
         public void checkBelow(BlockPos pos, IWorldAccessor world)
         {
+            bool exists = false;
+            Block check;
             foreach (var val in lookFor)
             {
-                BlockPos unlitpos = new BlockPos(0,0,0);
-                BlockPos litpos = new BlockPos(0,0,0);
-                AssetLocation jc = world.BlockAccessor.GetBlock(pos).Code;
-                for (int y = 0; y < 16; y++)
+                for (int y = 0; y < pos.Y; y++)
                 {
-                    AssetLocation fc = world.BlockAccessor.GetBlock(pos + new BlockPos(0, -y, 0)).Code;
-                    if (new ItemStack(world.GetBlock(jc)).Collectible.WildCardMatch(val[3]))
+                    check = world.BlockAccessor.GetBlock(pos + new BlockPos(0, -y, 0));
+                    if (new ItemStack(check).Collectible.WildCardMatch(val[0]))
                     {
-                        if (new ItemStack(world.GetBlock(fc)).Collectible.WildCardMatch(val[0]))
-                        {
-                            world.BlockAccessor.SetBlock(world.GetBlock(val[1]).BlockId, pos);
-                            unlitpos = pos + new BlockPos(0, -y, 0);
-                            break;
-                        }
-
-                    }
-                    if (new ItemStack(world.GetBlock(jc)).Collectible.WildCardMatch(val[1]))
-                    {
-                        if (new ItemStack(world.GetBlock(fc)).Collectible.WildCardMatch(val[2]))
-                        {
-                            world.BlockAccessor.SetBlock(world.GetBlock(val[3]).BlockId, pos);
-                            litpos = pos + new BlockPos(0, -y, 0);
-                            break;
-                        }
-                    }
-                    /*
-                    if (!new ItemStack(world.BlockAccessor.GetBlock(unlitpos)).Collectible.WildCardMatch(val[0]) || !new ItemStack(world.BlockAccessor.GetBlock(litpos)).Collectible.WildCardMatch(val[2]))
-                    {
-                        world.BlockAccessor.SetBlock(world.GetBlock(val[1]).BlockId, pos);
+                        exists = true;
                         break;
                     }
-                    */
                 }
-                //world.UnregisterGameTickListener(listenerId);
-
+                check = world.BlockAccessor.GetBlock(pos);
+                if (exists && new ItemStack(check).Collectible.WildCardMatch(val[1]))
+                {
+                    world.BlockAccessor.SetBlock(world.GetBlock(val[2]).BlockId, pos);
+                    break;
+                }
+                if (!exists && new ItemStack(check).Collectible.WildCardMatch(val[2]))
+                {
+                    world.BlockAccessor.SetBlock(world.GetBlock(val[1]).BlockId, pos);
+                    break;
+                }
             }
             return;
         }

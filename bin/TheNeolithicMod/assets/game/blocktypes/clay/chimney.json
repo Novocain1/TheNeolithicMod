@@ -8,10 +8,14 @@
       name: "ChimneyBehavior",
       properties: {
         "lookFor": [
-          [ "game:firepit-extinct", "game:claybrickchimney-blue-unlit-ns", "game:firepit-lit", "game:claybrickchimney-blue-lit-ns" ],
-          [ "game:firepit-extinct", "game:claybrickchimney-brown-unlit-ns", "game:firepit-lit", "game:claybrickchimney-brown-lit-ns" ],
-          [ "game:firepit-extinct", "game:claybrickchimney-fire-unlit-ns", "game:firepit-lit", "game:claybrickchimney-fire-lit-ns" ],
-          [ "game:firepit-extinct", "game:claybrickchimney-red-unlit-ns", "game:firepit-lit", "game:claybrickchimney-red-lit-ns" ],
+          [ "game:firepit-lit", "game:claybrickchimney-blue-unlit-we", "game:claybrickchimney-blue-lit-we" ],
+          [ "game:firepit-lit", "game:claybrickchimney-brown-unlit-we", "game:claybrickchimney-brown-lit-we" ],
+          [ "game:firepit-lit", "game:claybrickchimney-fire-unlit-we", "game:claybrickchimney-fire-lit-we" ],
+          [ "game:firepit-lit", "game:claybrickchimney-red-unlit-we", "game:claybrickchimney-red-lit-we" ],
+          [ "game:firepit-lit", "game:claybrickchimney-blue-unlit-ns", "game:claybrickchimney-blue-lit-ns" ],
+          [ "game:firepit-lit", "game:claybrickchimney-brown-unlit-ns", "game:claybrickchimney-brown-lit-ns" ],
+          [ "game:firepit-lit", "game:claybrickchimney-fire-unlit-ns", "game:claybrickchimney-fire-lit-ns" ],
+          [ "game:firepit-lit", "game:claybrickchimney-red-unlit-ns", "game:claybrickchimney-red-lit-ns" ],
         ],
       },
     }
