@@ -41,8 +41,15 @@ namespace TheNeolithicMod
                 }
                 if (t && active.Itemstack.StackSize >= count && new ItemStack(world.BlockAccessor.GetBlock(pos)).Collectible.WildCardMatch(takes))
                 {
-                    active.Itemstack.StackSize -= count;
                     if (world.Side == EnumAppSide.Client) world.PlaySoundAt(block.Sounds.Place, pos.X, pos.Y, pos.Z);
+                    if (count < 0 && active.Itemstack.StackSize >= 64)
+                    {
+                        world.SpawnItemEntity(new ItemStack(world.GetBlock(active.Itemstack.Collectible.Code)), pos.ToVec3d().Add(0.5, 0.5, 0.5), new Vec3d(0.0, 0.05, 0.0));
+                    }
+                    else
+                    {
+                        active.Itemstack.StackSize -= count;
+                    }
                     if (active.Itemstack.StackSize <= 0) active.Itemstack = null;
                     world.BlockAccessor.SetBlock(world.GetBlock(makes).BlockId, pos);
 
