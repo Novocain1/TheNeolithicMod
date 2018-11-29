@@ -48,7 +48,7 @@ namespace TheNeolithicMod
                     return true;
                 }
             }
-            return false;
+            return true;
         }
     }
 }
