@@ -3,7 +3,7 @@
   variantgroups: [
     {
       code: "metal",
-      states: [ "tinbronze", "bismuthbronze", "blackbronze" ]
+      states: [ "tinbronze", "bismuthbronze", "blackbronze", "copper" ]
     }
   ],
   blockmaterial: "Metal",
@@ -17,6 +17,7 @@
           [ "game:metalsheet-tinbronze*", "game:bowlstamp-tinbronze", 1 ],
           [ "game:metalsheet-bismuthbronze*", "game:bowlstamp-bismuthbronze", 1 ],
           [ "game:metalsheet-blackbronze*", "game:bowlstamp-blackbronze", 1 ],
+          [ "game:metalsheet-copper*", "game:bowlstamp-copper", 1 ],
         ],
       },
     },
