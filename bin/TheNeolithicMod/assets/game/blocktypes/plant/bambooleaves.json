@@ -12,6 +12,7 @@
 	renderpass: "OpaqueNoCull",
 	faceCullMode: "CollapseMaterial",
 	blockmaterial: "Leaves",
+  drops: [],
 	tintIndex: 1,
 	vertexFlags: {
 		zOffset: 3
