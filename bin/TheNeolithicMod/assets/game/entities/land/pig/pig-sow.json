@@ -15,7 +15,7 @@
 		renderer: "Shape",
 		shape: { base: "entity/land/pig/sow" },
 		texture: { base: "entity/pig/sow/{color}" },
-		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }, { code: "multiply" }],
+		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }, { code: "fixedmultiply" }],
 		animations: [
 			{
 				code: "hurt",
@@ -38,7 +38,7 @@
 			},
 			{ code: "breathe" },
 			{
-				code: "multiply",
+				code: "fixedmultiply",
 				spawnEntityCode: "pig-piglet",
 				spawnQuantityMin: 2,
 				spawnQuantityMax: 6,

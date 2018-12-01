@@ -33,7 +33,7 @@
 			{ code: "health", currenthealth: 12, maxhealth: 12, },
 			{ code: "breathe" },
 			{ 
-				code: "multiply",
+				code: "fixedmultiply",
 				quantityPerDay: 0,
 				spawnEntityCode: "hyena-pup",
 				growthCapQuantity: 10,

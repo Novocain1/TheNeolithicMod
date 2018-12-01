@@ -15,7 +15,7 @@
 		renderer: "Shape",
 		shape: { base: "entity/land/rabbit/female" },
 		texture: { base: "entity/rabbit/{color}" },
-		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }, { code: "multiply" }],
+		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }, { code: "fixedmultiply" }],
 		animations: [
 			{
 				code: "hurt",
@@ -53,7 +53,7 @@
 			{ code: "despawn", minPlayerDistance: 8, belowLightLevel: 8, minSeconds: 300 },
 			{ code: "health", currenthealth: 3, maxhealth: 3 },
 			{ 
-				code: "multiply",
+				code: "fixedmultiply",
 				spawnEntityCodeByType: {
 					"*-black": "rabbit-baby-black",
 					"*-brown": "rabbit-baby-brown",
