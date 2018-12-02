@@ -3,17 +3,21 @@
   variantgroups: [
     {
       code: "metal",
-      states: [ "tinbronze", "bismuthbronze", "blackbronze" ]
+      states: [ "tinbronze", "bismuthbronze", "blackbronze", "copper" ]
     }
   ],
   blockmaterial: "Metal",
   behaviors: [
+    { name: "UnstableFalling" },
     {
       name: "BlockCreateBehavior",
       properties: {
-        "matcount": 1,
         "createBlocks": [
-          [ "game:clay-blue", "game:bowl-raw" ],
+          [ "game:clay-*", "game:bowl-raw", 4 ],
+          [ "game:metalsheet-tinbronze*", "game:bowlstamp-tinbronze", 1 ],
+          [ "game:metalsheet-bismuthbronze*", "game:bowlstamp-bismuthbronze", 1 ],
+          [ "game:metalsheet-blackbronze*", "game:bowlstamp-blackbronze", 1 ],
+          [ "game:metalsheet-copper*", "game:bowlstamp-copper", 1 ],
         ],
       },
     },
@@ -39,6 +43,8 @@
   },
   sounds: {
     walk: "walk/stone",
+    place: "block/anvil1",
+    break: "block/anvil2",
   },
   collisionbox: {
     x1: 0.3125,

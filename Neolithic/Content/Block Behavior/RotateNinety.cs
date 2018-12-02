@@ -10,12 +10,12 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 
-namespace BbB
+namespace TheNeolithicMod
 {
     // Used for the post, should change shape based on side connections.
-    class rotateninety : BlockBehavior
+    class RotateNinety : BlockBehavior
     {
-        public rotateninety(Block block) : base(block)
+        public RotateNinety(Block block) : base(block)
         {
         }
 

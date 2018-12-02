@@ -12,7 +12,7 @@
 	shape: { base: "block/basic/leavesbranchy" },
 	renderpass: "OpaqueNoCull",
 	faceCullMode: "CollapseMaterial",
-	blockmaterial: "Wood",
+	blockmaterial: "Leaves",
 	requiredMiningTier: 1,
 	vertexFlags: {
 		zOffset: 3

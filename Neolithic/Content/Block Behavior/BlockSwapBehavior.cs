@@ -5,18 +5,19 @@ using Vintagestory.API.MathTools;
 
 namespace TheNeolithicMod
 {
-    class BlockCreateBehavior : BlockBehavior
+    class BlockSwapBehavior : BlockBehavior
     {
-        private object[][] createBlocks;
+        private object[][] swapBlocks;
         private AssetLocation makes;
+        private AssetLocation takes;
         private bool t;
         private int count;
 
-        public BlockCreateBehavior(Block block) : base(block) { }
+        public BlockSwapBehavior(Block block) : base(block) { }
 
         public override void Initialize(JsonObject properties)
         {
-            createBlocks = properties["createBlocks"].AsObject<object[][]>();
+            swapBlocks = properties["swapBlocks"].AsObject<object[][]>();
         }
 
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
@@ -27,21 +28,21 @@ namespace TheNeolithicMod
             t = false;
             if (active.Itemstack != null)
             {
-                foreach (var val in createBlocks)
+                foreach (var val in swapBlocks)
                 {
                     if (active.Itemstack.Collectible.WildCardMatch(new AssetLocation(val[0].ToString())))
                     {
                         makes = new AssetLocation(val[1].ToString());
-                        count = Convert.ToInt32(val[2]);
+                        takes = new AssetLocation(val[2].ToString());
+                        count = Convert.ToInt32(val[3]);
                         t = true;
                         break;
                     }
                 }
-                if (t && active.Itemstack.StackSize >= count)
+                if (t && active.Itemstack.StackSize >= count && new ItemStack(world.BlockAccessor.GetBlock(pos)).Collectible.WildCardMatch(takes))
                 {
-                    
                     if (world.Side == EnumAppSide.Client) world.PlaySoundAt(block.Sounds.Place, pos.X, pos.Y, pos.Z);
-                    if (count < 0 && active.Itemstack.StackSize >= 64 )
+                    if (count < 0 && active.Itemstack.StackSize >= 64)
                     {
                         world.SpawnItemEntity(new ItemStack(active.Itemstack.Collectible, -count), pos.ToVec3d().Add(0.5, 0.5, 0.5), new Vec3d(0.0, 0.05, 0.0));
                     }
@@ -50,7 +51,7 @@ namespace TheNeolithicMod
                         active.Itemstack.StackSize -= count;
                     }
                     if (active.Itemstack.StackSize <= 0) active.Itemstack = null;
-                    world.SpawnItemEntity(new ItemStack(world.GetBlock(makes)), pos.ToVec3d().Add(0.5, 0.5, 0.5), new Vec3d(0.0, 0.05, 0.0));
+                    world.BlockAccessor.SetBlock(world.GetBlock(makes).BlockId, pos);
 
                     active.MarkDirty();
                     return true;

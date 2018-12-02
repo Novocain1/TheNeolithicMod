@@ -34,7 +34,7 @@
 			{ code: "health", currenthealth: 10, maxhealth: 10, },
 			{ code: "breathe" },
 			{ 
-				code: "multiply",
+				code: "fixedmultiply",
 				quantityPerDay: 0,
 				spawnEntityCodeByType: {
 					"*-ashgrey": "wolf-pup-ashgrey",

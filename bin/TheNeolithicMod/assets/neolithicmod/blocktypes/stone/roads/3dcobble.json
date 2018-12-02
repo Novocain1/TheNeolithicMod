@@ -1,21 +1,17 @@
 ﻿{
-  code: "3droad",
+  code: "3dcobble",
   variantgroups: [
-    {
-      code: "rock",
-      loadFromProperties: "block/rock",
-    },
     {
       code: "roughness",
       states: [ "polished", "rough", ],
     },
-    {
-      code: "pattern",
-      states: [ "square", "tightsquare", "brick", "tightbrick" ],
+    { 
+      code: "rock",
+      states: [ "andesite", "basalt", "chalk", "claystone", "granite", "obsidian", "sandstone", "shale", ],
     },
     {
-      code: "type",
-      states: [ "paver", ],
+      code: "pattern",
+      states: [ "normal", ],
     },
   ],
   drawtype: "json",
@@ -24,10 +20,7 @@
     "neolithicdeco": [ "*" ]
   },
   shapeByType: {
-    "*-square-paver": { base: "block/road/road-paver-square" },
-    "*-tightsquare-paver": { base: "block/road/road-paver-tightsquare" },
-    "*-brick-paver": { base: "block/road/road-paver-brick" },
-    "*-tightbrick-paver": { base: "block/road/road-paver-tightbrick" },
+    "*-normal": { base: "block/road/road-cobble-normal" },
   },
   blockmaterial: "Stone",
   replaceable: 900,
@@ -39,9 +32,9 @@
     break: "game:block/rock-break-pickaxe",
   },
   textures: {
-    top: {
-      base: "game:block/stone/gravel/{rock}",
-      overlays: [ "block/stone/roads/3d/{type}/{roughness}/{pattern}-{rock}" ],
+    top: { 
+      base: "game:block/stone/base/moss", 
+      overlays: [ "game:block/stone/roads/3d/cobble/{roughness}/{pattern}-{rock}" ], 
     },
     sides: { base: "game:block/stone/gravel/{rock}" },
   },

@@ -13,7 +13,7 @@
 		renderer: "Shape",
 		shape: { base: "entity/land/sheep/ewe" },
 		texture: { base: "entity/sheep/sheep-bighorn-female" },
-		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }, { code: "multiply" }],
+		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }, { code: "fixedmultiply" }],
 		animations: [
 			{
 				code: "hurt",
@@ -42,7 +42,7 @@
 			}, 
 			{ code: "breathe" },
 			{ 
-				code: "multiply",
+				code: "fixedmultiply",
 				spawnEntityCode: "sheep-lamb",
 				requiresNearbyEntityCode: "sheep-ram",
 				requiresNearbyEntityRange: 10,

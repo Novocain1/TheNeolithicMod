@@ -10,8 +10,12 @@ namespace TheNeolithicMod
             base.Start(api);
 
             //Block Behavior
-            api.RegisterBlockBehaviorClass("ClayPressBehavior", typeof(ClayPressBehavior));
             api.RegisterBlockBehaviorClass("BlockCreateBehavior", typeof(BlockCreateBehavior));
+            api.RegisterBlockBehaviorClass("BlockSwapBehavior", typeof(BlockSwapBehavior));
+            api.RegisterBlockBehaviorClass("LampConnectorBehavior", typeof(LampConnectorBehavior));
+            api.RegisterBlockBehaviorClass("LampPostBehavior", typeof(LampPostBehavior));
+            api.RegisterBlockBehaviorClass("RotateNinety", typeof(RotateNinety));
+            api.RegisterBlockBehaviorClass("ChimneyBehavior", typeof(ChimneyBehavior));
 
             //Block
             api.RegisterBlockClass("BlockPlaceOnDrop", typeof(BlockPlaceOnDrop));
@@ -32,6 +36,7 @@ namespace TheNeolithicMod
             api.RegisterBlockEntityClass("BEScary", typeof(BEScary));
             api.RegisterBlockEntityClass("FixedBESapling", typeof(FixedBESapling));
             api.RegisterBlockEntityClass("BEMortarAndPestle", typeof(BEMortarAndPestle));
+            api.RegisterBlockEntityClass("BlockEntityChimney", typeof(BlockEntityChimney));
         }
     }
 }
