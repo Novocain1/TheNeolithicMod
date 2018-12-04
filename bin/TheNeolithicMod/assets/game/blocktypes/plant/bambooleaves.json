@@ -4,7 +4,7 @@
 		{ code: "type", states: ["grown", "placed"] }
 	],
 	behaviorsByType: {
-		"bambooleaves-grown": [{name: "PushEventOnBlockBroken",	properties:	{eventName: "checkLeafDecay"}}]
+		"bambooleaves-grown": [{name: "PushEventOnBlockBroken",	properties: {eventName: "testForDecay"}}]
 	},
 	creativeinventory: { "general": ["bambooleaves-placed"], "flora": ["bambooleaves-placed"] },
 	shape: { base: "block/basic/cube" },
@@ -38,6 +38,7 @@
 	collisionbox: null,
 	sounds: {
 		break: "block/plant",
+		hit: "block/plant",
 		place: "block/plant",
 		walk: "walk/grass"
 	},
@@ -46,4 +47,5 @@
 		burnDuration: 10,
 	},
 	materialDensity: 300,
+	drops: []
 }
