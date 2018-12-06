@@ -15,8 +15,8 @@ namespace TheNeolithicMod
 {
     class CostTest : BlockBehavior
     {
-        List<BlockPos> costPos = new List<BlockPos>();
-        List<int> HCost = new List<int>();
+        HashSet<BlockPos> costPos = new HashSet<BlockPos>();
+        Dictionary<BlockPos, int> pastCost = new Dictionary<BlockPos, int>();
 
         BlockPos targetPos;
         public CostTest(Block block) : base(block) { }
@@ -31,45 +31,54 @@ namespace TheNeolithicMod
             return world.BlockAccessor.GetBlock(pos).BlockId == 0;
         }
 
+        public bool Walkable(IWorldAccessor world, BlockPos pos)
+        {
+            return (world.BlockAccessor.GetBlock(pos + (new BlockPos(0, -1, 0))).BlockId != 0 && world.BlockAccessor.GetBlock(pos + (new BlockPos(0, 1, 0))).BlockId == 0);
+        }
+
         public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ref EnumHandling handled)
         {
-            HCost.Clear();
+            pastCost.Clear();
             costPos.Clear();
             BlockPos pos = blockPos;
             int sD = 16;
-            targetPos = pos + new BlockPos(0, 8, 0);
-            int searchRadius = sD / 2;
+            var grid = new CubeGrid(sD, sD, sD);
+            targetPos = pos + new BlockPos(-2, 0, 3);
+            int sR = sD / 2;
             if (world.Side == EnumAppSide.Client)
             {
-                for (int x = pos.X - searchRadius; x <= pos.X + searchRadius; x++)
+                for (int x = pos.X - sR; x <= pos.X + sR; x++)
                 {
-                    for (int y = pos.Y - searchRadius; y <= pos.Y + searchRadius; y++)
+                    for (int y = pos.Y - sR; y <= pos.Y + sR; y++)
                     {
-                        for (int z = pos.Z - searchRadius; z <= pos.Z + searchRadius; z++)
+                        for (int z = pos.Z - sR; z <= pos.Z + sR; z++)
                         {
                             BlockPos currentPos = new BlockPos(x, y, z);
-                            if (InBounds(world, currentPos) && Passable(world, currentPos)) {
+                            if (InBounds(world, currentPos) && Passable(world, currentPos) && Walkable(world, currentPos)) {
                                 costPos.Add(currentPos);
-                                HCost.Add(currentPos.ManhattenDistance(targetPos));
+                                pastCost.Add(currentPos, currentPos.ManhattenDistance(targetPos));
+                                grid.air.Add(currentPos);
+                            }
+                            else
+                            {
+                                grid.walls.Add(currentPos);
                             }
                         }
                     }
                 }
             }
-            var astar = new AStarSearch(world, costPos, HCost, pos, targetPos);
-            DrawGrid(world, costPos, astar, pos);
-            HCost.Clear();
-            costPos.Clear();
+            var astar = new AStarSearch(world, grid, pastCost, pos, targetPos);
+            DrawGrid(world, costPos, astar, pos, sR);
             return;
         }
 
-        private void DrawGrid(IWorldAccessor world, List<BlockPos> grid, AStarSearch astar, BlockPos pos)
+        private void DrawGrid(IWorldAccessor world, HashSet<BlockPos> grid, AStarSearch astar, BlockPos pos, int sR)
         {
-            for (int x = pos.X - 16; x < pos.X + 16; x++)
+            for (int x = pos.X - sR; x < pos.X + sR; x++)
             {
-                for (int y = pos.Y - 16; y < pos.Y + 16; y++)
+                for (int y = pos.Y - sR; y < pos.Y + sR; y++)
                 {
-                    for (int z = pos.Z - 16; z < pos.Z + 16; z++)
+                    for (int z = pos.Z - sR; z < pos.Z + sR; z++)
                     {
                         ushort ff = 32;
                         BlockPos id = new BlockPos(x, y, z);
@@ -79,7 +88,7 @@ namespace TheNeolithicMod
                             ptr = id;
                             ff = 0;
                         }
-                        world.BlockAccessor.SetBlock(ff, ptr);
+                        if (ff != 0 && world.Side == EnumAppSide.Server) world.BlockAccessor.SetBlock(ff, ptr);
                     }
                 }
             }
@@ -90,15 +99,17 @@ namespace TheNeolithicMod
     {
         public Dictionary<BlockPos, BlockPos> cameFrom = new Dictionary<BlockPos, BlockPos>();
         public Dictionary<BlockPos, int> currentCost = new Dictionary<BlockPos, int>();
+        
 
         static public int Heuristic(BlockPos a, BlockPos b)
         {
             return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y) + Math.Abs(a.Z - b.Z);
         }
 
-        public AStarSearch(IWorldAccessor world, List<BlockPos> grid, List<int> hcost, BlockPos from, BlockPos to)
+        public AStarSearch(IWorldAccessor world, IWeightedGraph<BlockPos> graph, Dictionary<BlockPos, int> pastCost, BlockPos from, BlockPos to)
         {
-
+            cameFrom.Clear();
+            currentCost.Clear();
             var f = new SimplePriorityQueue<BlockPos>();
             f.Enqueue(from, 0);
 
@@ -111,10 +122,10 @@ namespace TheNeolithicMod
                 {
                     break;
                 }
-                int l = 0;
-                foreach (var next in grid)
+                foreach (var next in graph.Neighbors(world, current))
                 {
-                    int newCost = currentCost[current] + hcost[l];
+                    pastCost.TryGetValue(next, out int pC);
+                    int newCost = currentCost[current] + pC;
                     if (!currentCost.ContainsKey(next) || newCost < currentCost[next])
                     {
                         currentCost[next] = newCost;
@@ -122,7 +133,74 @@ namespace TheNeolithicMod
                         f.Enqueue(next, priority);
                         cameFrom[next] = current;
                     }
-                    l += 1;
+                }
+            }
+        }
+    }
+    public interface IWeightedGraph<L>
+    {
+        int Cost(BlockPos a, BlockPos b);
+        IEnumerable<BlockPos> Neighbors(IWorldAccessor world, BlockPos id);
+    }
+
+    public class CubeGrid : IWeightedGraph<BlockPos>
+    {
+        public static readonly BlockPos[] DIRS = new[]
+        {
+            new BlockPos(0, 0, 1),
+            new BlockPos(0, 1, 0),
+            new BlockPos(0, 1, 1),
+            new BlockPos(1, 0, 0),
+            new BlockPos(1, 0, 1),
+            new BlockPos(1, 1, 0),
+            new BlockPos(1, 1, 1),
+            new BlockPos(0, 0, -1),
+            new BlockPos(0, -1, 0),
+            new BlockPos(0, -1, -1),
+            new BlockPos(-1, 0, 0),
+            new BlockPos(-1, 0, -1),
+            new BlockPos(-1, -1, 0),
+            new BlockPos(-1, -1, -1),
+        };
+        public int width, height, length;
+
+        public CubeGrid(int width, int height, int length)
+        {
+            this.width = width;
+            this.height = height;
+            this.length = length;
+        }
+        public HashSet<BlockPos> walls = new HashSet<BlockPos>();
+        public HashSet<BlockPos> air = new HashSet<BlockPos>();
+
+        public bool InBounds(IWorldAccessor world, BlockPos pos)
+        {
+            return pos.Y >= 1 && pos.Y <= world.BlockAccessor.MapSizeY;
+        }
+
+        public bool Passable(IWorldAccessor world, BlockPos pos)
+        {
+            return world.BlockAccessor.GetBlock(pos).BlockId == 0;
+        }
+
+        public bool Walkable(IWorldAccessor world, BlockPos pos)
+        {
+            return (world.BlockAccessor.GetBlock(pos + (new BlockPos(0, -1, 0))).BlockId != 0 && world.BlockAccessor.GetBlock(pos + (new BlockPos(0, 1, 0))).BlockId == 0);
+        }
+
+        public int Cost(BlockPos a, BlockPos b)
+        {
+            return air.Contains(b) ? 5 : 1;
+        }
+
+        public IEnumerable<BlockPos> Neighbors(IWorldAccessor world, BlockPos id)
+        {
+            foreach (var dir in DIRS)
+            {
+                BlockPos next = new BlockPos(id.X + dir.X, id.Y + dir.Y, id.Z + dir.Z);
+                if (InBounds(world, next) && Passable(world, next) && Walkable(world, next))
+                {
+                    yield return next;
                 }
             }
         }
