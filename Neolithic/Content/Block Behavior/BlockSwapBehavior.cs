@@ -39,7 +39,7 @@ namespace TheNeolithicMod
                         break;
                     }
                 }
-                if (t && active.Itemstack.StackSize >= count && new ItemStack(world.BlockAccessor.GetBlock(pos)).Collectible.WildCardMatch(takes))
+                if (t && active.Itemstack.StackSize >= count && world.BlockAccessor.GetBlock(pos).WildCardMatch(takes))
                 {
                     if (world.Side == EnumAppSide.Client) world.PlaySoundAt(block.Sounds.Place, pos.X, pos.Y, pos.Z);
                     if (count < 0 && active.Itemstack.StackSize >= 64)
