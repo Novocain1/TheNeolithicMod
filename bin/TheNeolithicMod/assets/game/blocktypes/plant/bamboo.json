@@ -85,7 +85,7 @@
       {
         "type": "block",
         "code": "sapling-bamboobrown",
-        "quantity": { "avg": 0.8 }
+        "quantity": { "avg": 0.25 }
       }
     ],
     "bamboo-green-grown-segment1": [
@@ -104,7 +104,7 @@
       {
         type: "block",
         code: "sapling-bamboogreen",
-        quantity: { avg: 0.8 }
+        quantity: { avg: 0.25 }
       }
     ],
   }
