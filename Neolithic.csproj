@@ -128,17 +128,6 @@
     <Compile Include="Neolithic\Content\Block Behavior\LampConnectorBehavior.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\LampPostBehavior.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\RotateNinety.cs" />
-    <Compile Include="CarryCapacity\BlockBehaviorCarryable.cs" />
-    <Compile Include="CarryCapacity\CarriedBlock.cs" />
-    <Compile Include="CarryCapacity\CarrySystem.cs" />
-    <Compile Include="CarryCapacity\Client\EntityCarryRenderer.cs" />
-    <Compile Include="CarryCapacity\Client\HudOverlayRenderer.cs" />
-    <Compile Include="CarryCapacity\Extensions.cs" />
-    <Compile Include="CarryCapacity\Handler\CarryHandler.cs" />
-    <Compile Include="CarryCapacity\Handler\CustomMouseHandler.cs" />
-    <Compile Include="CarryCapacity\Handler\DeathHandler.cs" />
-    <Compile Include="CarryCapacity\Network\PickUpMessage.cs" />
-    <Compile Include="CarryCapacity\Network\PlaceDownMessage.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\BlockSwapBehavior.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\BlockCreateBehavior.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\FixedBESapling.cs" />

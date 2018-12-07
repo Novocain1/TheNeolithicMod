@@ -552,7 +552,7 @@ namespace TheNeolithicMod
                 }
             }
 
-            if (packetid == (int)Vintagestory.API.Client.EnumBlockContainerPacketId.CloseInventory)
+            if (packetid == (int)EnumBlockContainerPacketId.CloseInventory)
             {
                 IClientWorldAccessor clientWorld = (IClientWorldAccessor)api.World;
                 clientWorld.Player.InventoryManager.CloseInventory(Inventory);

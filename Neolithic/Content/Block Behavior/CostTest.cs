@@ -15,61 +15,34 @@ namespace TheNeolithicMod
 {
     class CostTest : BlockBehavior
     {
-        HashSet<BlockPos> costPos = new HashSet<BlockPos>();
-        Dictionary<BlockPos, int> pastCost = new Dictionary<BlockPos, int>();
-
         BlockPos targetPos;
         public CostTest(Block block) : base(block) { }
-
-        public bool isInBounds(IWorldAccessor world, BlockPos pos)
-        {
-            return pos.Y >= 1 && pos.Y <= world.BlockAccessor.MapSizeY;
-        }
-
-        public bool isPassable(IWorldAccessor world, BlockPos pos)
-        {
-            return world.BlockAccessor.GetBlock(pos).GetCollisionBoxes(world.BlockAccessor, pos) == null;
-        }
-
-        public bool isWalkable(IWorldAccessor world, BlockPos pos)
-        {
-            return (world.BlockAccessor.GetBlock(pos + new BlockPos(0, -1, 0)).GetCollisionBoxes(world.BlockAccessor, pos) != null || world.BlockAccessor.GetBlock(pos + new BlockPos(0, -1, 0)).WildCardMatch(new AssetLocation("game:water*")));
-        }
-
-        public bool isDangerous(IWorldAccessor world, BlockPos pos)
-        {
-            for (int i = 0; i < world.BlockAccessor.MapSizeY; i++)
-            {
-                if (world.BlockAccessor.GetBlock(pos + new BlockPos(0, -i, 0)).WildCardMatch(new AssetLocation("game:lava*"))) return true;
-            }
-            return false;
-        }
 
         public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ref EnumHandling handled)
         {
             if (world.Side != EnumAppSide.Server) return;
-            pastCost.Clear();
-            costPos.Clear();
             BlockPos pos = blockPos;
-            int sD = 16;
+            int sD = 24;
             targetPos = pos + new BlockPos(-2, 0, 8);
             int sR = sD / 2;
             var grid = new CubeGrid(sD, sD, sD);
-            if (!isInBounds(world, targetPos) || !isPassable(world, targetPos) || !isWalkable(world, targetPos) || isDangerous(world, targetPos))
+            Vec3d posv = pos.ToVec3d();
+            Vec3d tgtv = targetPos.ToVec3d();
+            BlockPos mP = ((posv.Add(tgtv)) / 2).AsBlockPos;
+
+            if (!grid.isInBounds(world, targetPos) || !grid.isPassable(world, targetPos) || !grid.isWalkable(world, targetPos) || grid.isDangerous(world, targetPos))
             {
                 return;
             }
-            for (int x = pos.X - sR; x <= pos.X + sR; x++)
+            for (int x = mP.X - sR; x <= mP.X + sR; x++)
             {
-                for (int y = pos.Y - sR; y <= pos.Y + sR; y++)
+                for (int y = mP.Y - sR; y <= mP.Y + sR; y++)
                 {
-                    for (int z = pos.Z - sR; z <= pos.Z + sR; z++)
+                    for (int z = mP.Z - sR; z <= mP.Z + sR; z++)
                     {
                         BlockPos currentPos = new BlockPos(x, y, z);
-                        if (isInBounds(world, currentPos) && isPassable(world, currentPos) && isWalkable(world, currentPos) && !isDangerous(world, currentPos))
+                        if (grid.isInBounds(world, currentPos) && grid.isPassable(world, currentPos) && grid.isWalkable(world, currentPos) && !grid.isDangerous(world, currentPos))
                         {
-                            costPos.Add(currentPos);
-                            pastCost.Add(currentPos, currentPos.ManhattenDistance(targetPos));
                             grid.air.Add(currentPos);
                         }
                         else
@@ -79,9 +52,10 @@ namespace TheNeolithicMod
                     }
                 }
             }
-            var astar = new AStarSearch(world, grid, pastCost, pos, targetPos);
-            DrawGrid(world, astar, pos, sR);
+            var astar = new AStarSearch(world, grid, pos, targetPos);
+            DrawGrid(world, astar, mP, sR);
             world.BlockAccessor.SetBlock(1, pos);
+            world.BlockAccessor.SetBlock(1, mP);
             world.BlockAccessor.SetBlock(903, targetPos);
             return;
         }
@@ -94,15 +68,12 @@ namespace TheNeolithicMod
                 {
                     for (int z = pos.Z - sR; z < pos.Z + sR; z++)
                     {
-                        ushort ff = 32;
                         BlockPos id = new BlockPos(x, y, z);
-                        BlockPos ptr = id;
-                        if (!astar.cameFrom.TryGetValue(id, out ptr))
+                        if (!astar.cameFrom.TryGetValue(id, out BlockPos ptr))
                         {
                             ptr = id;
-                            ff = 0;
                         }
-                        if (ff != 0) world.BlockAccessor.SetBlock(ff, ptr);
+                        else world.BlockAccessor.SetBlock(32, ptr);
                     }
                 }
             }
@@ -120,7 +91,7 @@ namespace TheNeolithicMod
             return Math.Abs(a.X - b.X) + Math.Abs(a.Y - b.Y) + Math.Abs(a.Z - b.Z);
         }
 
-        public AStarSearch(IWorldAccessor world, IWeightedGraph<BlockPos> graph, Dictionary<BlockPos, int> pastCost, BlockPos from, BlockPos to)
+        public AStarSearch(IWorldAccessor world, IWeightedGraph<BlockPos> graph, BlockPos from, BlockPos to)
         {
             cameFrom.Clear();
             currentCost.Clear();
@@ -138,7 +109,6 @@ namespace TheNeolithicMod
                 }
                 foreach (var next in graph.Neighbors(world, current))
                 {
-                   // pastCost.TryGetValue(next, out int pC);
                     int newCost = currentCost[current];
                     if (!currentCost.ContainsKey(next) || newCost < currentCost[next])
                     {
@@ -188,19 +158,12 @@ namespace TheNeolithicMod
 
         public bool isDangerous(IWorldAccessor world, BlockPos pos)
         {
-            for (int i = 0; i <= 4; i++)
-            {
-                if (world.BlockAccessor.GetBlock(pos + new BlockPos(0, -i, 0)).WildCardMatch(new AssetLocation("game:lava*")))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return (world.BlockAccessor.GetBlock(pos + new BlockPos(0, -1, 0)).WildCardMatch(new AssetLocation("game:lava*")));
         }
 
         public int Cost(BlockPos a, BlockPos b)
         {
-            return air.Contains(b) ? 5 : 1;
+            return (int)a.DistanceTo(b);
         }
 
         public IEnumerable<BlockPos> Neighbors(IWorldAccessor world, BlockPos id)
