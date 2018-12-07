@@ -82,7 +82,7 @@ namespace TheNeolithicMod
             var astar = new AStarSearch(world, grid, pastCost, pos, targetPos);
             DrawGrid(world, astar, pos, sR);
             world.BlockAccessor.SetBlock(1, pos);
-            //world.BlockAccessor.SetBlock(1, targetPos);
+            world.BlockAccessor.SetBlock(903, targetPos);
             return;
         }
 
@@ -188,9 +188,12 @@ namespace TheNeolithicMod
 
         public bool isDangerous(IWorldAccessor world, BlockPos pos)
         {
-            for (int i = 0; i < 32; i++)
+            for (int i = 0; i <= 4; i++)
             {
-                if (world.BlockAccessor.GetBlock(pos + new BlockPos(0, -i, 0)).WildCardMatch(new AssetLocation("game:lava*"))) return true;
+                if (world.BlockAccessor.GetBlock(pos + new BlockPos(0, -i, 0)).WildCardMatch(new AssetLocation("game:lava*")))
+                {
+                    return true;
+                }
             }
             return false;
         }
