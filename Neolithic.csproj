@@ -70,6 +70,9 @@
       <HintPath>..\VS-1.7.8\Vintagestory\Lib\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Priority Queue, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\OptimizedPriorityQueue.4.2.0\lib\net45\Priority Queue.dll</HintPath>
+    </Reference>
     <Reference Include="protobuf-net">
       <HintPath>..\VS-1.7.8\Vintagestory\Lib\protobuf-net.dll</HintPath>
       <Private>False</Private>
@@ -159,6 +162,7 @@
     <Folder Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\generic\" />
     <Folder Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\bag\" />
     <Folder Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\entity\" />
+    <Folder Include="Content\Block Behavior\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\TheNeolithicMod\assets\game\blocktypes\clay\bowl.json" />
@@ -1090,6 +1094,7 @@
     <None Include="bin\Totems\assets\totems\shapes\block\wood\totem\pig\new.json" />
     <None Include="bin\Totems\assets\totems\shapes\block\wood\totem\pig\tusk.json" />
     <None Include="bin\Totems\modinfo.json" />
+    <None Include="packages.config" />
     <None Include="README.md" />
     <None Include="UNLICENSE" />
     <None Include="WIPAssets\Novocain\shapes\road-cobble-circle.json" />
