@@ -14,22 +14,22 @@
 		 name: "BlockSwapBehavior",
 		 properties: {
 			"swapBlocks": [
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-up-north", "neolithicmod:logwall-{type}-{wood}-{style}-up-west", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-up-west", "neolithicmod:logwall-{type}-{wood}-{style}-up-south", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-up-south", "neolithicmod:logwall-{type}-{wood}-{style}-up-east", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-up-east", "neolithicmod:logwall-{type}-{wood}-{style}-left-north", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-left-north", "neolithicmod:logwall-{type}-{wood}-{style}-left-west", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-left-west", "neolithicmod:logwall-{type}-{wood}-{style}-left-south", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-left-south", "neolithicmod:logwall-{type}-{wood}-{style}-left-east", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-left-east", "neolithicmod:logwall-{type}-{wood}-{style}-down-north", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-down-north", "neolithicmod:logwall-{type}-{wood}-{style}-down-west", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-down-west", "neolithicmod:logwall-{type}-{wood}-{style}-down-south", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-down-south", "neolithicmod:logwall-{type}-{wood}-{style}-down-east", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-down-east", "neolithicmod:logwall-{type}-{wood}-{style}-right-north", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-right-north", "neolithicmod:logwall-{type}-{wood}-{style}-right-west", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-right-west", "neolithicmod:logwall-{type}-{wood}-{style}-right-south", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-right-south", "neolithicmod:logwall-{type}-{wood}-{style}-right-east", 0 ],
-			 [ "game:hammer-*", "neolithicmod:logwall-{type}-{wood}-{style}-right-east", "neolithicmod:logwall-{type}-{wood}-{style}-up-north", 0 ]
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-up-north", "neolithicmod:logwall-wall-acacia-bark-up-west", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-up-west", "neolithicmod:logwall-wall-acacia-bark-up-south", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-up-south", "neolithicmod:logwall-wall-acacia-bark-up-east", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-up-east", "neolithicmod:logwall-wall-acacia-bark-left-north", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-left-north", "neolithicmod:logwall-wall-acacia-bark-left-west", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-left-west", "neolithicmod:logwall-wall-acacia-bark-left-south", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-left-south", "neolithicmod:logwall-wall-acacia-bark-left-east", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-left-east", "neolithicmod:logwall-wall-acacia-bark-down-north", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-down-north", "neolithicmod:logwall-wall-acacia-bark-down-west", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-down-west", "neolithicmod:logwall-wall-acacia-bark-down-south", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-down-south", "neolithicmod:logwall-wall-acacia-bark-down-east", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-down-east", "neolithicmod:logwall-wall-acacia-bark-right-north", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-right-north", "neolithicmod:logwall-wall-acacia-bark-right-west", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-right-west", "neolithicmod:logwall-wall-acacia-bark-right-south", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-right-south", "neolithicmod:logwall-wall-acacia-bark-right-east", 0 ],
+			 [ "game:hammer-iron", "neolithicmod:logwall-wall-acacia-bark-right-east", "neolithicmod:logwall-wall-acacia-bark-up-north", 0 ]
 			]
 		 }
 	  }
