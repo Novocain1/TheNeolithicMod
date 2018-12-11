@@ -120,6 +120,7 @@
     <Compile Include="Neolithic\Content\Block Behavior\ChimneyBehavior.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\BlockEntityChimney.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\CostTest.cs" />
+    <Compile Include="Neolithic\Content\Entity\AStarPathingTask.cs" />
     <Compile Include="TasksLib\BehaviorsLib.cs" />
     <Compile Include="TasksLib\EntityBehaviors\FixedMultiply.cs" />
     <Compile Include="TasksLib\Tasks\AiTaskInjured.cs" />

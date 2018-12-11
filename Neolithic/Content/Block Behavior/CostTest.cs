@@ -16,21 +16,25 @@ namespace TheNeolithicMod
     class CostTest : BlockBehavior
     {
         BlockPos targetPos;
+        public HashSet<BlockPos> testBlockPos = new HashSet<BlockPos>();
+        public IWorldAccessor lworld;
+        long listenerId;
         public CostTest(Block block) : base(block) { }
 
         public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ref EnumHandling handled)
         {
+            testBlockPos.Clear();
+            lworld = world;
             if (world.Side != EnumAppSide.Server) return;
             BlockPos pos = blockPos;
-            int sD = 24;
-            targetPos = pos + new BlockPos(-2, 0, 8);
-            int sR = sD / 2;
-            var grid = new CubeGrid(sD, sD, sD);
+            targetPos = world.GetNearestEntity(pos.ToVec3d(),64,64).Pos.AsBlockPos;
             Vec3d posv = pos.ToVec3d();
             Vec3d tgtv = targetPos.ToVec3d();
             BlockPos mP = ((posv.Add(tgtv)) / 2).AsBlockPos;
+            int sR = (int)mP.DistanceTo(pos) + 4;
+            var grid = new CubeGrid(sR * 2, sR * 2, sR * 2);
 
-            if (!grid.isInBounds(world, targetPos) || !grid.isPassable(world, targetPos) || !grid.isWalkable(world, targetPos) || grid.isDangerous(world, targetPos))
+            if (!grid.isInBounds(world, targetPos) || !grid.isPassable(world, targetPos) || !grid.isWalkable(world, targetPos))
             {
                 return;
             }
@@ -41,7 +45,7 @@ namespace TheNeolithicMod
                     for (int z = mP.Z - sR; z <= mP.Z + sR; z++)
                     {
                         BlockPos currentPos = new BlockPos(x, y, z);
-                        if (grid.isInBounds(world, currentPos) && grid.isPassable(world, currentPos) && grid.isWalkable(world, currentPos) && !grid.isDangerous(world, currentPos))
+                        if (grid.isInBounds(world, currentPos) && grid.isPassable(world, currentPos) && grid.isWalkable(world, currentPos))
                         {
                             grid.air.Add(currentPos);
                         }
@@ -54,9 +58,12 @@ namespace TheNeolithicMod
             }
             var astar = new AStarSearch(world, grid, pos, targetPos);
             DrawGrid(world, astar, mP, sR);
-            world.BlockAccessor.SetBlock(1, pos);
-            world.BlockAccessor.SetBlock(1, mP);
-            world.BlockAccessor.SetBlock(903, targetPos);
+            world.BlockAccessor.SetBlock(2278, pos);
+            //world.BlockAccessor.SetBlock(2279, mP);
+            world.BlockAccessor.SetBlock(2278, targetPos);
+            testBlockPos.Add(targetPos);
+            testBlockPos.Add(pos);
+            //testBlockPos.Add(mP);
             return;
         }
 
@@ -73,9 +80,29 @@ namespace TheNeolithicMod
                         {
                             ptr = id;
                         }
-                        else world.BlockAccessor.SetBlock(32, ptr);
+                        else
+                        {
+                            world.BlockAccessor.SetBlock(2277, ptr);
+                            testBlockPos.Add(ptr);
+                        }
                     }
                 }
+            }
+            listenerId = world.RegisterGameTickListener(Ticker, 2500);
+        }
+
+        private void Ticker(float dt)
+        {
+            Clear(lworld, testBlockPos);
+            lworld.UnregisterGameTickListener(listenerId);
+            return;
+        }
+
+        private void Clear(IWorldAccessor world, HashSet<BlockPos> blocks)
+        {
+            foreach (var val in blocks)
+            {
+                world.BlockAccessor.SetBlock(0, val);
             }
         }
 
@@ -97,11 +124,12 @@ namespace TheNeolithicMod
             currentCost.Clear();
             var f = new SimplePriorityQueue<BlockPos>();
             f.Enqueue(from, 0);
-
+            int max = 128;
             cameFrom[from] = from;
             currentCost[from] = 0;
-            while (f.Count > 0)
+            while (f.Count > 0 && max > 0)
             {
+                max -= 1;
                 var current = f.Dequeue();
                 if (current.Equals(to))
                 {
@@ -137,6 +165,19 @@ namespace TheNeolithicMod
             this.width = width;
             this.height = height;
             this.length = length;
+
+            DIRS.Clear();
+            for (int x = -1; x <= 1; x++)
+            {
+                for (int y = -4; y <= 1; y++)
+                {
+                    for (int z = -1; z <= 1; z++)
+                    {
+                        DIRS.Add(new BlockPos(x, y, z));
+
+                    }
+                }
+            }
         }
         public HashSet<BlockPos> walls = new HashSet<BlockPos>();
         public HashSet<BlockPos> air = new HashSet<BlockPos>();
@@ -148,17 +189,29 @@ namespace TheNeolithicMod
 
         public bool isPassable(IWorldAccessor world, BlockPos pos)
         {
-            return world.BlockAccessor.GetBlock(pos).GetCollisionBoxes(world.BlockAccessor, pos) == null;
+            if (world.BlockAccessor.GetBlock(pos).CollisionBoxes == null)
+            {
+                if (world.BlockAccessor.GetBlock(pos).WildCardMatch(new AssetLocation("game:water*")) || world.BlockAccessor.GetBlock(pos).WildCardMatch(new AssetLocation("game:lava*")))
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
 
         public bool isWalkable(IWorldAccessor world, BlockPos pos)
         {
-            return (world.BlockAccessor.GetBlock(pos + new BlockPos(0, -1, 0)).GetCollisionBoxes(world.BlockAccessor, pos) != null || world.BlockAccessor.GetBlock(pos + new BlockPos(0, -1, 0)).WildCardMatch(new AssetLocation("game:water*")));
-        }
-
-        public bool isDangerous(IWorldAccessor world, BlockPos pos)
-        {
-            return (world.BlockAccessor.GetBlock(pos + new BlockPos(0, -1, 0)).WildCardMatch(new AssetLocation("game:lava*")));
+            BlockPos offset = new BlockPos(0, -1, 0);
+            if (world.BlockAccessor.GetBlock(pos + offset).CollisionBoxes == null)
+            {
+                if (world.BlockAccessor.GetBlock(pos + offset).WildCardMatch(new AssetLocation("game:water*")))
+                {
+                    return true;
+                }
+                return false;
+            }
+            return true;
         }
 
         public int Cost(BlockPos a, BlockPos b)
@@ -168,21 +221,10 @@ namespace TheNeolithicMod
 
         public IEnumerable<BlockPos> Neighbors(IWorldAccessor world, BlockPos id)
         {
-            DIRS.Clear();
-            for (int x = -1; x <= 1; x++)
-            {
-                for (int y = -4; y <= 1; y++)
-                {
-                    for (int z = -1; z <= 1; z++)
-                    {
-                        DIRS.Add(new BlockPos(x, y, z));
-                    }
-                }
-            }
             foreach (var dir in DIRS)
             {
                 BlockPos next = new BlockPos(id.X + dir.X, id.Y + dir.Y, id.Z + dir.Z);
-                if (isInBounds(world, next) && isPassable(world, next) && isWalkable(world, next) && !isDangerous(world, next))
+                if (isInBounds(world, next) && isPassable(world, next) && isWalkable(world, next))
                 {
                     yield return next;
                 }
