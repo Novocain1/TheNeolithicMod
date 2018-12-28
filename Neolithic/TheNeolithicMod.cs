@@ -40,7 +40,7 @@ namespace TheNeolithicMod
             api.RegisterBlockEntityClass("BlockEntityChimney", typeof(BlockEntityChimney));
 
             //Entity
-            AiTaskRegistry.Register("aitaskastar", typeof(AiTaskAstar));
+            //AiTaskRegistry.Register("aitaskastar", typeof(AiTaskAstar));
         }
     }
 }

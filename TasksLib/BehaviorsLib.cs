@@ -12,8 +12,6 @@ namespace BehaviorsLib
             //AiTaskManager.RegisterTaskType("seekastar", typeof(AiTaskBaseAStar));
             AiTaskRegistry.Register("fixedseekfoodandeat", typeof(FixedAiTaskSeekFoodAndEat));
             //AiTaskManager.RegisterTaskType("fleepoi", typeof(AiTaskFleePOI));
-            AiTaskRegistry.Register("injured", typeof(AiTaskInjured));
-            api.RegisterEntityBehaviorClass("fixedmultiply", typeof(FixedEntityBehaviorMultiply));
         }
     }
 }

@@ -120,10 +120,7 @@
     <Compile Include="Neolithic\Content\Block Behavior\ChimneyBehavior.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\BlockEntityChimney.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\CostTest.cs" />
-    <Compile Include="Neolithic\Content\Entity\AStarPathingTask.cs" />
     <Compile Include="TasksLib\BehaviorsLib.cs" />
-    <Compile Include="TasksLib\EntityBehaviors\FixedMultiply.cs" />
-    <Compile Include="TasksLib\Tasks\AiTaskInjured.cs" />
     <Compile Include="TasksLib\Tasks\AiTaskSleep.cs" />
     <Compile Include="TasksLib\Tasks\FixedAiTaskSeekFoodAndEat.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\LampConnectorBehavior.cs" />
@@ -153,6 +150,8 @@
     <Folder Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\bag\" />
     <Folder Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\entity\" />
     <Folder Include="Content\Block Behavior\" />
+    <Folder Include="Neolithic\Content\Entity\" />
+    <Folder Include="TasksLib\EntityBehaviors\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\TheNeolithicMod\assets\game\blocktypes\clay\bowl.json" />

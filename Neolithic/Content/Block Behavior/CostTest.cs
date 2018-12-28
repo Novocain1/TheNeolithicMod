@@ -107,6 +107,88 @@ namespace TheNeolithicMod
         }
 
     }
+
+    public class MakePath
+    {
+        public List<BlockPos> currentPath = new List<BlockPos>();
+        public int positionIndex = 0;
+
+        public BlockPos NextPathPos(IWorldAccessor world, BlockPos targetPos, BlockPos startPos)
+        {
+            BlockPos nextPos = startPos;
+            List<BlockPos> path = MakeGrid(world, targetPos, startPos);
+            if (positionIndex < path.Count)
+            {
+                positionIndex += 1;
+            }
+            else
+            {
+                positionIndex = 0;
+            }
+
+            return path[positionIndex];
+        }
+
+        public List<BlockPos> MakeGrid(IWorldAccessor world, BlockPos targetPos, BlockPos startPos)
+        {
+            BlockPos pos = startPos;
+            Vec3d posv = pos.ToVec3d();
+            Vec3d tgtv = targetPos.ToVec3d();
+            BlockPos mP = ((posv.Add(tgtv)) / 2).AsBlockPos;
+            int sR = (int)mP.DistanceTo(pos) + 4;
+            var grid = new CubeGrid(sR * 2, sR * 2, sR * 2);
+
+            if (!grid.isInBounds(world, targetPos) || !grid.isPassable(world, targetPos) || !grid.isWalkable(world, targetPos))
+            {
+                return new List<BlockPos> { startPos };
+            }
+            for (int x = mP.X - sR; x <= mP.X + sR; x++)
+            {
+                for (int y = mP.Y - sR; y <= mP.Y + sR; y++)
+                {
+                    for (int z = mP.Z - sR; z <= mP.Z + sR; z++)
+                    {
+                        BlockPos currentPos = new BlockPos(x, y, z);
+                        if (grid.isInBounds(world, currentPos) && grid.isPassable(world, currentPos) && grid.isWalkable(world, currentPos))
+                        {
+                            grid.air.Add(currentPos);
+                        }
+                        else
+                        {
+                            grid.walls.Add(currentPos);
+                        }
+                    }
+                }
+            }
+            var astar = new AStarSearch(world, grid, pos, targetPos);
+            return CurrentPath(world, astar, mP, sR);
+        }
+
+        public List<BlockPos> CurrentPath(IWorldAccessor world, AStarSearch astar, BlockPos pos, int sR)
+        {
+            currentPath.Clear();
+            for (int x = pos.X - sR; x < pos.X + sR; x++)
+            {
+                for (int y = pos.Y - sR; y < pos.Y + sR; y++)
+                {
+                    for (int z = pos.Z - sR; z < pos.Z + sR; z++)
+                    {
+                        BlockPos id = new BlockPos(x, y, z);
+                        if (!astar.cameFrom.TryGetValue(id, out BlockPos ptr))
+                        {
+                            ptr = id;
+                        }
+                        else
+                        {
+                            currentPath.Add(ptr);
+                        }
+                    }
+                }
+            }
+            return currentPath;
+        }
+    }
+
     public class AStarSearch
     {
         public Dictionary<BlockPos, BlockPos> cameFrom = new Dictionary<BlockPos, BlockPos>();
