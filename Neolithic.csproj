@@ -70,9 +70,6 @@
       <HintPath>..\VS-1.7.8\Vintagestory\Lib\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Priority Queue, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\OptimizedPriorityQueue.4.2.0\lib\net45\Priority Queue.dll</HintPath>
-    </Reference>
     <Reference Include="protobuf-net">
       <HintPath>..\VS-1.7.8\Vintagestory\Lib\protobuf-net.dll</HintPath>
       <Private>False</Private>
@@ -117,9 +114,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarryCapacity\BlockBehaviorCarryable.cs" />
+    <Compile Include="CarryCapacity\CarriedBlock.cs" />
+    <Compile Include="CarryCapacity\CarrySlot.cs" />
+    <Compile Include="CarryCapacity\CarrySystem.cs" />
+    <Compile Include="CarryCapacity\Client\EntityCarryRenderer.cs" />
+    <Compile Include="CarryCapacity\Client\HudOverlayRenderer.cs" />
+    <Compile Include="CarryCapacity\Handler\BackwardCompatHandler.cs" />
+    <Compile Include="CarryCapacity\Handler\CarryHandler.cs" />
+    <Compile Include="CarryCapacity\Handler\DeathHandler.cs" />
+    <Compile Include="CarryCapacity\Network\PickUpMessage.cs" />
+    <Compile Include="CarryCapacity\Network\PlaceDownMessage.cs" />
+    <Compile Include="CarryCapacity\Network\SwapSlotsMessage.cs" />
+    <Compile Include="CarryCapacity\Utility\Extensions.cs" />
+    <Compile Include="CarryCapacity\Utility\LockedItemSlot.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\ChimneyBehavior.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\BlockEntityChimney.cs" />
-    <Compile Include="Neolithic\Content\Block Behavior\CostTest.cs" />
     <Compile Include="TasksLib\BehaviorsLib.cs" />
     <Compile Include="TasksLib\Tasks\AiTaskSleep.cs" />
     <Compile Include="TasksLib\Tasks\FixedAiTaskSeekFoodAndEat.cs" />
