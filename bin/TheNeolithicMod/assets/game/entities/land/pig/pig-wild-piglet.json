@@ -1,25 +1,33 @@
 {
-	code: "pig-piglet",
+	code: "pig-wild-piglet",
 	class: "EntityAgent",
 	hitboxSize: { x: 0.6, y: 0.5 },
+	deadHitboxSize: { x: 0.6, y: 0.25 },
 	eyeHeight: 0.4,
-	drops: [
-		{
-			type: "item", 
-			code: "neolithicmod:porkchops-raw", 
-			quantity: { avg: 0.5, var: 0.5 } 
-		}
-	],
+	drops: [],
 	client: {
 		renderer: "Shape",
-		shape: { base: "entity/land/pig/piglet" },
+		shape: { base: "entity/land/pig-wild-piglet" },
 		texture: { base: "entity/pig/pig-wild-piglet" },
-		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }],
+		behaviors: [
+			{ code: "repulseagents" }, 
+			{ code: "controlledphysics", stepHeight: 1.0001 }, 
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "interpolateposition" },
+			{ code: "harvestable" }
+		],
 		animations: [
 			{
 				code: "hurt",
 				animation: "hurt", 
 				animationSpeed: 2.2,
+				weight: 10,
+				blendMode: "AddAverage" 
+			},
+			{
+				code: "die",
+				animation: "die", 
+				animationSpeed: 2,
 				weight: 10,
 				blendMode: "AddAverage" 
 			}
@@ -30,35 +38,26 @@
 			{ code: "repulseagents" }, 
 			{ code: "controlledphysics", stepHeight: 1.0001 },
 			{ code: "health", currenthealth: 10, maxhealth: 10, },
+			{ code: "deaddecay", hoursToDecay: 96, decayedBlock: "carcass-small" },
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
 			{ code: "despawn", minPlayerDistance: 8, belowLightLevel: 8, minSeconds: 300 },
+			{ code: "harvestable", drops: [
+				{
+					type: "item", 
+					code: "redmeat-raw", 
+					quantity: { avg: 0.5, var: 0.5 } 
+				}
+				],
+			},
 			{ code: "breathe" }, 
 			{ 
 				code: "grow",
 				hoursToGrow: 168,
-				adultEntityCodes: [ "pig-sow-ashgrey", "pig-boar-ashgrey", "pig-sow-brown", "pig-boar-brown","pig-sow-chocolate", "pig-boar-chocolate","pig-sow-darkgrey", "pig-boar-darkgrey","pig-sow-smokegrey", "pig-boar-smokegrey","pig-sow-walnut", "pig-boar-walnut"],
+				adultEntityCodes: ["pig-wild-female", "pig-wild-male"],
 			},
 			{ 
 				code: "taskai",
 				aitasks: [
-					{
-						code: "fleeentity",
-						entityCodes: ["player"],
-						priority: 1.9,
-						movespeed: 0.015,
-						seekingRange: 5,
-						animationSpeed: 7,
-						animation: "Run",
-						sound: "creature/pig/piglet-hurt"
-					},
-					{
-						code: "AiTaskSleep",
-						priority: 1.8,
-						priorityForCancel: 1.35,
-						animation: "sleep",
-						isnocturnal: false,
-						cancelOnHurt: true,
-						animationSpeed: 0.20
-					},
 					{
 						code: "fleeentity",
 						entityCodes: ["player"],

@@ -1,26 +1,33 @@
 {
-	code: "pig-boar",
+	code: "pig-wild-male",
 	class: "EntityAgent",
 	hitboxSize: { x: 0.99, y: 0.8 },
+	deadHitboxSize: { x: 0.99, y: 0.5 },
 	eyeHeight: 0.7,
-	variantgroups: [
-		{ code: "color", states: ["ashgrey", "brown", "chocolate", "darkgrey", "smokegrey", "walnut"] }],
-	drops: [
-		{
-			type: "block",
-			code: "neolithicmod:dead-pig-boar-{color}",
-		},
-	],
+	drops: [],
 	client: {
 		renderer: "Shape",
-		shape: { base: "entity/land/pig/boar" },
-		texture: { base: "entity/pig/{color}" },
-		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }],
+		shape: { base: "entity/land/pig-wild-male" },
+		texture: { base: "entity/pig/pig-wild-male1", alternates: [ { base: "entity/pig/pig-wild-male2" }, { base: "entity/pig/pig-wild-male3" }, { base: "entity/pig/pig-wild-male4" }, { base: "entity/pig/pig-wild-male5" } ] },
+		behaviors: [
+			{ code: "repulseagents" }, 
+			{ code: "controlledphysics", stepHeight: 1.0001 }, 
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "interpolateposition" },
+			{ code: "harvestable" }
+		],
 		animations: [
 			{
 				code: "hurt",
 				animation: "hurt", 
 				animationSpeed: 2.2,
+				weight: 10,
+				blendMode: "AddAverage" 
+			},
+			{
+				code: "die",
+				animation: "die", 
+				animationSpeed: 2,
 				weight: 10,
 				blendMode: "AddAverage" 
 			}
@@ -32,6 +39,26 @@
 			{ code: "controlledphysics", stepHeight: 1.0001 },
 			{ code: "despawn", minPlayerDistance: 8, belowLightLevel: 8, minSeconds: 300 },
 			{ code: "health", currenthealth: 25, maxhealth: 25, },
+			{ code: "deaddecay", hoursToDecay: 96, decayedBlock: "carcass-medium" },
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "harvestable", drops: [
+				{
+					type: "item", 
+					code: "redmeat-raw", 
+					quantity: { avg: 4.5, var: 1.5 } 
+				},
+				{
+					type: "item", 
+					code: "hide-raw", 
+					quantity: { avg: 1.25, var: 0 } 
+				},
+				{
+					type: "item", 
+					code: "fat", 
+					quantity: { avg: 1.5, var: 0 } 
+				}
+				],
+			},
 			{ code: "breathe" },
 			{ 
 				code: "emotionstates",
@@ -60,27 +87,6 @@
 					{
 						code: "seekentity",
 						entityCodes: ["player"],
-						priority: 1.9,
-						mincooldown: 1000, 
-						maxcooldown: 1500, 
-						seekingRange: 5,
-						movespeed: 0.025,
-						animation: "Run",
-						animationSpeed: 4,
-						whenInEmotionState: "aggressiveondamage"
-					},
-					{
-						code: "AiTaskSleep",
-						priority: 1.8,
-						priorityForCancel: 1.35,
-						animation: "sleep",
-						isnocturnal: false,
-						cancelOnHurt: true,
-						animationSpeed: 0.20
-					},
-					{
-						code: "seekentity",
-						entityCodes: ["player"],
 						priority: 1.5,
 						mincooldown: 1000, 
 						maxcooldown: 1500, 
@@ -98,7 +104,7 @@
 						seekingRange: 12,
 						animation: "Run",
 						animationSpeed: 4,
-						sound: "creature/pig/pig-hurt",
+						sound: "creature/pig/hurt",
 						whenInEmotionState: "fleeondamage"
 					},
 					{
@@ -169,20 +175,7 @@
 				maxTemp: 28,
 				minRain: 0.45,
 				minForest: 0.35,
-				companionsByType: {
-					"pig-boar-ashgrey":
-						["pig-sow-ashgrey", "pig-piglet"],
-					"pig-boar-brown":
-						["pig-sow-brown", "pig-piglet"],
-					"pig-boar-chocolate":
-						["pig-sow-chocolate", "pig-piglet"],
-					"pig-boar-darkgrey":
-						["pig-sow-darkgrey", "pig-piglet"],
-					"pig-boar-smokegrey":
-						["pig-sow-smokegrey", "pig-piglet"],
-					"pig-boar-walnut":
-						["pig-sow-walnut", "pig-piglet"]
-				}
+				companions: ["pig-wild-female", "pig-wild-piglet"]
 			},
 			runtime: {
 				group: "neutral",
@@ -196,27 +189,14 @@
 				maxTemp: 28,
 				minRain: 0.45,
 				minForestOrShrubs: 0.35,
-				companionsByType: {
-					"pig-boar-ashgrey":
-						["pig-sow-ashgrey", "pig-piglet"],
-					"pig-boar-brown":
-						["pig-sow-brown", "pig-piglet"],
-					"pig-boar-chocolate":
-						["pig-sow-chocolate", "pig-piglet"],
-					"pig-boar-darkgrey":
-						["pig-sow-darkgrey", "pig-piglet"],
-					"pig-boar-smokegrey":
-						["pig-sow-smokegrey", "pig-piglet"],
-					"pig-boar-walnut":
-						["pig-sow-walnut", "pig-piglet"]
-				}
+				companions: ["pig-wild-female", "pig-wild-piglet"]
 			}
 		}
 	},
 	sounds: {
-		hurt: "creature/pig/pig-hurt",
-		death: "creature/pig/pig-hurt",
-		idle: "creature/pig/pig-idle"
+		hurt: "creature/pig/hurt",
+		death: "creature/pig/hurt",
+		idle: "creature/pig/idle"
 	},
 	idleSoundChance: 0.01
 }

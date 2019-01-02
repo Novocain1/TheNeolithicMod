@@ -8,7 +8,6 @@
   ],
   blockmaterial: "Metal",
   behaviors: [
-    { name: "CostTest" },
     { name: "UnstableFalling" },
     {
       name: "BlockCreateBehavior",

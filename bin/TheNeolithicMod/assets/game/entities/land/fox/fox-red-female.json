@@ -1,32 +1,32 @@
 {
-  code: "fox-red-female",
+  code: "fox-female",
   class: "EntityAgent",
   hitboxSize: {
-    x: 1.1,
-    y: 0.9
+    x: 0.75,
+    y: 0.75
+  },
+  deadHitboxSize: {
+    x: 0.75,
+    y: 0.5
   },
   eyeHeight: 0.7,
-  drops: [
-    {
-      type: "block",
-      code: "neolithicmod:dead-fox-red-female",
-      quantity: {
-        avg: 2,
-        var: 1
-      }
-    },
-  ],
+  drops: [],
   client: {
     renderer: "Shape",
-    shape: { base: "entity/land/fox/female" },
-    texture: { base: "neolithicmod:entity/fox/red-female" },
+    shape: { base: "entity/land/fox-female" },
+    texture: { base: "entity/fox/fox-female" },
     behaviors: [
       { code: "repulseagents" },
       {
         code: "controlledphysics",
         stepHeight: 1.0001
       },
-      { code: "interpolateposition" }
+      { code: "interpolateposition" },
+      {
+        code: "floatupwhenstuck",
+        onlyWhenDead: true
+      },
+      { code: "harvestable" }
     ],
     animations: [
       {
@@ -35,6 +35,14 @@
         animationSpeed: 2.2,
         weight: 10,
         blendMode: "AddAverage"
+      },
+      {
+        code: "die",
+        animation: "death",
+        animationSpeed: 1.25,
+        weight: 10,
+        blendMode: "AddAverage",
+        mapHitboxPosToElemPos: "body"
       }
     ]
   },
@@ -55,6 +63,28 @@
         code: "health",
         currenthealth: 6,
         maxhealth: 6,
+      },
+      {
+        code: "deaddecay",
+        hoursToDecay: 96,
+        decayedBlock: "carcass-small"
+      },
+      {
+        code: "floatupwhenstuck",
+        onlyWhenDead: true
+      },
+      {
+        code: "harvestable",
+        drops: [
+          {
+            type: "block",
+            code: "neolithicmod:dead-fox-red-female",
+            quantity: {
+              avg: 2,
+              var: 1
+            }
+          },
+        ],
       },
       { code: "breathe" },
       {
@@ -105,20 +135,6 @@
             whenInEmotionState: "aggressiveondamage"
           },
           {
-            code: "fixedseekfoodandeat",
-            priority: 2.85,
-            eatSound: "player/eat",
-            eatTime: 7,
-            movespeed: 0.02,
-            animation: "Walk",
-            animationSpeed: 1.0,
-            eatanimation: "Eat",
-            eatanimationspeed: 1.0,
-            mincooldownHours: 1,
-            maxcooldownHours: 4,
-            doConsumePortion: true
-          },
-          {
             code: "AiTaskSleep",
             priority: 2.8,
             priorityForCancel: 1.35,
@@ -126,7 +142,6 @@
             isnocturnal: true,
             cancelOnHurt: true,
             animationSpeed: 0.20,
-
           },
           {
             code: "seekentity",
@@ -151,7 +166,7 @@
 
           {
             code: "meleeattack",
-            entityCodes: [ "chicken-*", "rabbit-*" ],
+            entityCodes: [ "chicken-rooster", "chicken-hen", "chicken-baby" ],
             priority: 1.6,
             damage: 4,
             slot: 1,
@@ -166,7 +181,7 @@
           },
           {
             code: "seekentity",
-            entityCodes: [ "chicken-*", "rabbit-*" ],
+            entityCodes: [ "chicken-rooster", "chicken-hen", "chicken-baby" ],
             priority: 1.5,
             movespeed: 0.022,
             seekingRange: 20,
@@ -177,10 +192,24 @@
           },
           {
             code: "getoutofwater",
-            priority: 1.35,
+            priority: 1.4,
             movespeed: 0.015,
             animation: "Walk",
             animationSpeed: 2.2
+          },
+          {
+            code: "idle",
+            onBlockBelowCode: "snowblock",
+            priority: 1.35,
+            priorityForCancel: 5,
+            minduration: 2400,
+            maxduration: 2400,
+            mincooldown: 8000,
+            maxcooldown: 40000,
+            animation: "Dive",
+            animationSpeed: 1.25,
+            sound: "walk/deepsnow1",
+            soundStartMs: 950
           },
           {
             code: "idle",
@@ -223,9 +252,9 @@
     ],
   },
   sounds: {
-    hurt: "creature/fox/fox-hurt",
-    death: "creature/wolf/wolf-hurt",
-    idle: "creature/fox/fox-yip"
+    hurt: "creature/fox/hurt",
+    death: "creature/wolf/hurt",
+    idle: "creature/fox/yip"
   },
   idleSoundChance: 0
 }

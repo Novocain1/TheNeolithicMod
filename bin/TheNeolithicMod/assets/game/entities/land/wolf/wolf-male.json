@@ -2,25 +2,32 @@
 	code: "wolf-male",
 	class: "EntityAgent",
 	hitboxSize: { x: 1.2, y: 1 },
+	deadHitboxSize: { x: 1, y: 0.75 },
 	eyeHeight: 0.9,
-	variantgroups: [
-		{ code: "color", states: ["ashgrey", "black", "brown", "darkgrey", "gold", "grey", "silver", "smokegrey","white"] }],
-	drops: [
-		{
-			type: "block",
-			code: "neolithicmod:dead-wolf-male-{color}",
-		},
-	],
+	drops: [],
 	client: {
 		renderer: "Shape",
-		shape: { base: "entity/land/wolf/male" },
-		texture: { base: "entity/wolf/{color}" },
-		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }],
+		shape: { base: "entity/land/wolf-male" },
+		texture: { base: "entity/wolf/wolf1", alternates: [ { base: "entity/wolf/wolf2" }, { base: "entity/wolf/wolf3" }, { base: "entity/wolf/wolf4" }, { base: "entity/wolf/wolf5" }, { base: "entity/wolf/wolf6" }, { base: "entity/wolf/wolf7" }, { base: "entity/wolf/wolf8" }, { base: "entity/wolf/wolf9" } ] },
+		behaviors: [
+			{ code: "repulseagents" }, 
+			{ code: "controlledphysics", stepHeight: 1.0001 }, 
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "interpolateposition" },
+			{ code: "harvestable" }
+		],
 		animations: [
 			{
 				code: "hurt",
 				animation: "hurt", 
 				animationSpeed: 2.2,
+				weight: 10,
+				blendMode: "AddAverage" 
+			},
+			{
+				code: "die",
+				animation: "death", 
+				animationSpeed: 1.25,
 				weight: 10,
 				blendMode: "AddAverage" 
 			}
@@ -32,6 +39,26 @@
 			{ code: "controlledphysics", stepHeight: 1.0001 },
 			{ code: "despawn", minPlayerDistance: 8, belowLightLevel: 8, minSeconds: 300 },
 			{ code: "health", currenthealth: 10, maxhealth: 10, },
+			{ code: "deaddecay", hoursToDecay: 96, decayedBlock: "carcass-medium" },
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "harvestable", drops: [
+				{
+					type: "item", 
+					code: "bushmeat-raw", 
+					quantity: { avg: 3.5, var: 1 } 
+				},
+				{
+					type: "item", 
+					code: "hide-raw", 
+					quantity: { avg: 1.25, var: 0 } 
+				},
+				{
+					type: "item", 
+					code: "fat", 
+					quantity: { avg: 0.75, var: 0 } 
+				}
+				],
+			},
 			{ code: "breathe" },
 			{ 
 				code: "emotionstates",
@@ -45,9 +72,9 @@
 				aitasks: [
 					{
 						code: "meleeattack",
-						entityCodes: ["player", "chicken-*", "rabbit-*"],
+						entityCodes: ["player", "chicken-rooster", "chicken-hen", "chicken-baby"],
 						priority: 2,
-						damage: 5,
+						damage: 8,
 						slot: 1,
 						mincooldown: 1500, 
 						maxcooldown: 1500, 
@@ -55,51 +82,17 @@
 						damagePlayerAtMs: 500,
 						animation: "Attack",
 						animationSpeed: 2.5,
-						sound: "creature/wolf/wolf-attack"
+						sound: "creature/wolf/attack"
 					},
 					{
 						code: "seekentity",
-						entityCodes: ["player"],
-						priority: 1.9,
-						movespeed: 0.021,
-						seekingRange: 5,
-						animation: "Run",
-						animationSpeed: 1.5,
-						sound: "creature/wolf/wolf-growl",
-						whenNotInEmotionState: "saturated"
-					},
-					{
-                        code: "fixedseekfoodandeat",
-                        priority: 1.85,
-                        eatSound: "player/eat",
-                        eatTime: 7,
-                        movespeed: 0.02,
-                        animation: "Walk",
-                        animationSpeed: 1.0,
-                        eatanimation: "Eat",
-                        eatanimationspeed: 1.0,
-                        mincooldownHours: 1,
-                        maxcooldownHours: 4,
-                        doConsumePortion: true
-                    },
-					{
-						code: "AiTaskSleep",
-						priority: 1.8,
-						priorityForCancel: 1.35,
-						animation: "sleep",
-						isnocturnal: true,
-						cancelOnHurt: true,
-						animationSpeed: 0.20,
-					},
-					{
-						code: "seekentity",
-						entityCodes: ["player", "chicken-*", "rabbit-*"],
+						entityCodes: ["player", "chicken-rooster", "chicken-hen", "chicken-baby"],
 						priority: 1.5,
 						movespeed: 0.021,
 						seekingRange: 20,
 						animation: "Run",
 						animationSpeed: 1.5,
-						sound: "creature/wolf/wolf-growl",
+						sound: "creature/wolf/growl",
 						whenNotInEmotionState: "saturated"
 					},
 					
@@ -111,7 +104,7 @@
 						seekingRange: 20,
 						animation: "Run",
 						animationSpeed: 1.5,
-						sound: "creature/wolf/wolf-growl",
+						sound: "creature/wolf/growl",
 						whenInEmotionState: "aggressiveondamage"
 					},
 					
@@ -132,7 +125,7 @@
 						maxcooldown: 500000,
 						animation: "Howl",
 						animationSpeed: 0.25,
-						sound: "creature/wolf/wolf-howl",
+						sound: "creature/wolf/howl",
 						soundRange: 110
 					},
 					{
@@ -171,26 +164,7 @@
 				minTemp: -15,
 				maxTemp: 15,
 				minRain: 0.25,
-				companionsByType: {
-					"wolf-male-ashgrey":
-						["wolf-female-ashgrey", "wolf-pup-ashgrey"],
-					"wolf-male-black":
-						["wolf-female-black", "wolf-pup-black"],
-					"wolf-male-brown":
-						["wolf-female-brown", "wolf-pup-brown"],
-					"wolf-male-darkgrey":
-						["wolf-female-darkgrey", "wolf-pup-darkgrey"],
-					"wolf-male-gold":
-						["wolf-female-gold", "wolf-pup-gold"],
-					"wolf-male-grey":
-						["wolf-female-grey", "wolf-pup-grey"],
-					"wolf-male-silver":
-						["wolf-female-silver", "wolf-pup-silver"],
-					"wolf-male-smokegrey":
-						["wolf-female-smokegrey", "wolf-pup-smokegrey"],
-					"wolf-male-white":
-						["wolf-female-white", "wolf-pup-white"],
-				}
+				companions: ["wolf-female", "wolf-pup"]
 			},
 			runtime: {
 				group: "hostile",
@@ -203,32 +177,14 @@
 				minTemp: -15,
 				maxTemp: 15,
 				minRain: 0.25,
-				companionsByType: {
-					"wolf-male-ashgrey":
-						["wolf-female-ashgrey", "wolf-pup-ashgrey"],
-					"wolf-male-black":
-						["wolf-female-black", "wolf-pup-black"],
-					"wolf-male-brown":
-						["wolf-female-brown", "wolf-pup-brown"],
-					"wolf-male-darkgrey":
-						["wolf-female-darkgrey", "wolf-pup-darkgrey"],
-					"wolf-male-gold":
-						["wolf-female-gold", "wolf-pup-gold"],
-					"wolf-male-grey":
-						["wolf-female-grey", "wolf-pup-grey"],
-					"wolf-male-silver":
-						["wolf-female-silver", "wolf-pup-silver"],
-					"wolf-male-smokegrey":
-						["wolf-female-smokegrey", "wolf-pup-smokegrey"],
-					"wolf-male-white":
-						["wolf-female-white", "wolf-pup-white"],
+				companions: ["wolf-female", "wolf-pup"]
 			}
 		}
 	},
 	sounds: {
-		hurt: "creature/wolf/wolf-hurt",
-		death: "creature/wolf/wolf-hurt",
-		idle: "creature/wolf/wolf-howl"
+		hurt: "creature/wolf/hurt",
+		death: "creature/wolf/hurt",
+		idle: "creature/wolf/howl"
 	},
 	idleSoundChance: 0
 }
