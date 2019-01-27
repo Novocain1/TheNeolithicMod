@@ -126,7 +126,6 @@ namespace BehaviorsLib
             soundPlayed = false;
             eatTimeNow = 0;
             pathTraverser.GoTo(target.Position, moveSpeed, MinDistanceToTarget(), OnGoalReached, OnStuck);
-            
         }
 
         public override bool ContinueExecute(float dt)

@@ -112,6 +112,15 @@ namespace TheNeolithicMod
 
                 api.World.BlockAccessor.MarkBlockDirty(pos, OnRetesselated);
 
+                if (nowGrinding)
+                {
+                    ambientSound?.Start();
+                }
+                else
+                {
+                    ambientSound?.Stop();
+                }
+
                 if (api.Side == EnumAppSide.Server)
                 {
                     MarkDirty();
@@ -593,8 +602,10 @@ namespace TheNeolithicMod
 
         public override void OnStoreCollectibleMappings(Dictionary<int, AssetLocation> blockIdMapping, Dictionary<int, AssetLocation> itemIdMapping)
         {
-            foreach (var slot in Inventory)
+            int q = Inventory.Count;
+            for (int i = 0; i < q; i++)
             {
+                ItemSlot slot = inventory[i];
                 if (slot.Itemstack == null) continue;
 
                 if (slot.Itemstack.Class == EnumItemClass.Item)
@@ -610,8 +621,10 @@ namespace TheNeolithicMod
 
         public override void OnLoadCollectibleMappings(IWorldAccessor worldForResolve, Dictionary<int, AssetLocation> oldBlockIdMapping, Dictionary<int, AssetLocation> oldItemIdMapping)
         {
-            foreach (var slot in Inventory)
+            int q = Inventory.Count;
+            for (int i = 0; i < q; i++)
             {
+                ItemSlot slot = inventory[i];
                 if (slot.Itemstack == null) continue;
                 if (!slot.Itemstack.FixMapping(oldBlockIdMapping, oldItemIdMapping, worldForResolve))
                 {
