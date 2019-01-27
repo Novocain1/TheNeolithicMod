@@ -43,23 +43,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="cairo-sharp">
-      <HintPath>..\VS-1.7.8\Vintagestory\Lib\cairo-sharp.dll</HintPath>
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\cairo-sharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CommandLine">
-      <HintPath>..\VS-1.7.8\Vintagestory\Lib\CommandLine.dll</HintPath>
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\CommandLine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="csogg">
-      <HintPath>..\VS-1.7.8\Vintagestory\Lib\csogg.dll</HintPath>
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\csogg.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="csvorbis">
-      <HintPath>..\VS-1.7.8\Vintagestory\Lib\csvorbis.dll</HintPath>
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\csvorbis.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ENet">
-      <HintPath>..\VS-1.7.8\Vintagestory\Lib\ENet.dll</HintPath>
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\ENet.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp">
@@ -67,11 +67,11 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\VS-1.7.8\Vintagestory\Lib\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>..\VS-1.7.8\Vintagestory\Lib\protobuf-net.dll</HintPath>
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\protobuf-net.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
@@ -92,45 +92,46 @@
     <Reference Include="System.Xml.Linq">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Vintagestory">
-      <HintPath>..\VS-1.7.8\Vintagestory\Vintagestory.exe</HintPath>
+    <Reference Include="VintagestoryAPI">
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\VintagestoryAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="VintagestoryAPI">
-      <HintPath>..\VS-1.7.8\Vintagestory\VintagestoryAPI.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="VintagestoryLib">
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\VintagestoryLib.dll</HintPath>
     </Reference>
     <Reference Include="VSCreativeMod">
-      <HintPath>..\VS-1.7.8\Vintagestory\Mods\VSCreativeMod.dll</HintPath>
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Mods\VSCreativeMod.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VSEssentials">
-      <HintPath>..\VS-1.7.8\Vintagestory\Mods\VSEssentials.dll</HintPath>
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Mods\VSEssentials.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VSSurvivalMod">
-      <HintPath>..\VS-1.7.8\Vintagestory\Mods\VSSurvivalMod.dll</HintPath>
+      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Mods\VSSurvivalMod.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarryCapacity\BlockBehaviorCarryable.cs" />
-    <Compile Include="CarryCapacity\CarriedBlock.cs" />
-    <Compile Include="CarryCapacity\CarrySlot.cs" />
-    <Compile Include="CarryCapacity\CarrySystem.cs" />
-    <Compile Include="CarryCapacity\Client\EntityCarryRenderer.cs" />
-    <Compile Include="CarryCapacity\Client\HudOverlayRenderer.cs" />
-    <Compile Include="CarryCapacity\Handler\BackwardCompatHandler.cs" />
-    <Compile Include="CarryCapacity\Handler\CarryHandler.cs" />
-    <Compile Include="CarryCapacity\Handler\DeathHandler.cs" />
-    <Compile Include="CarryCapacity\Network\PickUpMessage.cs" />
-    <Compile Include="CarryCapacity\Network\PlaceDownMessage.cs" />
-    <Compile Include="CarryCapacity\Network\SwapSlotsMessage.cs" />
-    <Compile Include="CarryCapacity\Utility\Extensions.cs" />
-    <Compile Include="CarryCapacity\Utility\LockedItemSlot.cs" />
+    <Compile Include="carrycapacity\BlockBehaviorCarryable.cs" />
+    <Compile Include="carrycapacity\CarriedBlock.cs" />
+    <Compile Include="carrycapacity\CarrySlot.cs" />
+    <Compile Include="carrycapacity\CarrySystem.cs" />
+    <Compile Include="carrycapacity\Client\EntityCarryRenderer.cs" />
+    <Compile Include="carrycapacity\Client\HudOverlayRenderer.cs" />
+    <Compile Include="carrycapacity\Handler\BackwardCompatHandler.cs" />
+    <Compile Include="carrycapacity\Handler\CarryHandler.cs" />
+    <Compile Include="carrycapacity\Handler\DeathHandler.cs" />
+    <Compile Include="carrycapacity\Handler\EntityBehaviorDropCarriedOnDamage.cs" />
+    <Compile Include="carrycapacity\Network\PickUpMessage.cs" />
+    <Compile Include="carrycapacity\Network\PlaceDownMessage.cs" />
+    <Compile Include="carrycapacity\Network\SwapSlotsMessage.cs" />
+    <Compile Include="carrycapacity\Utility\Extensions.cs" />
+    <Compile Include="carrycapacity\Utility\LockedItemSlot.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\ChimneyBehavior.cs" />
     <Compile Include="Neolithic\Content\BlockEntity\BlockEntityChimney.cs" />
     <Compile Include="TasksLib\BehaviorsLib.cs" />
+    <Compile Include="TasksLib\Tasks\AiTaskFleePOI.cs" />
     <Compile Include="TasksLib\Tasks\AiTaskSleep.cs" />
     <Compile Include="TasksLib\Tasks\FixedAiTaskSeekFoodAndEat.cs" />
     <Compile Include="Neolithic\Content\Block Behavior\LampConnectorBehavior.cs" />
@@ -159,7 +160,6 @@
     <Folder Include="bin\TheNeolithicMod\assets\neolithicmod\blocktypes\wood\generic\" />
     <Folder Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\bag\" />
     <Folder Include="bin\TheNeolithicMod\assets\neolithicmod\shapes\entity\" />
-    <Folder Include="Content\Block Behavior\" />
     <Folder Include="Neolithic\Content\Entity\" />
     <Folder Include="TasksLib\EntityBehaviors\" />
   </ItemGroup>
@@ -605,10 +605,12 @@
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\itemtypes\tool\woodenmallet.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\lang\en.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\patches\blocks.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\patches\carryable.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\patches\entities.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\patches\items.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\patches\modifystonepath.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\patches\recipes.json" />
+    <None Include="bin\TheNeolithicMod\assets\neolithicmod\patches\seraph.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\patches\worldgen.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\adobe.json" />
     <None Include="bin\TheNeolithicMod\assets\neolithicmod\recipes\grid\bamboo-arrow-shaft.json" />
@@ -2068,8 +2070,6 @@
     <Content Include="bin\TheNeolithicMod\assets\neolithicmod\textures\overlays\Medium\rock2.png" />
     <Content Include="bin\TheNeolithicMod\assets\neolithicmod\textures\overlays\Medium\rock3.png" />
     <Content Include="bin\TheNeolithicMod\assets\neolithicmod\textures\unknown.png" />
-    <Content Include="bin\TheNeolithicMod\Neolithic.dll" />
-    <Content Include="bin\TheNeolithicMod\Neolithic.pdb" />
     <Content Include="bin\Totems\assets\totems\textures\block\pig-eyes.png" />
     <Content Include="bin\Totems\assets\totems\textures\item\offering-bowl\bread.png" />
     <Content Include="bin\Totems\assets\totems\textures\item\offering-bowl\empty.png" />

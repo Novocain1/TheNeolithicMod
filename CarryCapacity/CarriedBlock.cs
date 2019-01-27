@@ -189,8 +189,8 @@ namespace CarryCapacity
 			}
 			
 			RestoreBlockEntityData(world, selection.Position);
-			PlaySound(selection.Position, entity);
 			if (entity != null) Remove(entity, Slot);
+			PlaySound(selection.Position, world, (entity as EntityPlayer));
 			
 			return true;
 		}
@@ -220,7 +220,8 @@ namespace CarryCapacity
 		}
 		
 		
-		internal void PlaySound(BlockPos pos, Entity entity = null)
+		internal void PlaySound(BlockPos pos, IWorldAccessor world,
+		                        EntityPlayer entityPlayer = null)
 		{
 			const float SOUND_RANGE  = 16.0F;
 			const float SOUND_VOLUME = 0.8F;
@@ -228,12 +229,10 @@ namespace CarryCapacity
 			// TODO: In 1.7.0, Block.Sounds should not be null anymore.
 			if (Block.Sounds?.Place == null) return;
 			
-			var player = (entity.World.Side == EnumAppSide.Server)
-					&& (entity is EntityPlayer entityPlayer)
-				? entity.World.PlayerByUid(entityPlayer.PlayerUID)
-				: null;
+			var player = (entityPlayer != null) && (world.Side == EnumAppSide.Server)
+				? world.PlayerByUid(entityPlayer.PlayerUID) : null;
 			
-			entity.World.PlaySoundAt(Block.Sounds.Place,
+			world.PlaySoundAt(Block.Sounds.Place,
 				pos.X + 0.5, pos.Y + 0.25, pos.Z + 0.5, player,
 				range: SOUND_RANGE, volume: SOUND_VOLUME);
 		}
@@ -277,7 +276,7 @@ namespace CarryCapacity
 			if (carried == null) return false;
 			
 			carried.Set(entity, slot);
-			carried.PlaySound(pos, entity);
+			carried.PlaySound(pos, entity.World, (entity as EntityPlayer));
 			return true;
 		}
 		
@@ -298,24 +297,80 @@ namespace CarryCapacity
 			return carried.PlaceDown(player.Entity.World, selection, player.Entity);
 		}
 		
-		/// <summary> Attempts to make this entity drop its <see cref="CarriedBlock"/>
-		///           (if any) at the specified position, returning whether it was successful. </summary>
-		/// <example cref="ArgumentNullException"> Thrown if entity or pos is null. </exception>
-		public static bool DropCarried(this Entity entity, BlockPos pos, CarrySlot slot)
+		/// <summary> Attempts to make this entity drop its carried blocks from the
+		///           specified slots around its current position in the specified area. </summary>
+		/// <example cref="ArgumentNullException"> Thrown if entity or slots is null. </exception>
+		/// <example cref="ArgumentOutOfRangeException"> Thrown if hSize or vSize is negative. </exception>
+		public static void DropCarried(this Entity entity, IEnumerable<CarrySlot> slots,
+		                               int hSize = 2, int vSize = 4)
 		{
-			if (pos == null) throw new ArgumentNullException(nameof(pos));
+			if (entity == null) throw new ArgumentNullException(nameof(entity));
+			if (slots == null) throw new ArgumentNullException(nameof(slots));
+			if (hSize < 0) throw new ArgumentOutOfRangeException(nameof(hSize));
+			if (vSize < 0) throw new ArgumentOutOfRangeException(nameof(vSize));
 			
-			var carried = CarriedBlock.Get(entity, slot);
-			if (carried == null) return false;
+			var remaining = new HashSet<CarriedBlock>(
+				slots.Select(s => entity.GetCarried(s))
+				     .Where(c => (c != null)));
+			if (remaining.Count == 0) return;
 			
-			var selection = new BlockSelection {
-				Position    = pos,
-				Face        = BlockFacing.UP,
-				HitPosition = new Vec3d(0.5, 0.5, 0.5),
-			};
+			bool DropCarried(BlockPos pos, CarriedBlock block)
+			{
+				if (!block.PlaceDown(entity.World, new BlockSelection { Position = pos }, null)) return false;
+				CarriedBlock.Remove(entity, block.Slot);
+				return true;
+			}
 			
-			return carried.PlaceDown(entity.World, selection, entity);
+			var centerBlock  = entity.Pos.AsBlockPos;
+			var nearbyBlocks = new List<BlockPos>((hSize * 2 + 1) * (hSize * 2 + 1));
+			for (int x = -hSize; x <= hSize; x++)
+				for (int z = -hSize; z <= hSize; z++)
+					nearbyBlocks.Add(centerBlock.AddCopy(x, 0, z));
+			nearbyBlocks = nearbyBlocks.OrderBy(b => b.DistanceTo(centerBlock)).ToList();
+			
+			var accessor    = entity.World.BlockAccessor;
+			var blockIndex  = 0;
+			var distance    = 0;
+			while (remaining.Count > 0) {
+				var pos = nearbyBlocks[blockIndex];
+				if (Math.Abs(pos.Y - centerBlock.Y) <= vSize) {
+					var sign = Math.Sign(pos.Y - centerBlock.Y);
+					var testBlock   = accessor.GetBlock(pos);
+					var placeable   = remaining.FirstOrDefault(c => testBlock.IsReplacableBy(c.Block));
+					if (sign == 0) {
+						sign = ((placeable != null) ? -1 : 1);
+					} else if (sign > 0) {
+						if ((placeable != null) && DropCarried(pos, placeable))
+							remaining.Remove(placeable);
+					} else if ((placeable == null)) {
+						var above = pos.UpCopy();
+						testBlock = accessor.GetBlock(above);
+						placeable = remaining.FirstOrDefault(c => testBlock.IsReplacableBy(c.Block));
+						if ((placeable != null) && DropCarried(above, placeable))
+							remaining.Remove(placeable);
+					}
+					pos.Add(0, sign, 0);
+				} else if (blockIndex >= nearbyBlocks.Count) break;
+				
+				if (++distance > 2) {
+					distance = 0;
+					blockIndex++;
+					if (blockIndex % 4 == 4)
+					if (++blockIndex >= nearbyBlocks.Count)
+						blockIndex = 0;
+				}
+			}
+			
+			// FIXME: Drop container contents if blocks could not be placed.
+			//        Right now, the player just gets to keep them equipped.
 		}
+		
+		/// <summary> Attempts to make this entity drop all of its carried
+		///           blocks around its current position in the specified area. </summary>
+		/// <example cref="ArgumentNullException"> Thrown if entity is null. </exception>
+		/// <example cref="ArgumentOutOfRangeException"> Thrown if hSize or vSize is negative. </exception>
+		public static void DropAllCarried(this Entity entity, int hSize = 2, int vSize = 4)
+			=> DropCarried(entity, Enum.GetValues(typeof(CarrySlot)).Cast<CarrySlot>(), hSize, vSize);
 		
 		/// <summary>
 		///   Attempts to swap the <see cref="CarriedBlock"/>s currently carried in the

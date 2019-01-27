@@ -96,7 +96,7 @@ namespace BehaviorsLib
             entity.World.Logger.Notification("AiTaskFleePOI:" + entity.ServerPos.XYZ + ": I Started :^|");
             stuckatMs = -9999;
             nowStuck = false;
-            entity.PathTraverser.GoTo(pos, moveSpeed, MinDistanceToTarget(), OnGoalReached, OnStuck);
+            pathTraverser.GoTo(pos, moveSpeed, MinDistanceToTarget(), OnGoalReached, OnStuck);
             fleeStartMs = entity.World.ElapsedMilliseconds;
             stuck = false;
 
@@ -107,10 +107,10 @@ namespace BehaviorsLib
             Vec3d pos = target.Position;
             UpdateTargetPos(pos);
             //if (pos == null) return false;
-            entity.PathTraverser.CurrentTarget.X = pos.X;
-            entity.PathTraverser.CurrentTarget.Y = pos.Y;
-            entity.PathTraverser.CurrentTarget.Z = pos.Z;
-            //entity.World.Logger.Notification("" + entity.PathTraverser.CurrentTarget);
+            pathTraverser.CurrentTarget.X = pos.X;
+            pathTraverser.CurrentTarget.Y = pos.Y;
+            pathTraverser.CurrentTarget.Z = pos.Z;
+            //entity.World.Logger.Notification("" + pathTraverser.CurrentTarget);
 
             Cuboidd targetBox = entity.CollisionBox.ToDouble().Translate(entity.ServerPos.X, entity.ServerPos.Y, entity.ServerPos.Z);
             double distance = targetBox.ShortestDistanceFrom(pos);
@@ -134,14 +134,14 @@ namespace BehaviorsLib
             Vec3d diff = pos.Sub(entity.ServerPos.X, entity.ServerPos.Y, entity.ServerPos.Z);
             float yaw = (float)Math.Atan2(diff.X, diff.Z);
 
-            pos = entity.Pos.XYZ.Ahead(10, 0, yaw - GameMath.PI / 2);
+            pos = pos.Ahead(10, 0, yaw - GameMath.PI / 2);
         }
 
 
         public override void FinishExecute(bool cancelled)
         {
             base.FinishExecute(cancelled);
-            entity.PathTraverser.Stop();
+            pathTraverser.Stop();
 
             if (cancelled)
             {
@@ -170,7 +170,7 @@ namespace BehaviorsLib
 
         private void OnGoalReached()
         {
-            entity.PathTraverser.Active = true;
+            pathTraverser.Active = true;
 
             failedSeekTargets.Remove(target);
         }
