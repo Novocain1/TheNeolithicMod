@@ -2,7 +2,7 @@ using System;
 using Vintagestory.API.Client;
 using Vintagestory.API.MathTools;
 
-namespace CarryCapacity
+namespace CarryCapacity.Client
 {
 	public class HudOverlayRenderer : IRenderer
 	{
@@ -34,7 +34,7 @@ namespace CarryCapacity
 		public HudOverlayRenderer(ICoreClientAPI api)
 		{
 			API = api;
-			api.Event.RegisterRenderer(this, EnumRenderStage.Ortho);
+			API.Event.RegisterRenderer(this, EnumRenderStage.Ortho);
 			UpdateCirceMesh(1);
 		}
 		
@@ -83,7 +83,7 @@ namespace CarryCapacity
 			
 			var r = ((CIRCLE_COLOR >> 16) & 0xFF) / 255.0F;
 			var g = ((CIRCLE_COLOR >>  8) & 0xFF) / 255.0F;
-			var b = ((CIRCLE_COLOR      ) & 0xFF) / 255.0F;
+			var b = ( CIRCLE_COLOR        & 0xFF) / 255.0F;
 			var color = new Vec4f(r, g, b, _circleAlpha);
 			
 			shader.Uniform("rgbaIn", color);
@@ -93,10 +93,14 @@ namespace CarryCapacity
 			shader.Uniform("noTexture", 1.0F);
 			shader.UniformMatrix("projectionMatrix", rend.CurrentProjectionMatrix);
 			
-			// TODO: Render at mouse cursor, not center of screen.
-			//       Gotta wait for the API to add MouseMove event.
-			var x = API.Render.FrameWidth / 2;
-			var y = API.Render.FrameHeight / 2;
+			int x, y;
+			if (API.Input.MouseGrabbed) {
+				x = API.Render.FrameWidth / 2;
+				y = API.Render.FrameHeight / 2;
+			} else {
+				x = API.Input.MouseX;
+				y = API.Input.MouseY;
+			}
 			
 			rend.GlPushMatrix();
 				rend.GlTranslate(x, y, 0);

@@ -1,15 +1,15 @@
 ﻿using CarryCapacity.Client;
 using CarryCapacity.Handler;
 using CarryCapacity.Network;
+using CarryCapacity.Utility;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 
-[assembly: ModInfo( "CarryCapacity",
+[assembly: ModInfo("CarryCapacity",
 	Description = "Adds the capability to carry various things",
 	Website     = "https://github.com/copygirl/CarryCapacity",
-	Authors     = new []{ "copygirl" } )]
+	Authors     = new []{ "copygirl" })]
 
 namespace CarryCapacity
 {
@@ -24,7 +24,6 @@ namespace CarryCapacity
 		// Client
 		public ICoreClientAPI ClientAPI { get; private set; }
 		public IClientNetworkChannel ClientChannel { get; private set; }
-		public CustomMouseHandler MouseHandler { get; private set; }
 		public EntityCarryRenderer EntityCarryRenderer { get; private set; }
 		public HudOverlayRenderer HudOverlayRenderer { get; private set; }
 		
@@ -32,6 +31,7 @@ namespace CarryCapacity
 		public ICoreServerAPI ServerAPI { get; private set; }
 		public IServerNetworkChannel ServerChannel { get; private set; }
 		public DeathHandler DeathHandler { get; private set; }
+		public BackwardCompatHandler BackwardCompatHandler { get; private set; }
 		
 		// Common
 		public CarryHandler CarryHandler { get; private set; }
@@ -49,9 +49,9 @@ namespace CarryCapacity
 			ClientAPI     = api;
 			ClientChannel = api.Network.RegisterChannel(MOD_ID)
 				.RegisterMessageType(typeof(PickUpMessage))
-				.RegisterMessageType(typeof(PlaceDownMessage));
+				.RegisterMessageType(typeof(PlaceDownMessage))
+				.RegisterMessageType(typeof(SwapSlotsMessage));
 			
-			MouseHandler        = new CustomMouseHandler(api);
 			EntityCarryRenderer = new EntityCarryRenderer(api);
 			HudOverlayRenderer  = new HudOverlayRenderer(api);
 			
@@ -60,12 +60,16 @@ namespace CarryCapacity
 		
 		public override void StartServerSide(ICoreServerAPI api)
 		{
+			api.Register<EntityBehaviorDropCarriedOnDamage>();
+			
 			ServerAPI     = api;
 			ServerChannel = api.Network.RegisterChannel(MOD_ID)
 				.RegisterMessageType(typeof(PickUpMessage))
-				.RegisterMessageType(typeof(PlaceDownMessage));
+				.RegisterMessageType(typeof(PlaceDownMessage))
+				.RegisterMessageType(typeof(SwapSlotsMessage));
 			
-			DeathHandler = new DeathHandler(api);
+			DeathHandler          = new DeathHandler(api);
+			BackwardCompatHandler = new BackwardCompatHandler(api);
 			
 			CarryHandler.InitServer();
 		}

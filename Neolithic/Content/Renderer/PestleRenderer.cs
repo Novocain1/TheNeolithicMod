@@ -32,8 +32,10 @@ namespace TheNeolithicMod
         {
             this.api = coreClientAPI;
             this.pos = pos;
+            MeshRef test = new MeshRef();
 
             meshref = coreClientAPI.Render.UploadMesh(mesh);
+            
         }
 
         public double RenderOrder
@@ -47,10 +49,13 @@ namespace TheNeolithicMod
         float yf = -0.5f;
         float zf = 0.0f;
         bool yb = true;
+        bool dO = true;
+
         public void OnRenderFrame(float deltaTime, EnumRenderStage stage)
         {
             if (meshref == null || !ShouldRender) return;
 
+            
             IRenderAPI rpi = api.Render;
             Vec3d camPos = api.World.Player.Entity.CameraPos;
 
@@ -87,7 +92,14 @@ namespace TheNeolithicMod
                     yf += deltaTime * jl * 5.0f;
                     zf += deltaTime * 0.02f;
                 }
-                else yb = false;
+                else
+                {
+                    yb = false;
+                    if (dO && api.Side == EnumAppSide.Client) {
+                        api.World.PlaySoundAt(api.World.BlockAccessor.GetBlock(new AssetLocation("game:gravel-andesite")).Sounds.Break, pos.X, pos.Y, pos.Z);
+                        dO = false;
+                    }
+                }
                 if (!yb && yf >= -0.2f)
                 {
                     float jl = Convert.ToSingle(api.World.Rand.NextDouble());
@@ -95,11 +107,11 @@ namespace TheNeolithicMod
                     yf -= deltaTime * jl * 10.0f;
                     zf -= deltaTime * 0.04f;
                 }
-                else yb = true;
+                else { yb = true; dO = true; }
                 if (!yb) Angle += (deltaTime * 100) * GameMath.DEG2RAD;
                 if (Angle * GameMath.RAD2DEG > 360.0f) Angle = 0.0f * GameMath.DEG2RAD;
             }
-            if (!ShouldRotate)
+            else
             {
                 xf = 0.0f;
                 yf = 0.0f;

@@ -1,26 +1,33 @@
 {
-	code: "pig-sow",
+	code: "pig-wild-female",
 	class: "EntityAgent",
 	hitboxSize: { x: 0.99, y: 0.8 },
+	deadHitboxSize: { x: 0.99, y: 0.5 },
 	eyeHeight: 0.7,
-	variantgroups: [
-		{ code: "color", states: ["ashgrey", "brown", "chocolate", "darkgrey", "smokegrey", "walnut"] }],
-	drops: [
-		{
-			type: "block",
-			code: "neolithicmod:dead-pig-sow-{color}",
-		},
-	],
+	drops: [],
 	client: {
 		renderer: "Shape",
-		shape: { base: "entity/land/pig/sow" },
-		texture: { base: "entity/pig/sow/{color}" },
-		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }, { code: "fixedmultiply" }],
+		shape: { base: "entity/land/pig-wild-female" },
+		texture: { base: "entity/pig/pig-wild-female1" },
+		behaviors: [
+			{ code: "repulseagents" }, 
+			{ code: "controlledphysics", stepHeight: 1.0001 }, 
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "interpolateposition" }, { code: "multiply" },
+			{ code: "harvestable" }
+		],
 		animations: [
 			{
 				code: "hurt",
 				animation: "hurt", 
 				animationSpeed: 2.2,
+				weight: 10,
+				blendMode: "AddAverage" 
+			},
+			{
+				code: "die",
+				animation: "die", 
+				animationSpeed: 2,
 				weight: 10,
 				blendMode: "AddAverage" 
 			}
@@ -36,14 +43,34 @@
 				currenthealth: 20,
 				maxhealth: 20
 			},
+			{ code: "deaddecay", hoursToDecay: 96, decayedBlock: "carcass-medium" },
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "harvestable", drops: [
+				{
+					type: "item", 
+					code: "redmeat-raw", 
+					quantity: { avg: 4.5, var: 1.5 } 
+				},
+				{
+					type: "item", 
+					code: "hide-raw", 
+					quantity: { avg: 1.25, var: 0 } 
+				},
+				{
+					type: "item", 
+					code: "fat", 
+					quantity: { avg: 1.5, var: 0 } 
+				}				
+				],
+			},
 			{ code: "breathe" },
 			{
-				code: "fixedmultiply",
-				spawnEntityCode: "pig-piglet",
+				code: "multiply",
+				spawnEntityCode: "pig-wild-piglet",
 				spawnQuantityMin: 2,
 				spawnQuantityMax: 6,
-				growthCapEntityCodes: ["pig-piglet", "pig-sow-*", "pig-boar-*"],
-				requiresNearbyEntityCode: "pig-boar-*",
+				growthCapEntityCodes: ["pig-wild-piglet", "pig-wild-female", "pig-wild-male"],
+				requiresNearbyEntityCode: "pig-wild-male",
 				requiresNearbyEntityRange: 10,
 				pregnancyDays: 8,
 				multiplyCooldownDaysMin: 12,
@@ -77,27 +104,6 @@
 					{
 						code: "seekentity",
 						entityCodes: ["player"],
-						priority: 1.9,
-						mincooldown: 1000, 
-						maxcooldown: 1500, 
-						movespeed: 0.025,
-						seekingRange: 5,
-						animation: "Run",
-						animationSpeed: 4,
-						whenInEmotionState: "aggressiveondamage"
-					},
-					{
-						code: "AiTaskSleep",
-						priority: 1.8,
-						priorityForCancel: 1.35,
-						animation: "sleep",
-						isnocturnal: false,
-						cancelOnHurt: true,
-						animationSpeed: 0.20
-					},
-					{
-						code: "seekentity",
-						entityCodes: ["player"],
 						priority: 1.5,
 						mincooldown: 1000, 
 						maxcooldown: 1500, 
@@ -115,7 +121,7 @@
 						seekingRange: 12,
 						animation: "Run",
 						animationSpeed: 4,
-						sound: "creature/pig/pig-hurt",
+						sound: "creature/pig/hurt",
 						whenInEmotionState: "fleeondamage"
 					},
 					{
@@ -174,9 +180,9 @@
 		]
 	},
 	sounds: {
-		hurt: "creature/pig/pig-hurt",
-		death: "creature/pig/pig-hurt",
-		idle: "creature/pig/pig-idle"
+		hurt: "creature/pig/hurt",
+		death: "creature/pig/hurt",
+		idle: "creature/pig/idle"
 	},
 	idleSoundChance: 0.01
 }

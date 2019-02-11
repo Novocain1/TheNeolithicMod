@@ -125,16 +125,16 @@ namespace BehaviorsLib
             nowStuck = false;
             soundPlayed = false;
             eatTimeNow = 0;
-            entity.PathTraverser.GoTo(target.Position, moveSpeed, MinDistanceToTarget(), OnGoalReached, OnStuck);
+            pathTraverser.GoTo(target.Position, moveSpeed, MinDistanceToTarget(), OnGoalReached, OnStuck);
         }
 
         public override bool ContinueExecute(float dt)
         {
             Vec3d pos = target.Position;
 
-            entity.PathTraverser.CurrentTarget.X = pos.X;
-            entity.PathTraverser.CurrentTarget.Y = pos.Y;
-            entity.PathTraverser.CurrentTarget.Z = pos.Z;
+            pathTraverser.CurrentTarget.X = pos.X;
+            pathTraverser.CurrentTarget.Y = pos.Y;
+            pathTraverser.CurrentTarget.Z = pos.Z;
 
             Cuboidd targetBox = entity.CollisionBox.ToDouble().Translate(entity.ServerPos.X, entity.ServerPos.Y, entity.ServerPos.Z);
             double distance = targetBox.ShortestDistanceFrom(pos);
@@ -191,7 +191,7 @@ namespace BehaviorsLib
         public override void FinishExecute(bool cancelled)
         {
             base.FinishExecute(cancelled);
-            entity.PathTraverser.Stop();
+            pathTraverser.Stop();
 
             if (cancelled)
             {
@@ -224,13 +224,13 @@ namespace BehaviorsLib
 
         private void OnGoalReached()
         {
-            entity.PathTraverser.Active = true;
+            pathTraverser.Active = true;
 
             failedSeekTargets.Remove(target);
             if (animMeta != null && nlAnimMeta != null && doOnce)
             {
                 entity.StopAnimation(animMeta.Code);
-                entity.StartAnimation(nlAnimMeta);
+                entity.StartAnimation(nlAnimMeta.ToString());
                 doOnce = false;
             }
         }

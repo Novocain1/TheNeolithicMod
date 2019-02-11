@@ -29,7 +29,7 @@ namespace BehaviorsLib
         {
             if (doOnce)
             {
-                WakeRNG = entity.World.Rand.NextDouble()/5.00d;
+                WakeRNG = entity.World.Rand.NextDouble() / 5.00d;
                 //entity.World.Logger.Notification("Entity at position " + entity.ServerPos + " is set to a WakeRNG of " + WakeRNG);
                 doOnce = false;
             }
@@ -39,7 +39,6 @@ namespace BehaviorsLib
 
         public override void StartExecute()
         {
-
             base.StartExecute();
         }
 

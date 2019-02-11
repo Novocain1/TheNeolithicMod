@@ -1,21 +1,35 @@
 {
-	code: "hyena-wild-pup",
+	code: "hyena-pup",
 	class: "EntityAgent",
-	hitboxSize: { x: 1.0, y: 0.5 },
+	hitboxSize: { x: 0.7, y: 0.5 },
+	deadHitboxSize: { x: 0.7, y: 0.3 },
 	eyeHeight: 0.4,
 	drops: [
 		
 	],
 	client: {
 		renderer: "Shape",
-		shape: { base: "entity/land/hyena/pup" },
-		texture: { base: "entity/hyena/wild-pup" }, 
-		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }],
+		shape: { base: "entity/land/hyena-pup" },
+		texture: { base: "entity/hyena/pup" }, 
+		behaviors: [
+			{ code: "repulseagents" }, 
+			{ code: "controlledphysics", stepHeight: 1.0001 }, 
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "interpolateposition" },
+			{ code: "harvestable" }
+		],
 		animations: [
 			{
 				code: "hurt",
 				animation: "hurt", 
 				animationSpeed: 2.2,
+				weight: 10,
+				blendMode: "AddAverage" 
+			},
+			{
+				code: "die",
+				animation: "die", 
+				animationSpeed: 1.75,
 				weight: 10,
 				blendMode: "AddAverage" 
 			}
@@ -27,10 +41,16 @@
 			{ code: "controlledphysics", stepHeight: 1.0001 },
 			{ code: "despawn", minPlayerDistance: 8, belowLightLevel: 8, minSeconds: 300 },
 			{ code: "health", currenthealth: 5, maxhealth: 5 },
+			{ code: "deaddecay", hoursToDecay: 96, decayedBlock: "carcass-small" },
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "harvestable", drops: [
+				
+				],
+			},
 			{ code: "breathe" },
 			{ 
 				hoursToGrow: 336,
-				adultEntityCodes: ["hyena-wild-male", "hyena-wild-female-brown", "hyena-wild-female-tan"],
+				adultEntityCodes: ["hyena-male", "hyena-female"],
 				code: "grow" 
 			},
 			{ 
@@ -39,21 +59,12 @@
 					{
 						code: "fleeentity",
 						entityCodes: ["player"],
-						priority: 1.6,
+						priority: 1.5,
 						movespeed: 0.02,
 						animationSpeed: 2.2,
 						seekingRange: 6,
 						animation: "Run",
-						sound: "creature/wolf/wolf-pup-bark"
-					},
-					{
-						code: "AiTaskSleep",
-						priority: 1.5,
-						priorityForCancel: 1.35,
-						animation: "sleep",
-						isnocturnal: true,
-						cancelOnHurt: true,
-						animationSpeed: 0.20
+						sound: "creature/wolf/pup-bark"
 					},
 					{
 						code: "getoutofwater",
@@ -65,7 +76,7 @@
 					{
 						code: "stayclosetoentity",
 						priority: 1.4,
-						entityCode: "hyena-wild-female",
+						entityCode: "hyena-female",
 						movespeed: 0.02,
 						animationSpeed: 3,
 						maxDistance: 5,
@@ -111,9 +122,9 @@
 		]
 	},
 	sounds: {
-		hurt: "creature/wolf/wolf-pup-hurt",
-		death: "creature/wolf/wolf-pup-hurt",
-		idle: "creature/wolf/wolf-pup-bark"
+		hurt: "creature/wolf/pup-hurt",
+		death: "creature/wolf/pup-hurt",
+		idle: "creature/wolf/pup-bark"
 	},
 	idleSoundChance: 0.01
 }

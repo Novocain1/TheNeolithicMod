@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Vintagestory.API;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
@@ -13,16 +16,34 @@ namespace CarryCapacity
 		public static BlockBehaviorCarryable DEFAULT { get; }
 			= new BlockBehaviorCarryable(null);
 		
-		
-		public ModelTransform Transform { get; }
-			= new ModelTransform {
+		public static ModelTransform DEFAULT_BLOCK_TRANSFORM
+			=> new ModelTransform {
 				Translation = new Vec3f(0.0F, 0.0F, 0.0F),
 				Rotation    = new Vec3f(0.0F, 0.0F, 0.0F),
 				Origin      = new Vec3f(0.5F, 0.5F, 0.5F),
 				ScaleXYZ    = new Vec3f(0.5F, 0.5F, 0.5F)
 			};
 		
+		public static readonly IReadOnlyDictionary<CarrySlot, float> DEFAULT_WALKSPEED
+			= new Dictionary<CarrySlot, float> { // Default slowdown while carrying ..
+				{ CarrySlot.Hands    , 0.60F },    // .. in hands:    40%
+				{ CarrySlot.Back     , 0.85F },    // .. on back:     15%
+				{ CarrySlot.Shoulder , 0.70F },    // .. on shoulder: 30%
+			};
+		
+		public static readonly IReadOnlyDictionary<CarrySlot, string> DEFAULT_ANIMATION
+			= new Dictionary<CarrySlot, string> {
+				{ CarrySlot.Hands    , $"{ CarrySystem.MOD_ID }:holdheavy" },
+				{ CarrySlot.Shoulder , $"{ CarrySystem.MOD_ID }:shoulder"  },
+			};
+		
+		
 		public float InteractDelay { get; private set; } = 0.8F;
+		
+		public ModelTransform DefaultTransform { get; private set; } = DEFAULT_BLOCK_TRANSFORM;
+		
+		public SlotStorage Slots { get; private set; } = new SlotStorage();
+		
 		
 		public BlockBehaviorCarryable(Block block)
 			: base(block) {  }
@@ -30,40 +51,83 @@ namespace CarryCapacity
 		
 		public override void Initialize(JsonObject properties)
 		{
-			bool TryGetFloat(string key, out float result) {
-				result = properties[key].AsFloat(float.NaN);
-				return !float.IsNaN(result);
-			}
-			bool TryGetVec3f(string key, out Vec3f result) {
-				var floats  = properties[key].AsFloatArray();
-				var success = (floats?.Length == 3);
-				result = success ? new Vec3f(floats) : null;
-				return success;
-			}
-			
-			if (TryGetVec3f("translation", out var t)) Transform.Translation = t;
-			if (TryGetVec3f("rotation"   , out var r)) Transform.Rotation = r;
-			if (TryGetVec3f("origin"     , out var o)) Transform.Origin = o;
-			
-			// Try to get scale both as a Vec3f and single float - for compatibility reasons.
-			if (TryGetVec3f("scale", out var sv)) Transform.ScaleXYZ = sv;
-			if (TryGetFloat("scale", out var sf)) Transform.ScaleXYZ = new Vec3f(sf, sf, sf);
-			
-			if (TryGetFloat("interactDelay", out var d)) InteractDelay = d;
+			if (TryGetFloat(properties, "interactDelay", out var d)) InteractDelay = d;
+			DefaultTransform = GetTransform(properties, DEFAULT_BLOCK_TRANSFORM);
+			Slots.Initialize(properties["slots"], DefaultTransform);
 		}
 		
-		public override bool OnBlockInteractStart(
-			IWorldAccessor world, IPlayer byPlayer,
-			BlockSelection blockSel, ref EnumHandling handling)
+		
+		private static bool TryGetFloat(JsonObject json, string key, out float result)
 		{
-			var isSneaking    = byPlayer.Entity.Controls.Sneak;
-			var isEmptyHanded = byPlayer.Entity.RightHandItemSlot.Empty;
-			// Prevent default action if sneaking and empty handed,
-			// as we want to handle block pickup in this case.
-			if (isSneaking && isEmptyHanded) {
-				handling = EnumHandling.PreventDefault;
-				return false;
-			} else return true;
+				result = json[key].AsFloat(float.NaN);
+				return !float.IsNaN(result);
+		}
+		private static bool TryGetVec3f(JsonObject json, string key, out Vec3f result)
+		{
+			var floats  = json[key].AsFloatArray();
+			var success = (floats?.Length == 3);
+			result = success ? new Vec3f(floats) : null;
+			return success;
+		}
+		
+		private static ModelTransform GetTransform(JsonObject json, ModelTransform baseTransform)
+		{
+			var trans = baseTransform.Clone();
+			if (TryGetVec3f(json, "translation", out var t)) trans.Translation = t;
+			if (TryGetVec3f(json, "rotation"   , out var r)) trans.Rotation = r;
+			if (TryGetVec3f(json, "origin"     , out var o)) trans.Origin = o;
+			// Try to get scale both as a Vec3f and single float - for compatibility reasons.
+			if (TryGetVec3f(json, "scale", out var sv)) trans.ScaleXYZ = sv;
+			if (TryGetFloat(json, "scale", out var sf)) trans.ScaleXYZ = new Vec3f(sf, sf, sf);
+			return trans;
+		}
+		
+		
+		public class SlotSettings
+		{
+			public ModelTransform Transform { get; set; }
+			
+			public string Animation { get; set; }
+			
+			public float WalkSpeedModifier { get; set; } = 1.0F;
+		}
+		
+		public class SlotStorage
+		{
+			private readonly Dictionary<CarrySlot, SlotSettings> _dict
+				= new Dictionary<CarrySlot, SlotSettings>();
+			
+			public SlotSettings this[CarrySlot slot]
+				=> _dict.TryGetValue(slot, out var settings) ? settings : null;
+			
+			public void Initialize(JsonObject properties, ModelTransform defaultTansform)
+			{
+				_dict.Clear();
+				if (properties?.Exists != true) {
+					
+					if (!DEFAULT_ANIMATION.TryGetValue(CarrySlot.Hands, out var anim)) anim = null;
+					_dict.Add(CarrySlot.Hands, new SlotSettings { Animation = anim });
+					
+				} else {
+					
+					foreach (var slot in Enum.GetValues(typeof(CarrySlot)).Cast<CarrySlot>()) {
+						var slotProperties = properties[slot.ToString()];
+						if (slotProperties?.Exists != true) continue;
+						
+						if (!_dict.TryGetValue(slot, out var settings)) {
+							if (!DEFAULT_ANIMATION.TryGetValue(slot, out var anim)) anim = null;
+							_dict.Add(slot, settings = new SlotSettings { Animation = anim });
+						}
+						
+						settings.Transform = GetTransform(slotProperties, defaultTansform);
+						settings.Animation = slotProperties["animation"].AsString(settings.Animation);
+						
+						if (!DEFAULT_WALKSPEED.TryGetValue(slot, out var speed)) speed = 1.0F;
+						settings.WalkSpeedModifier = slotProperties["walkSpeedModifier"].AsFloat(speed);
+					}
+					
+				}
+			}
 		}
 	}
 }

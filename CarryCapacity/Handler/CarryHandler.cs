@@ -1,19 +1,27 @@
+using System;
+using System.Linq;
 using CarryCapacity.Network;
+using CarryCapacity.Utility;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 
 namespace CarryCapacity.Handler
 {
 	/// <summary>
-	///   Takes care of core CarryCapacity handling, such as listening to events,
-	///   picking up and placing blocks, as well as sending and handling messages.
+	///   Takes care of core CarryCapacity handling, such as listening to input events,
+	///   picking up, placing and swapping blocks, as well as sending and handling messages.
 	/// </summary>
 	public class CarryHandler
 	{
 		public const float PLACE_SPEED_MODIFIER = 0.75F;
+		public const float SWAP_SPEED_MODIFIER  = 1.5F;
 		
 		private CurrentAction _action   = CurrentAction.None;
+		private CarrySlot? _targetSlot  = null;
 		private BlockPos _selectedBlock = null;
+		private float _timeHeld         = 0.0F;
 		
 		private CarrySystem Mod { get; }
 		
@@ -22,43 +30,95 @@ namespace CarryCapacity.Handler
 		
 		public void InitClient()
 		{
-			Mod.MouseHandler.OnRightMousePressed  += OnPress;
-			Mod.MouseHandler.OnRightMouseHeld     += OnHold;
-			Mod.MouseHandler.OnRightMouseReleased += OnRelease;
+			Mod.ClientAPI.Event.MouseDown += OnMouseDown;
+			Mod.ClientAPI.Event.MouseUp   += OnMouseUp;
+			Mod.ClientAPI.Event.RegisterGameTickListener(OnGameTick, 0);
+			
+			// FIXME: Disabled this portion of the code, since the updated event
+			//        isn't available because my merge request wasn't accepted yet.
+			// Mod.ClientAPI.Event.BeforeActiveSlotChanged +=
+			// 	(ev) => OnBeforeActiveSlotChanged(Mod.ClientAPI.World.Player.Entity, ev);
 		}
 		
 		public void InitServer()
 		{
 			Mod.ServerChannel
 				.SetMessageHandler<PickUpMessage>(OnPickUpMessage)
-				.SetMessageHandler<PlaceDownMessage>(OnPlaceDownMessage);
+				.SetMessageHandler<PlaceDownMessage>(OnPlaceDownMessage)
+				.SetMessageHandler<SwapSlotsMessage>(OnSwapSlotsMessage);
+			
+			Mod.ServerAPI.Event.OnEntitySpawn += OnEntitySpawn;
+			
+			// Mod.ServerAPI.Event.BeforeActiveSlotChanged +=
+			// 	(player, ev) => OnBeforeActiveSlotChanged(player.Entity, ev);
 		}
 		
 		
-		public void OnPress()
+		public void OnEntitySpawn(Entity entity)
+		{
+			// Set this again so walk speed modifiers and animations can be applied.
+			foreach (var carried in entity.GetCarried())
+				carried.Set(entity, carried.Slot);
+		}
+		
+		
+		/// <summary> Returns the first "action" slot (either Hands or Shoulder)
+		///           that satisfies the specified function, or null if none. </summary>
+		private static CarrySlot? FindActionSlot(System.Func<CarrySlot, bool> func)
+		{
+			if (func(CarrySlot.Hands   )) return CarrySlot.Hands;
+			if (func(CarrySlot.Shoulder)) return CarrySlot.Shoulder;
+			return null;
+		}
+		
+		public void OnMouseDown(MouseEvent ev)
 		{
 			var world     = Mod.ClientAPI.World;
 			var player    = world.Player;
-			var carried   = player.Entity.GetCarried();
 			var selection = player.CurrentBlockSelection;
-			if (selection == null) return;
+			var block     = (selection != null) ? world.BlockAccessor.GetBlock(selection.Position) : null;
 			
-			if (carried == null) {
-				// Pick up a block. Ensure it's carryable.
-				if (!world.BlockAccessor.GetBlock(selection.Position).IsCarryable()) return;
+			var carriedHands    = player.Entity.GetCarried(CarrySlot.Hands);
+			var carriedBack     = player.Entity.GetCarried(CarrySlot.Back);
+			var carriedShoulder = player.Entity.GetCarried(CarrySlot.Shoulder);
+			var carriedAny      = carriedHands ?? carriedShoulder;
+			
+			// If something is being carried in-hand, make sure to prevent the default action.
+			if (carriedHands != null) ev.Handled = true;
+			// FIXME: This prevents interactions in the GUI. We need dedicated events for block/entity interactions.
+			
+			// Only continue if the right (interact) mouse button is held and player is sneaking with an empty hand.
+			if ((ev.Button != EnumMouseButton.Right) || !CanInteract(player.Entity)) return;
+			
+			if (carriedAny != null) {
+				// If something's being carried in-hand or on shoulder and aiming at block, try to place it.
+				if (selection != null) {
+					// Make sure it's put on a solid top face of a block.
+					if (!CanPlace(world, selection, carriedAny)) return;
+					_action        = CurrentAction.PlaceDown;
+					_targetSlot    = carriedAny.Slot;
+					_selectedBlock = GetPlacedPosition(world, selection, carriedAny.Block);
+				}
+				// If something's being carried in-hand and aiming at nothing, try to put held block on back.
+				else if ((carriedBack == null) && (carriedAny.Behavior.Slots[CarrySlot.Back] != null)) {
+					_action     = CurrentAction.SwapBack;
+					_targetSlot = carriedAny.Slot;
+				}
+			}
+			// If nothing's being carried in-hand and aiming at carryable block, try to pick it up.
+			else if ((selection != null) && ((_targetSlot = FindActionSlot(slot => block.IsCarryable(slot))) != null)) {
 				_action        = CurrentAction.PickUp;
 				_selectedBlock = selection.Position;
-			} else {
-				// Place down a block. Make sure it's
-				// put on a solid top face of a block.
-				if (!CanPlace(world, selection, carried)) return;
-				_action        = CurrentAction.PlaceDown;
-				_selectedBlock = GetPlacedPosition(world, selection, carried.Block);
 			}
-			OnHold(0.0F);
+			// If nothing's being carried in-hand and aiming at nothing or non-carryable block, try to grab block on back.
+			else if ((carriedBack != null) && ((_targetSlot = FindActionSlot(slot => (carriedBack.Behavior.Slots[slot] != null))) != null))
+				_action = CurrentAction.SwapBack;
+			
+			OnGameTick(0.0F);  // Run this once to for validation. May reset action to None.
+			ev.Handled = true; // Prevent default action. Don't want to interact with blocks.
 		}
 		
-		public void OnHold(float time)
+		public void OnGameTick(float deltaTime)
 		{
 			if (_action == CurrentAction.None) return;
 			var world  = Mod.ClientAPI.World;
@@ -68,83 +128,143 @@ namespace CarryCapacity.Handler
 			// TODO: Only allow close blocks to be picked up.
 			// TODO: Don't allow the block underneath to change?
 			
-			var isSneaking    = player.Entity.Controls.Sneak;
-			var isEmptyHanded = player.Entity.RightHandItemSlot.Empty;
-			// Only pick up or place down if sneaking and empty handed.
-			if (!isSneaking || !isEmptyHanded)
-				{ OnRelease(); return; }
+			// Only perform action if sneaking with empty hands.
+			if (!CanInteract(player.Entity))
+				{ OnMouseUp(); return; }
 			
-			// Ensure the player hasn't in the meantime
-			// picked up / placed down something somehow.
-			var carried = player.Entity.GetCarried();
-			if ((_action == CurrentAction.PickUp) == (carried != null))
-				{ OnRelease(); return; }
+			var carriedTarget = _targetSlot.HasValue ? player.Entity.GetCarried(_targetSlot.Value) : null;
+			var carriedAny    = player.Entity.GetCarried(CarrySlot.Hands)
+			                 ?? player.Entity.GetCarried(CarrySlot.Shoulder);
+			BlockSelection selection = null;
+			BlockBehaviorCarryable behavior;
 			
-			// Make sure the player is still looking at the same block.
-			var selection = player.CurrentBlockSelection;
-			var position  = (_action == CurrentAction.PlaceDown)
-				? GetPlacedPosition(world, selection, carried.Block)
-				: selection?.Position;
-			if (!_selectedBlock.Equals(position)) { OnRelease(); return; }
-			
-			// Get the block behavior from either the block
-			// to be picked up or the currently carried block.
-			var behavior = ((_action == CurrentAction.PickUp)
-					? world.BlockAccessor.GetBlock(selection.Position)
-					: carried.Block
-				).GetBehaviorOrDefault(BlockBehaviorCarryable.DEFAULT);
+			switch (_action) {
+				case CurrentAction.PickUp:
+				case CurrentAction.PlaceDown:
+					
+					// Ensure the player hasn't in the meantime
+					// picked up / placed down something somehow.
+					if ((_action == CurrentAction.PickUp) == (carriedAny != null))
+						{ OnMouseUp(); return; }
+					
+					selection    = player.CurrentBlockSelection;
+					var position = (_action == CurrentAction.PlaceDown)
+						? GetPlacedPosition(world, selection, carriedTarget.Block)
+						: selection?.Position;
+					// Make sure the player is still looking at the same block.
+					if (!_selectedBlock.Equals(position))
+						{ OnMouseUp(); return; }
+					
+					// Get the block behavior from either the block
+					// to be picked up or the currently carried block.
+					behavior = (_action == CurrentAction.PickUp)
+						? world.BlockAccessor.GetBlock(selection.Position)
+							.GetBehaviorOrDefault(BlockBehaviorCarryable.DEFAULT)
+						: carriedTarget.Behavior;
+					break;
+				
+				case CurrentAction.SwapBack:
+					
+					var carriedBack = player.Entity.GetCarried(CarrySlot.Back);
+					// Ensure that the player hasn't in the meantime
+					// put something in that slot / on their back.
+					if ((carriedTarget != null) == (carriedBack != null))
+						{ OnMouseUp(); return; }
+					
+					behavior = (carriedTarget != null) ? carriedTarget.Behavior : carriedBack.Behavior;
+					// Make sure the block to swap can still be put in that slot.
+					if (behavior.Slots[_targetSlot.Value] == null) return;
+					
+					break;
+				
+				default: return;
+			}
 			
 			var requiredTime = behavior.InteractDelay;
-			if (_action == CurrentAction.PlaceDown)
-				requiredTime *= PLACE_SPEED_MODIFIER;
+			switch (_action) {
+				case CurrentAction.PlaceDown: requiredTime *= PLACE_SPEED_MODIFIER; break;
+				case CurrentAction.SwapBack:  requiredTime *= SWAP_SPEED_MODIFIER;  break;
+			}
 			
-			var progress = (time / requiredTime);
+			_timeHeld += deltaTime;
+			var progress = (_timeHeld / requiredTime);
 			Mod.HudOverlayRenderer.CircleProgress = progress;
 			if (progress <= 1.0F) return;
 			
-			if (_action == CurrentAction.PickUp) {
-				// If not currently carrying a block, see if we can pick one up.
-				if (player.Entity.Carry(selection.Position))
-					Mod.ClientChannel.SendPacket(new PickUpMessage(selection.Position));
-			} else {
-				// If already carrying a block, see if we can place it down.
-				if (PlaceDown(player, carried, selection))
-					Mod.ClientChannel.SendPacket(new PlaceDownMessage(selection));
+			switch (_action) {
+				case CurrentAction.PickUp:
+					if (player.Entity.Carry(selection.Position, _targetSlot.Value))
+						Mod.ClientChannel.SendPacket(new PickUpMessage(selection.Position, _targetSlot.Value));
+					break;
+				case CurrentAction.PlaceDown:
+					if (PlaceDown(player, carriedTarget, selection))
+						Mod.ClientChannel.SendPacket(new PlaceDownMessage(_targetSlot.Value, selection));
+					break;
+				case CurrentAction.SwapBack:
+					if (player.Entity.Swap(_targetSlot.Value, CarrySlot.Back))
+						Mod.ClientChannel.SendPacket(new SwapSlotsMessage(CarrySlot.Back, _targetSlot.Value));
+					break;
 			}
-			OnRelease();
+			
+			OnMouseUp();
 		}
 		
-		public void OnRelease()
+		public void OnMouseUp(MouseEvent ev = null)
 		{
-			_action = CurrentAction.None;
+			_action     = CurrentAction.None;
+			_targetSlot = null;
+			_timeHeld   = 0.0F;
 			Mod.HudOverlayRenderer.CircleVisible = false;
 		}
+		
+		
+		// public EnumHandling OnBeforeActiveSlotChanged(EntityAgent entity, ActiveSlotChangeEventArgs ev)
+		// {
+		// 	// If the player is carrying something in their hands,
+		// 	// prevent them from changing their active hotbar slot.
+		// 	return (entity.GetCarried(CarrySlot.Hands) != null)
+		// 		? EnumHandling.PreventDefault
+		// 		: EnumHandling.NotHandled;
+		// }
 		
 		
 		public static void OnPickUpMessage(IPlayer player, PickUpMessage message)
 		{
 			// FIXME: Do at least some validation of this data.
 			
-			var isSneaking    = player.Entity.Controls.Sneak;
-			var isEmptyHanded = player.Entity.RightHandItemSlot.Empty;
-			var carried       = player.Entity.GetCarried();
-			
-			if (!isSneaking || !isEmptyHanded || (carried != null)
-				|| !player.Entity.Carry(message.Position))
-					InvalidCarry(player, message.Position);
+			var carried = player.Entity.GetCarried(message.Slot);
+			if ((message.Slot == CarrySlot.Back) || !CanInteract(player.Entity) ||
+			    (carried != null) || !player.Entity.Carry(message.Position, message.Slot))
+				InvalidCarry(player, message.Position);
 		}
 		
 		public static void OnPlaceDownMessage(IPlayer player, PlaceDownMessage message)
 		{
 			// FIXME: Do at least some validation of this data.
 			
-			var isSneaking    = player.Entity.Controls.Sneak;
-			var isEmptyHanded = player.Entity.RightHandItemSlot.Empty;
-			var carried       = player.Entity.GetCarried();
-			
-			if (!isSneaking || !isEmptyHanded || (carried == null)
-				|| !PlaceDown(player, carried, message.Selection))
-					InvalidCarry(player, message.Selection.Position);
+			var carried = player.Entity.GetCarried(message.Slot);
+			if ((message.Slot == CarrySlot.Back) || !CanInteract(player.Entity) ||
+			    (carried == null) || !PlaceDown(player, carried, message.Selection))
+				InvalidCarry(player, message.Selection.Position);
+		}
+		
+		public static void OnSwapSlotsMessage(IPlayer player, SwapSlotsMessage message)
+		{
+			if ((message.First == message.Second) || (message.First != CarrySlot.Back) ||
+			    !CanInteract(player.Entity) || !player.Entity.Swap(message.First, message.Second))
+				player.Entity.WatchedAttributes.MarkPathDirty(CarriedBlock.ATTRIBUTE_ID);
+		}
+		
+		
+		/// <summary>
+		///   Returns whether the specified entity has the required prerequisites
+		///   to interact using CarryCapacity: Must be sneaking with an empty hand.
+		/// </summary>
+		public static bool CanInteract(EntityAgent entity)
+		{
+			var isSneaking    = entity.Controls.Sneak;
+			var isEmptyHanded = entity.RightHandItemSlot.Empty && entity.LeftHandItemSlot.Empty;
+			return (isSneaking && isEmptyHanded);
 		}
 		
 		public static bool CanPlace(IWorldAccessor world, BlockSelection selection,
@@ -177,7 +297,7 @@ namespace CarryCapacity.Handler
 				selection.DidOffset = true;
 			}
 			
-			return player.PlaceCarried(selection);
+			return player.PlaceCarried(selection, carried.Slot);
 		}
 		
 		/// <summary> Called when a player picks up or places down an invalid block,
@@ -185,7 +305,7 @@ namespace CarryCapacity.Handler
 		private static void InvalidCarry(IPlayer player, BlockPos pos)
 		{
 			player.Entity.World.BlockAccessor.MarkBlockDirty(pos);
-			player.Entity.WatchedAttributes.MarkPathDirty(CarriedBlock.ATTRIBUTE_ID_STACK);
+			player.Entity.WatchedAttributes.MarkPathDirty(CarriedBlock.ATTRIBUTE_ID);
 		}
 		
 		/// <summary> Returns the position that the specified block would
@@ -208,7 +328,8 @@ namespace CarryCapacity.Handler
 		{
 			None,
 			PickUp,
-			PlaceDown
+			PlaceDown,
+			SwapBack
 		}
 	}
 }

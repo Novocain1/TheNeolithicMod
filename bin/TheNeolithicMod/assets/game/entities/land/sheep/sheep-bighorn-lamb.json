@@ -1,25 +1,33 @@
 {
-	code: "sheep-lamb",
+	code: "sheep-bighorn-lamb",
 	class: "EntityAgent",
 	hitboxSize: { x: 1.0, y: 0.5 },
+	deadHitboxSize: { x: 1, y: 0.25 },
 	eyeHeight: 0.4,
-	drops: [
-		{
-			type: "item", 
-			code: "neolithicmod:mutton-raw", 
-			quantity: { avg: 0.5, var: 0.5 } 
-		}
-	],
+	drops: [],
 	client: {
 		renderer: "Shape",
-		shape: { base: "entity/land/sheep/lamb" },
+		shape: { base: "entity/land/sheep-bighorn-lamb" },
 		texture: { base: "entity/sheep/sheep-bighorn-lamb" },
-		behaviors: [{ code: "repulseagents" }, { code: "controlledphysics", stepHeight: 1.0001 }, { code: "interpolateposition" }],
+		behaviors: [
+			{ code: "repulseagents" }, 
+			{ code: "controlledphysics", stepHeight: 1.0001 }, 
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "interpolateposition" },
+			{ code: "harvestable" }
+		],
 		animations: [
 			{
 				code: "hurt",
 				animation: "hurt", 
 				animationSpeed: 2.2,
+				weight: 10,
+				blendMode: "AddAverage" 
+			},
+			{
+				code: "die",
+				animation: "die", 
+				animationSpeed: 1.25,
 				weight: 10,
 				blendMode: "AddAverage" 
 			}
@@ -37,34 +45,25 @@
 			{ code: "controlledphysics", stepHeight: 1.0001 },
 			{ code: "despawn", minPlayerDistance: 8, belowLightLevel: 8, minSeconds: 300 },
 			{ code: "health", currenthealth: 10, maxhealth: 10, },
+			{ code: "deaddecay", hoursToDecay: 96, decayedBlock: "carcass-small" },
+			{ code: "floatupwhenstuck", onlyWhenDead: true },
+			{ code: "harvestable", drops: [
+				{
+					type: "item", 
+					code: "redmeat-raw", 
+					quantity: { avg: 0.5, var: 0.5 } 
+				}
+				],
+			},
 			{ code: "breathe" }, 
 			{ 
 				code: "grow",
 				hoursToGrow: 336,
-				adultEntityCodes: ["sheep-ram", "sheep-ewe"],
+				adultEntityCodes: ["sheep-bighorn-male", "sheep-bighorn-female"],
 			},
 			{ 
 				code: "taskai",
 				aitasks: [
-					{
-						code: "fleeentity",
-						entityCodes: ["player"],
-						priority: 1.9,
-						movespeed: 0.025,
-						seekingRange: 5,
-						animationSpeed: 4,
-						animation: "Run",
-						sound: "creature/sheep/sheep-bighorn-lamb-hurt2"
-					},
-					{
-						code: "AiTaskSleep",
-						priority: 1.8,
-						priorityForCancel: 1.35,
-						animation: "sleep",
-						isnocturnal: false,
-						cancelOnHurt: true,
-						animationSpeed: 0.20
-					},
 					{
 						code: "fleeentity",
 						entityCodes: ["player"],
@@ -73,7 +72,7 @@
 						seekingRange: 9,
 						animationSpeed: 4,
 						animation: "Run",
-						sound: "creature/sheep/sheep-bighorn-lamb-hurt2"
+						sound: "creature/sheep/lamb-hurt2"
 					},
 					{
 						code: "getoutofwater",
@@ -85,7 +84,7 @@
 					{
 						code: "stayclosetoentity",
 						priority: 1.4,
-						entityCode: "sheep-ewe",
+						entityCode: "sheep-bighorn-female",
 						movespeed: 0.025,
 						maxDistance: 5,
 						searchRange: 25,
@@ -132,9 +131,9 @@
 		]
 	},
 	sounds: {
-		hurt: "creature/sheep/sheep-bighorn-lamb-hurt",
-		death: "creature/sheep/sheep-bighorn-lamb-hurt",
-		idle: "creature/sheep/sheep-bighorn-idle"
+		hurt: "creature/sheep/lamb-hurt",
+		death: "creature/sheep/lamb-hurt",
+		idle: "creature/sheep/idle"
 	},
 	idleSoundChance: 0.01
 }

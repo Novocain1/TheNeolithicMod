@@ -1,54 +1,45 @@
 {
-  code: "fox-snow-male",
+  code: "fox-arctic-male",
   class: "EntityAgent",
   hitboxSize: {
-    x: 1.1,
-    y: 0.9
+    x: 0.75,
+    y: 0.75
+  },
+  deadHitboxSize: {
+    x: 0.75,
+    y: 0.5
   },
   eyeHeight: 0.7,
-  drops: [
-    {
-      type: "block",
-      code: "neolithicmod:dead-fox-snow-male",
-      quantity: {
-        avg: 2,
-        var: 1
-      }
-    },
-    {
-      type: "item",
-      code: "hide-raw",
-      quantity: {
-        avg: 1.25,
-        var: 0
-      }
-    },
-    {
-      type: "item",
-      code: "fat",
-      quantity: {
-        avg: 0.25,
-        var: 0
-      }
-    }
-  ],
+  drops: [],
   client: {
     renderer: "Shape",
-    shape: { base: "entity/land/fox/male" },
-    texture: { base: "neolithicmod:entity/fox/snow-male" },
+    shape: { base: "entity/land/fox-male" },
+    texture: { base: "entity/fox/fox-arctic-male" },
     behaviors: [
       { code: "repulseagents" },
       {
         code: "controlledphysics",
         stepHeight: 1.0001
       },
-      { code: "interpolateposition" }
+      {
+        code: "floatupwhenstuck",
+        onlyWhenDead: true
+      },
+      { code: "interpolateposition" },
+      { code: "harvestable" }
     ],
     animations: [
       {
         code: "hurt",
         animation: "hurt",
         animationSpeed: 2.2,
+        weight: 10,
+        blendMode: "AddAverage"
+      },
+      {
+        code: "die",
+        animation: "death",
+        animationSpeed: 1.25,
         weight: 10,
         blendMode: "AddAverage"
       }
@@ -71,6 +62,29 @@
         code: "health",
         currenthealth: 6,
         maxhealth: 6,
+      },
+      {
+        code: "deaddecay",
+        hoursToDecay: 96,
+        decayedBlock: "carcass-small"
+      },
+      {
+        code: "floatupwhenstuck",
+        onlyWhenDead: true
+      },
+      {
+        code: "harvestable",
+        drops: [
+          {
+            type: "block",
+            code: "neolithicmod:dead-fox-snow-male",
+            quantity: {
+              avg: 2,
+              var: 1
+            }
+          },
+
+        ],
       },
       { code: "breathe" },
       {
@@ -121,21 +135,6 @@
             whenInEmotionState: "aggressiveondamage"
           },
           {
-            code: "fixedseekfoodandeat",
-            priority: 2.85,
-            eatSound: "player/eat",
-            eatTime: 7,
-            movespeed: 0.02,
-            animation: "Walk",
-            animationSpeed: 1.0,
-            eatanimation: "Eat",
-            eatanimationspeed: 1.0,
-            mincooldownHours: 1,
-            maxcooldownHours: 4,
-            doConsumePortion: true
-          },
-
-          {
             code: "AiTaskSleep",
             priority: 2.8,
             priorityForCancel: 1.35,
@@ -167,7 +166,7 @@
 
           {
             code: "meleeattack",
-            entityCodes: [ "chicken*", "rabbit-*" ],
+            entityCodes: [ "chicken-rooster", "chicken-hen", "chicken-baby" ],
             priority: 1.6,
             damage: 4,
             slot: 1,
@@ -182,7 +181,7 @@
           },
           {
             code: "seekentity",
-            entityCodes: [ "chicken-*", "rabbit-*" ],
+            entityCodes: [ "chicken-rooster", "chicken-hen", "chicken-baby" ],
             priority: 1.5,
             movespeed: 0.022,
             seekingRange: 20,
@@ -198,6 +197,20 @@
             movespeed: 0.015,
             animation: "Walk",
             animationSpeed: 2.2
+          },
+          {
+            code: "idle",
+            onBlockBelowCode: "snowblock",
+            priority: 1.35,
+            priorityForCancel: 5,
+            minduration: 2400,
+            maxduration: 2400,
+            mincooldown: 8000,
+            maxcooldown: 40000,
+            animation: "Dive",
+            animationSpeed: 1.25,
+            sound: "walk/deepsnow1",
+            soundStartMs: 950
           },
           {
             code: "idle",
@@ -241,7 +254,7 @@
     spawnconditions: {
       worldgen: {
         TriesPerChunk: {
-          avg: 0.3,
+          avg: 0.5,
           var: 0
         },
         tryOnlySurface: true,
@@ -256,12 +269,12 @@
         maxTemp: -10,
         minRain: 0.25,
         minForest: 0.5,
-        companions: [ "fox-snow-female" ]
+        companions: [ "fox-arctic-female" ]
       },
       runtime: {
         group: "neutral",
         tryOnlySurface: true,
-        chance: 0.002,
+        chance: 0.003,
         maxQuantity: 4,
         minLightLevel: 10,
         groupSize: {
@@ -274,14 +287,14 @@
         maxTemp: -10,
         minRain: 0.25,
         minForest: 0.5,
-        companions: [ "fox-snow-female" ]
+        companions: [ "fox-arctic-female" ]
       }
     }
   },
   sounds: {
-    hurt: "creature/fox/fox-hurt",
-    death: "creature/wolf/wolf-hurt",
-    idle: "creature/fox/fox-yip"
+    hurt: "creature/fox/hurt",
+    death: "creature/wolf/hurt",
+    idle: "creature/fox/yip"
   },
   idleSoundChance: 0
 }

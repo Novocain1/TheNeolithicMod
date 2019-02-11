@@ -8,12 +8,13 @@ namespace BehaviorsLib
 	{
         public override void Start(ICoreAPI api)
 		{
-		    AiTaskManager.RegisterTaskType("AiTaskSleep", typeof(AiTaskSleep));
+
+            api.RegisterEntityBehaviorClass("AiTaskSleep", typeof(AiTaskSleep));
             //AiTaskManager.RegisterTaskType("seekastar", typeof(AiTaskBaseAStar));
-            AiTaskManager.RegisterTaskType("fixedseekfoodandeat", typeof(FixedAiTaskSeekFoodAndEat));
+            api.RegisterEntityBehaviorClass("fixedseekfoodandeat", typeof(FixedAiTaskSeekFoodAndEat));
             //AiTaskManager.RegisterTaskType("fleepoi", typeof(AiTaskFleePOI));
-            AiTaskManager.RegisterTaskType("injured", typeof(AiTaskInjured));
-            api.RegisterEntityBehaviorClass("fixedmultiply", typeof(FixedEntityBehaviorMultiply));
+          //  api.RegisterEntityBehaviorClass("injured", typeof(AiTaskInjured));
+           // api.RegisterEntityBehaviorClass("fixedmultiply", typeof(FixedEntityBehaviorMultiply));
         }
     }
 }

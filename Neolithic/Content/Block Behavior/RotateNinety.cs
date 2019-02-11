@@ -22,30 +22,21 @@ namespace TheNeolithicMod
         public override bool TryPlaceBlock(IWorldAccessor world, IPlayer byPlayer, ItemStack itemstack, BlockSelection blockSel, ref EnumHandling handling)
         {
             handling = EnumHandling.PreventDefault;
-            if (!world.BlockAccessor.GetBlock(blockSel.Position).IsReplacableBy(this.block))
+            if (!world.BlockAccessor.GetBlock(blockSel.Position).IsReplacableBy(block))
             {
                 return false;
             }
             BlockFacing[] blockFacingArray = Block.SuggestedHVOrientation(byPlayer, blockSel);
             string orientation = blockFacingArray[0] == BlockFacing.NORTH || blockFacingArray[0] == BlockFacing.SOUTH ? "n" : "w" ;
 
-            AssetLocation assetLocation = this.block.CodeWithParts(orientation);
+            AssetLocation assetLocation = block.CodeWithParts(orientation);
             world.BlockAccessor.SetBlock(world.BlockAccessor.GetBlock(assetLocation).BlockId, blockSel.Position);
             return true;
         }
 
-        public override ItemStack[] GetDrops(IWorldAccessor world, BlockPos pos, IPlayer byPlayer, float dropChanceMultiplier, ref EnumHandling handling)
-        {
-            handling = EnumHandling.PreventDefault;
-            return new ItemStack[1]
-            {
-                new ItemStack(world.BlockAccessor.GetBlock(this.block.CodeWithPath(this.block.CodeWithoutParts(2) + "-n")), 1)
-            };
-        }
-
         public override ItemStack OnPickBlock(IWorldAccessor world, BlockPos pos, ref EnumHandling handling)
         {
-            return new ItemStack(world.BlockAccessor.GetBlock(this.block.CodeWithPath(this.block.CodeWithoutParts(2) + "-n")), 1);
+            return new ItemStack(world.BlockAccessor.GetBlock(block.CodeWithPath(block.CodeWithoutParts(2) + "-n")), 1);
         }
 
         public override AssetLocation GetRotatedBlockCode(int angle, ref EnumHandling handling)
@@ -53,9 +44,9 @@ namespace TheNeolithicMod
 
             string[] strArray = new string[2] { "w", "n" };
             int num = angle / 90;
-            if (this.block.LastCodePart(0) == "n")
+            if (block.LastCodePart(0) == "n")
                 ++num;
-            return this.block.CodeWithParts( strArray[num % 2]);
+            return block.CodeWithParts( strArray[num % 2]);
         }
 
     }
