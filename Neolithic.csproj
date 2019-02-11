@@ -43,23 +43,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="cairo-sharp">
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\cairo-sharp.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\Lib\cairo-sharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="CommandLine">
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\CommandLine.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\Lib\CommandLine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="csogg">
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\csogg.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\Lib\csogg.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="csvorbis">
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\csvorbis.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\Lib\csvorbis.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ENet">
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\ENet.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\Lib\ENet.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp">
@@ -67,11 +67,15 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\Newtonsoft.Json.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\Lib\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>E:\Games\VintageStory\Lib\OpenTK.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Lib\protobuf-net.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\Lib\protobuf-net.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
@@ -92,23 +96,32 @@
     <Reference Include="System.Xml.Linq">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Tavis.JsonPatch">
+      <HintPath>E:\Games\VintageStory\Lib\Tavis.JsonPatch.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="VintagestoryAPI">
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\VintagestoryAPI.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\VintagestoryAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VintagestoryLib">
       <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\VintagestoryLib.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="VSCreativeMod">
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Mods\VSCreativeMod.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\Mods\VSCreativeMod.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VSEssentials">
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Mods\VSEssentials.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\Mods\VSEssentials.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VSModLauncher">
+      <HintPath>E:\Games\VintageStory\Mods\VSModLauncher.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VSSurvivalMod">
-      <HintPath>C:\Users\Stroam\AppData\Roaming\Vintagestory\Mods\VSSurvivalMod.dll</HintPath>
+      <HintPath>E:\Games\VintageStory\Mods\VSSurvivalMod.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
